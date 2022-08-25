@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
+    <EditText
+        android:id="@+id/unitEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:ems="10"
+        android:inputType="numberDecimal">
+
+        <requestFocus />
+    </EditText>
+
+    <Spinner
+        android:id="@+id/unitSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageButton1"
+        android:layout_marginBottom="15dp"
+        android:layout_toRightOf="@+id/unitEditText" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/unitEditText"
+        android:layout_alignParentRight="true"
+
+        android:onClick="removeItem"
+
+        android:contentDescription="gg"
+        android:src="@android:drawable/ic_menu_delete" />
+
+</RelativeLayout>

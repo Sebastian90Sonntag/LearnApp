@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">LearnApp</string>
+    <string name="action_profil">My Profile</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Login</string>
+    <string name="second_fragment_label" translatable="true">Second Fragment</string>
+    <string name="next" translatable="true">Login now</string>
+    <string name="previous" translatable="true">Previous</string>
+    <string name="hint_email_address" translatable="true">Your Email</string>
+    <string name="hint_password" translatable="true">Your Password</string>
+    <string name="hello_first_fragment">Login</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="learn_app" translatable="true">Learn App</string>
+    <string name="register" translatable="true">Register</string>
+    <!-- Strings used for register for navigation -->
+    <string name="btn_register" translatable="true">Register now</string>
+    <string name="title_register" translatable="true">Register</string>
+    <string name="hint_username" translatable="true">Username</string>
+    <string name="hint_firstname" translatable="true">Firstname</string>
+    <string name="hint_lastname" translatable="true">Lastname</string>
+    <string name="hint_repeat_password" translatable="true">Repeat Password</string>
+    <string name="todo">TODO</string>
+    <string name="to_do">TODO</string>
+    <string name="gdc">gdc</string>
+    <string name="quiz">Quiz</string>
+    <string name="scoreboard">Scoreboard</string>
+    <string name="quit">Quit</string>
+    <string name="main_menu">Main Menu</string>
+
+    <!-- Profil -->
+    <string name="btn_save" translatable="true">Save</string>
+    <string name="profile">Profile</string>
+    <string name="profile_default" />
+    <string name="profile_username">Username:</string>
+    <string name="profile_firstname">Firstname:</string>
+    <string name="profile_lastname">Lastname:</string>
+    <string name="profile_email">E-Mail:</string>
+    <string name="profile_btn">Upload Image</string>
+
+</resources>

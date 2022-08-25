@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScoreboardForm">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/cl_btns"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentPadding="25dp">
+
+                <LinearLayout
+                    android:id="@+id/cardview_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView_card_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/textView_card_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:text="TextView hjkjkjkjkj ghjhhg gfhgf hgfhgfh h gh gfh ftghgfh gfhg fhgf gfh gfhgfh gfhgf hgh gf hgfh fhg h ghfg hgfh fgh fgh gfh fg h"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_btns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E6E6E6"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView">
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical"
+            app:constraint_referenced_ids="button_show,button_known,button_maybe_known,button_dont_known"
+            app:flow_horizontalAlign="center"
+            app:flow_horizontalGap="5dp"
+            app:flow_horizontalStyle="spread"
+            app:flow_maxElementsWrap="3"
+            app:flow_wrapMode="aligned"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_known"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Known"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="265dp"
+            tools:layout_editor_absoluteY="48dp" />
+
+        <Button
+            android:id="@+id/button_maybe_known"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Sooo close"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="60dp" />
+
+        <Button
+            android:id="@+id/button_dont_known"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Dont know"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="45dp"
+            tools:layout_editor_absoluteY="48dp" />
+
+        <Button
+            android:id="@+id/button_show"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Show answer"
+            tools:layout_editor_absoluteX="227dp"
+            tools:layout_editor_absoluteY="48dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
