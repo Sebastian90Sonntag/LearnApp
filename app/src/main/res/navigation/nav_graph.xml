@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/StartUpForm">
+
+    <fragment
+        android:id="@+id/StartUpForm"
+        android:name="com.graphicdesigncoding.learnapp.StartUpForm"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/startup_form">
+        <action
+            android:id="@+id/action_StartUpForm_to_nav_main"
+            app:destination="@id/nav_main" />
+        <action
+            android:id="@+id/action_StartUpForm_to_nav_login_logout"
+            app:destination="@id/nav_login_logout" />
+    </fragment>
+    <navigation android:id="@+id/nav_login_logout"
+        app:startDestination="@id/LoginForm">
+        <fragment
+            android:id="@+id/LoginForm"
+            android:name="com.graphicdesigncoding.learnapp.LoginForm"
+            android:label="@string/second_fragment_label">
+
+            <action
+                android:id="@+id/action_LoginForm_to_MainMenuForm"
+                app:destination="@id/nav_main" />
+            <action
+                android:id="@+id/action_LoginForm_to_RegisterForm"
+                app:destination="@id/RegisterForm"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim" />
+            <action
+                android:id="@+id/action_LoginForm_to_StartUpForm"
+                app:popUpToInclusive="false" />
+        </fragment>
+        <fragment
+            android:id="@+id/RegisterForm"
+            android:name="com.graphicdesigncoding.learnapp.RegisterForm"
+            android:label="@string/second_fragment_label"
+            tools:layout="@layout/register_form">
+            <action
+                android:id="@+id/action_RegisterForm_to_LoginForm"
+                app:destination="@id/LoginForm" />
+        </fragment>
+        <action
+            android:id="@+id/action_global_nav_main"
+            app:destination="@id/nav_main" />
+    </navigation>
+    <navigation android:id="@+id/nav_main"
+        app:startDestination="@id/MainMenuForm">
+        <fragment
+            android:id="@+id/ScoreboardForm"
+            android:name="com.graphicdesigncoding.learnapp.ScoreboardForm"
+            android:label="@string/second_fragment_label"
+            tools:layout="@layout/scoreboard_form">
+            <action
+                android:id="@+id/action_ScoreboardForm_to_MainMenuForm"
+                app:destination="@id/MainMenuForm" />
+        </fragment>
+        <fragment
+            android:id="@+id/MainMenuForm"
+            android:name="com.graphicdesigncoding.learnapp.MainMenuForm"
+            android:label="@string/second_fragment_label"
+            tools:layout="@layout/mainmenu_form">
+            <action
+                android:id="@+id/action_MainMenuForm_to_QuizForm"
+                app:destination="@id/QuizForm" />
+            <action
+                android:id="@+id/action_MainMenuForm_to_ScoreboardForm"
+                app:destination="@id/ScoreboardForm" />
+            <action
+                android:id="@+id/action_MainMenuForm_to_ProfileForm"
+                app:destination="@id/ProfileForm" />
+        </fragment>
+        <fragment
+            android:id="@+id/QuizForm"
+            android:name="com.graphicdesigncoding.learnapp.QuizForm"
+            android:label="@string/second_fragment_label">
+            <action
+                android:id="@+id/action_QuizForm_to_MainMenuForm"
+                app:destination="@id/MainMenuForm" />
+        </fragment>
+        <fragment
+            android:id="@+id/ProfileForm"
+            android:name="com.graphicdesigncoding.learnapp.ProfileForm"
+            android:label="@string/second_fragment_label"
+            tools:layout="@layout/profile_form">
+            <action
+                android:id="@+id/action_ProfileForm_to_MainMenuForm"
+                app:destination="@id/MainMenuForm" />
+        </fragment>
+    </navigation>
+</navigation>
