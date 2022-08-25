@@ -1,0 +1,12 @@
+androidx.security.crypto.EncryptedFile
+androidx.security.crypto.EncryptedFile$Builder
+androidx.security.crypto.EncryptedFile$EncryptedFileInputStream
+androidx.security.crypto.EncryptedFile$EncryptedFileOutputStream
+androidx.security.crypto.EncryptedFile$FileEncryptionScheme
+androidx.security.crypto.EncryptedSharedPreferences
+androidx.security.crypto.EncryptedSharedPreferences$1
+androidx.security.crypto.EncryptedSharedPreferences$Editor
+androidx.security.crypto.EncryptedSharedPreferences$EncryptedType
+androidx.security.crypto.EncryptedSharedPreferences$PrefKeyEncryptionScheme
+androidx.security.crypto.EncryptedSharedPreferences$PrefValueEncryptionScheme
+androidx.security.crypto.MasterKeys
