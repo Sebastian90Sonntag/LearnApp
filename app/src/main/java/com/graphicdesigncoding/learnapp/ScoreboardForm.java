@@ -79,6 +79,8 @@ public class ScoreboardForm extends Fragment {
                     @Override
                     public void finished(Object responseMsg) {
                         JSONObject obj;
+
+                        System.out.println(responseMsg.toString());
                         try {
                             obj = new JSONObject(responseMsg.toString());
                             String token;

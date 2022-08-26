@@ -2,6 +2,7 @@ package com.graphicdesigncoding.learnapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,6 +29,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.graphicdesigncoding.learnapp.databinding.ActivityMainBinding;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -87,6 +93,34 @@ public class MainActivity extends AppCompatActivity {
         if (isBitmapInMemoryCache(key)){
             memoryCache.remove(key);
         }
+    }
+
+    public JSONObject getUserPreferences(){
+        JSONObject jobj;
+        SharedPreferences sharedPref = getSharedPreferences("LoginData", Context.MODE_PRIVATE);
+        Map<String,?> mapSharedpref = sharedPref.getAll();
+        StringBuilder s = new StringBuilder();
+
+        for (Map.Entry<String,?> sItem :  mapSharedpref.entrySet()) {
+            s.append("\"" + sItem.getKey() + "\":\"" + sItem.getValue().toString() + "\", ");
+        }
+        s.deleteCharAt(s.length() - 1);
+        String jString = "{" + s + "}";
+
+        try {
+            jobj = new JSONObject(jString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            jobj = null;
+        }
+        return jobj;
+    }
+
+    public void setUserPreferences(String prefName,String prefValue){
+        SharedPreferences sharedPref = getSharedPreferences("LoginData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(prefName, prefValue);
+        editor.apply();
     }
     public void showExtendedBar(boolean isVisible,String title,boolean nav_backwards_allowed){
         AppBarLayout abl = this.findViewById(R.id.appBarLayout);

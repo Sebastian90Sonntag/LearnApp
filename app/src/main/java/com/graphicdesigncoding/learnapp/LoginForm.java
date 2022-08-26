@@ -77,14 +77,18 @@ public class LoginForm extends Fragment {
 
         //Login Button Binding -> Send Login Data To Server
         binding.buttonLogin.setOnClickListener(btn_view -> {
+
             //Set Input tint color
             view.findViewById(R.id.editText_EmailAddress).getBackground().setTint(Color.TRANSPARENT);
             view.findViewById(R.id.editText_Password).getBackground().setTint(Color.TRANSPARENT);
+
             //Get Input data
             String email = ((EditText) view.findViewById(R.id.editText_EmailAddress)).getText().toString();
             String password = ((EditText) view.findViewById(R.id.editText_Password)).getText().toString();
+
             //Check if email data matches requirements
             if(new RegExPattern().Email(email)){
+
                 //Check if password matches requirements
                 if(new RegExPattern().Password(password)){
                     // Send data to server
@@ -95,25 +99,41 @@ public class LoginForm extends Fragment {
                             @Override
                             public void finished(Object _obj) {
                                 JSONObject obj;
+
                                 try {
+
                                     obj = new JSONObject(_obj.toString());
                                     String token;
                                     String imgLink;
+                                    String firstname;
+                                    String lastname;
+                                    String username;
+
                                     if(obj.has(new Crypt().md5("token")) && obj.has(new Crypt().md5("image_link"))) {
+
                                         try {
+
                                             token = obj.get(new Crypt().md5("token")).toString();
                                             imgLink = obj.get(new Crypt().md5("image_link")).toString();
-                                            System.out.println(token);
+                                            firstname = obj.get(new Crypt().md5("firstname")).toString();
+                                            lastname = obj.get(new Crypt().md5("lastname")).toString();
+                                            username = obj.get(new Crypt().md5("username")).toString();
+
                                             // Check for login data
                                             Context context = getActivity();
                                             SharedPreferences sharedPref;
+
                                             if (context != null) {
+
                                                 System.out.println("WRITE TO sharedprefs");
                                                 // Write shared Preferences
                                                 sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
                                                 SharedPreferences.Editor editor = sharedPref.edit();
                                                 editor.putString("UEmail", email);
                                                 editor.putString("UPwd", password);
+                                                editor.putString("UFirstname", firstname);
+                                                editor.putString("ULastname", lastname);
+                                                editor.putString("UUsername", username);
                                                 editor.putString("UToken", token);
                                                 editor.putString("UImage", imgLink);
                                                 editor.apply();
@@ -121,33 +141,38 @@ public class LoginForm extends Fragment {
                                                 System.out.println("Login performed...");
                                                 // Go to MainMenu
                                                 NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_global_nav_main);
+
                                             }else{
+
                                                 System.out.println("NO WRITE TO sharedprefs");
-                                                // System.out.println("sharedprefs:");
-                                                // System.out.println(sharedPref.getString("UEmail",null));
-                                                // System.out.println(sharedPref.getString("UPwd",null));
-                                                //System.out.println(sharedPref.getString("UToken",null));
                                             }
                                         } catch (JSONException e) {
                                             //User not exist :D
                                             Toast.makeText(view.getContext(),"Wrong login data",Toast.LENGTH_LONG).show();
                                         }
                                     }else if(obj.has(new Crypt().md5("error"))){
+
                                         String error;
+
                                         try {
+
                                             error = obj.getString(new Crypt().md5("error"));
                                             System.out.println("idk1");
                                             System.out.println(error);
                                             Toast.makeText(view.getContext(),"Wrong login data",Toast.LENGTH_LONG).show();
+
                                         } catch (JSONException e) {
                                             Toast.makeText(view.getContext(),"Service error",Toast.LENGTH_LONG).show();
                                         }
+
                                     }else{
-                                        //User not exist :D
+
                                         System.out.println("idk3");
                                         Toast.makeText(view.getContext(),"Wrong login data",Toast.LENGTH_LONG).show();
                                     }
+
                                 } catch (Throwable e) {
+
                                     Toast.makeText(view.getContext(),"Device Service error",Toast.LENGTH_LONG).show();
                                 }
                             }

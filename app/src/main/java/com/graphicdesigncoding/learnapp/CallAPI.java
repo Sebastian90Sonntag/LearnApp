@@ -76,7 +76,6 @@ public class CallAPI implements Callback{
                         while ((response = in.readLine()) != null) {
                             s.append(response);
                         }
-                        System.out.println(s);
                         byte[] decoded = Base64.decode(s.toString(),0);
                         bmp = BitmapFactory.decodeByteArray(decoded,0, decoded.length);
                         in.close();
