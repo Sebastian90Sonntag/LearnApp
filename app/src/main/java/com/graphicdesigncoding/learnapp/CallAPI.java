@@ -62,6 +62,11 @@ public class CallAPI implements Callback{
             main_Handler.post(() -> callback.finished(finalS));
         }).start();
     }
+    // Executed in an Activity, so 'this' is the Context
+// The fileUrl is a string URL, such as "http://www.example.com/image.png"
+//    Intent downloadIntent = new Intent(this, DownloadService.class);
+//downloadIntent.setData(Uri.parse(fileUrl));
+//    startService(downloadIntent);
 
     public void GetImage(String urlstr, Callback callback) {
         new Thread(() -> {

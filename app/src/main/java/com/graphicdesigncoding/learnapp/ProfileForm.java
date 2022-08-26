@@ -137,18 +137,21 @@ public class ProfileForm extends Fragment {
         Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
-                // Get image data out of google galery
+
+                // Get image data out of google gallery
                 Intent data = result.getData();
                 Bitmap bitmap = null;
+
                 // try to decode Image
                 try {
-
+                    System.out.println(data.getType());
                     bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(view.getContext().getContentResolver(), data.getData()));
                 } // if Image decoding fails
                 catch (IOException e) {
                     System.out.println("ImageUpload -> image decoding failed...");
                     e.printStackTrace();
                 }
+
                 // Resize IMG
                 IMG_Resize resizedBMP = new IMG_Resize(bitmap, IMG_Resize.PIXEL.X128, IMG_Resize.QUALITY_PERCENT.X100);
                 // Set IMG -> ImageView
