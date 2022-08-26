@@ -111,6 +111,7 @@ public class LoginForm extends Fragment {
                                         String error = new Crypt().md5("error");
 
                                         try {
+
                                             if (obj.has(token) && obj.has(imgLink)) {
                                                 // Set data to variables from JSONObj
                                                 token = obj.get(token).toString();
@@ -147,7 +148,9 @@ public class LoginForm extends Fragment {
                                                 } else {
 
                                                     System.out.println("SharedPreferences -> failed to write data.");
+
                                                 }
+
                                             } else if (obj.has(error)) {
 
                                                 error = obj.getString(error);
@@ -161,12 +164,14 @@ public class LoginForm extends Fragment {
                                                 Toast.makeText(view.getContext(), "Wrong login data", Toast.LENGTH_LONG).show();
 
                                             }
+
                                         } catch (JSONException e) {
 
                                             System.out.println("Login -> JSONObject didn't match required");
                                             Toast.makeText(view.getContext(), "Server Error", Toast.LENGTH_LONG).show();
 
                                         }
+
                                     } catch (Throwable e) {
 
                                         Toast.makeText(view.getContext(), "Device Service error", Toast.LENGTH_LONG).show();
