@@ -19,9 +19,10 @@ public class QuizForm extends Fragment {
 
     ///VARIABLES
     private QuizFormBinding binding;
-    private String CurrentTitle;
-    private String CurrentQuestion;
-    private String CurrentAnswer;
+    public String CurrentId;
+    public String CurrentTitle;
+    public String CurrentQuestion;
+    public String CurrentAnswer;
 
     ///METHODS--->
     @Override
@@ -58,6 +59,7 @@ public class QuizForm extends Fragment {
 
                             if(!jobj.has(new Crypt().md5("error")) && jobj.length() > 0){
 
+                                CurrentId  = jobj.getString(new Crypt().md5("questionID"));
                                 CurrentTitle = jobj.getString(new Crypt().md5("title"));
                                 CurrentQuestion = jobj.getString(new Crypt().md5("question"));
                                 CurrentAnswer = jobj.getString(new Crypt().md5("answer"));
@@ -121,26 +123,26 @@ public class QuizForm extends Fragment {
         //Known Button Binding -> Save and show next Answer
         binding.buttonKnown.setOnClickListener((View btn_view) -> {
 
-            NextQuestion(view,1);
+            NextQuestion(view,CurrentId,1);
 
         });
 
         //Maybe Known Button Binding -> Save and show next Answer
         binding.buttonMaybeKnown.setOnClickListener((View btn_view) -> {
 
-            NextQuestion(view,2);
+            NextQuestion(view,CurrentId,2);
 
         });
 
         //Don't Known Button Binding -> Save and show next Answer
         binding.buttonDontKnown.setOnClickListener((View btn_view) -> {
 
-            NextQuestion(view,3);
+            NextQuestion(view,CurrentId,3);
 
         });
     }
 
-    private void NextQuestion(View view,int answer_id){
+    private void NextQuestion(View view,String question_id,int status_id){
 
         view.findViewById(R.id.button_known).setVisibility(View.GONE);
         view.findViewById(R.id.button_maybe_known).setVisibility(View.GONE);
@@ -150,11 +152,13 @@ public class QuizForm extends Fragment {
         ll.animate().setDuration(500).rotationY(90).alpha(0).withEndAction(() -> {
             ll.animate().rotationY(-90).withEndAction(() -> {
                 try {
+
                     JSONObject jsonObject = ((MainActivity)getActivity()).getUserPreferences();
                     String token = jsonObject.get("UToken").toString();
+                    System.out.println(question_id + " " + status_id);
                     new CallAPI().Post(
                         "https://api.graphic-design-coding.de/quiz",
-                        "{\"t\":\"" + token + "\", \"a\":\" + answer_id + \"}",
+                        "{\"t\":\"" + token + "\", \"qid\":\"" + question_id + "\", \"sid\":\"" + status_id + "\"}",
                         new Callback() {
 
                             @Override
