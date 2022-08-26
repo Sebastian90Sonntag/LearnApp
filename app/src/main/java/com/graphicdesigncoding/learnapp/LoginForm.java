@@ -138,7 +138,7 @@ public class LoginForm extends Fragment {
                                                 editor.putString("UImage", imgLink);
                                                 editor.apply();
 
-                                                System.out.println("Nav forwarding...");
+                                                System.out.println("Login performed...");
                                                 // Go to MainMenu
                                                 NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_global_nav_main);
 

@@ -31,10 +31,10 @@ public class ProfileForm extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ){
+        // Get ControlBindings
         binding = ProfileFormBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
-
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -73,22 +73,22 @@ public class ProfileForm extends Fragment {
                                     SetTextViewText(view,R.id.textView_email,jobj.get(email).toString());
                                 }catch (JSONException e){
 
-                                    System.out.println("JSON Exception thrrrrroooowwwnnnnn");
+                                    System.out.println("JSON Exception thrown");
                                 }
 
                             }else{
-                                System.out.println("jobj doesn't match");
+                                System.out.println("ProfileLoading -> JSONObject doesn't match");
                             }
                         } catch (JSONException e) {
 
+                            System.out.println("ProfileLoading -> JSONObject failed");
                             e.printStackTrace();
                         }
                         SharedPreferences sharedPref = GetSharedPrefs();
                         String key = sharedPref.getString("UImage",null);
-                        System.out.println("key: " + key);
-
+                        System.out.println("ImageUpload -> image key: " + key);
                         if (!key.equals("")){
-
+                            // Check if Bitmap is in Memory
                             if(((MainActivity) getActivity()).isBitmapInMemoryCache(key)){
 
                                 ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(((MainActivity) getActivity()).getBitmapFromMemCache(key));
@@ -100,17 +100,19 @@ public class ProfileForm extends Fragment {
                                         SharedPreferences sharedPref = GetSharedPrefs();
                                         String key = sharedPref.getString("UImage",null);
                                         if (!key.equals("")){
+                                            // Load new Image into the ImageView
                                             ((MainActivity) getActivity()).addBitmapToMemoryCache(key,(Bitmap) obj);
                                             ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(((MainActivity) getActivity()).getBitmapFromMemCache(key));
                                         }else{
-                                            System.out.println("-X2-");
+                                            System.out.println("ImageUpload -> unknown image key => default image loaded");
                                         }
-                                        System.out.println("-X3-");
                                     }
                                     @Override
                                     public void canceled() {
+                                        // Load default Image into the ImageView
                                         Bitmap bitmap = ((MainActivity)getContext()).getBitmapFromVectorDrawable(getContext(),R.drawable.ic_account_avatar);
                                         ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(bitmap);
+                                        System.out.println("ImageUpload -> load default image");
                                     }
                                 });
                             }
@@ -118,6 +120,7 @@ public class ProfileForm extends Fragment {
 
                             Bitmap bitmap = ((MainActivity)getContext()).getBitmapFromVectorDrawable(getContext(),R.drawable.ic_account_avatar);
                             ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(bitmap);
+                            System.out.println("ImageUpload -> load default image");
                         }
                     }
                     @Override
@@ -129,15 +132,16 @@ public class ProfileForm extends Fragment {
         Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
+                // Get image data out of google galery
                 Intent data = result.getData();
                 Bitmap bitmap = null;
-
+                // try to decode Image
                 try {
 
                     bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(view.getContext().getContentResolver(), data.getData()));
-
-                } catch (IOException e) {
-
+                } // if Image decoding fails
+                catch (IOException e) {
+                    System.out.println("ImageUpload -> image decoding failed...");
                     e.printStackTrace();
                 }
                 // Resize IMG
@@ -146,9 +150,11 @@ public class ProfileForm extends Fragment {
                 ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(resizedBMP.GetBitmap());
                 // Send data to server
                 SharedPreferences sharedPref1 = GetSharedPrefs();
-                SharedPreferences.Editor editor = sharedPref1.edit();
+                    // Get memorized 'UToken' from sharedPreferences
                 String token1 = sharedPref1.getString("UToken",null);
-
+                    // Get Editor from sharedPreferences
+                SharedPreferences.Editor editor = sharedPref1.edit();
+                // Send Image to Server
                 new CallAPI().SendImage("https://api.graphic-design-coding.de/profile/",
                         token1,
                     resizedBMP,
@@ -158,21 +164,24 @@ public class ProfileForm extends Fragment {
                         public void finished(Object obj) {
 
                             try {
+                                // Get the returned Object from Server request
                                 JSONObject jobj = new JSONObject(obj.toString());
                                 String _token = jobj.getString(new Crypt().md5("token"));
                                 String imgLink = jobj.getString(new Crypt().md5("image_link"));
-
+                                // replace new Image in Memory Cache if some exist
                                 if(((MainActivity) getActivity()).isBitmapInMemoryCache(imgLink) && token1.equals(_token)){
 
                                     ((MainActivity) getActivity()).removeBitmapFromMemCache(imgLink);
                                     ((MainActivity) getActivity()).addBitmapToMemoryCache(imgLink, resizedBMP.GetBitmap());
+                                    //Set received imgLink to sharedPreferences
                                     editor.putString("UImage", imgLink);
                                     editor.apply();
                                 }else{
+                                    // if non memory Image exist just add it...
                                     ((MainActivity) getActivity()).addBitmapToMemoryCache(imgLink, resizedBMP.GetBitmap());
                                 }
                             } catch (JSONException e) {
-
+                                System.out.println("ImageUpload -> JSON obj didn't match...");
                                 e.printStackTrace();
                             }
                             SetUploadButtonVisibility(view,true);
