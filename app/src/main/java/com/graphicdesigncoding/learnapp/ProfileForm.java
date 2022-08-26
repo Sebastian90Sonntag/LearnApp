@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -26,7 +28,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class ProfileForm extends Fragment {
+public class ProfileForm extends Fragment
+{
     private ProfileFormBinding binding;
     @Override
     public View onCreateView(
@@ -38,114 +41,109 @@ public class ProfileForm extends Fragment {
         return binding.getRoot();
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
-        String token = ((MainActivity)getContext()).GetSharedPrefs("LoginData").getString("UToken",null);
-        new CallAPI().Post(
-                "https://api.graphic-design-coding.de/profile/",
-                "{\"t\":\"" + token + "\"}",
-                new Callback() {
+        MainActivity mA = ((MainActivity)getContext());
+        SharedPreferences sPref = mA.GetSharedPrefs("LoginData");
+        String token = sPref.getString("UToken",null);
+        String username = sPref.getString("UUsername",null);
+        String lastname = sPref.getString("ULastname",null);
+        String firstname = sPref.getString("UFirstname",null);
+        String email = sPref.getString("UEmail",null);
+        String ImageURL = sPref.getString("UImage",null);
 
-                    @Override
-                    public void finished(Object obj) {
+        if (!(token.isEmpty() && username.isEmpty() && lastname.isEmpty() &&
+                firstname.isEmpty() && email.isEmpty()))
+        {
+            ((TextView) view.findViewById( R.id.textView_email )).setText(username);
+            ((TextView) view.findViewById(R.id.textView_firstname)).setText(firstname);
+            ((TextView) view.findViewById(R.id.textView_lastname)).setText(lastname);
+            ((TextView) view.findViewById(R.id.textView_username)).setText(username);
 
-                        JSONObject jobj;
+            if (!ImageURL.isEmpty()){
+                // Check if Bitmap is in Memory
+                if(mA.isBitmapInMemoryCache(ImageURL)){
 
-                        try {
+                    ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(
+                            mA.getBitmapFromMemCache(ImageURL)
+                    );
 
-                            jobj = new JSONObject(obj.toString());
-                            System.out.println(jobj);
+                }else{
 
-                            String token = new Crypt().md5("token");
-                            String username = new Crypt().md5("username");
-                            String lastname = new Crypt().md5("lastname");
-                            String firstname = new Crypt().md5("firstname");
-                            String email = new Crypt().md5("email");
+                    new CallAPI().GetImage(ImageURL, new Callback() {
+                        @Override
+                        public void finished(Object obj) {
 
-                            if (    jobj.has(token) &&
-                                    jobj.has(username) &&
-                                    jobj.has(lastname) &&
-                                    jobj.has(firstname) &&
-                                    jobj.has(email)){
+                            MainActivity mA = (MainActivity)getContext();
+                            SharedPreferences sPref = mA.GetSharedPrefs("LoginData");
+                            String ImageURL = sPref.getString("UImage",null);
 
-                                try{
-                                    ((TextView) view.findViewById(R.id.textView_email)).setText(jobj.get(username).toString());
-                                    ((TextView) view.findViewById(R.id.textView_firstname)).setText(jobj.get(firstname).toString());
-                                    ((TextView) view.findViewById(R.id.textView_lastname)).setText(jobj.get(lastname).toString());
-                                    ((TextView) view.findViewById(R.id.textView_username)).setText(jobj.get(username).toString());
+                            if (!ImageURL.isEmpty()){
 
-                                }catch (JSONException e){
-
-                                    System.out.println("JSON Exception thrown");
-                                }
+                                // Load new Image into the ImageView
+                                mA.addBitmapToMemoryCache(ImageURL,(Bitmap) obj);
+                                ((ImageView) view.findViewById(R.id.imageView_profil_image))
+                                .setImageBitmap( mA.getBitmapFromMemCache(ImageURL) );
 
                             }else{
 
-                                System.out.println("ProfileLoading -> JSONObject doesn't match");
-
+                                System.out.println("ImageUpload -> unknown image key => default image loaded");
                             }
-                        } catch (JSONException e) {
-
-                            System.out.println("ProfileLoading -> JSONObject failed");
-                            e.printStackTrace();
                         }
-                        String key = ((MainActivity)getContext()).GetSharedPrefs("LoginData").getString("UImage",null);
-                        System.out.println("ImageUpload -> image key: " + key);
-                        if (!key.equals("")){
-                            // Check if Bitmap is in Memory
-                            if(((MainActivity) getActivity()).isBitmapInMemoryCache(key)){
-
-                                ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(((MainActivity) getActivity()).getBitmapFromMemCache(key));
-                            }else{
-
-                                new CallAPI().GetImage(key, new Callback() {
-                                    @Override
-                                    public void finished(Object obj) {
-                                        SharedPreferences sharedPref = ((MainActivity)getContext()).GetSharedPrefs("LoginData");
-                                        String key = sharedPref.getString("UImage",null);
-                                        if (!key.equals("")){
-                                            // Load new Image into the ImageView
-                                            ((MainActivity) getActivity()).addBitmapToMemoryCache(key,(Bitmap) obj);
-                                            ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(((MainActivity) getActivity()).getBitmapFromMemCache(key));
-                                        }else{
-                                            System.out.println("ImageUpload -> unknown image key => default image loaded");
-                                        }
-                                    }
-                                    @Override
-                                    public void canceled() {
-                                        // Load default Image into the ImageView
-                                        Bitmap bitmap = ((MainActivity)getContext()).getBitmapFromVectorDrawable(getContext(),R.drawable.ic_account_avatar);
-                                        ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(bitmap);
-                                        System.out.println("ImageUpload -> load default image");
-                                    }
-                                });
-                            }
-                        }else {
-
-                            Bitmap bitmap = ((MainActivity)getContext()).getBitmapFromVectorDrawable(getContext(),R.drawable.ic_account_avatar);
-                            ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(bitmap);
+                        @Override
+                        public void canceled() {
+                            MainActivity mA = ((MainActivity)getContext());
+                            // Load default Image into the ImageView
+                            Bitmap bitmap = mA.getBitmapFromVectorDrawable(
+                                                getContext(),
+                                                R.drawable.ic_account_avatar
+                            );
+                            ((ImageView) view.findViewById(R.id.imageView_profil_image))
+                                .setImageBitmap(bitmap);
                             System.out.println("ImageUpload -> load default image");
-
                         }
-                    }
-                    @Override
-                    public void canceled() {
-                    }
+                    });
                 }
-        );
 
-        Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            }else {
+
+                Bitmap bitmap = mA.getBitmapFromVectorDrawable(
+                        getContext(),
+                        R.drawable.ic_account_avatar
+                );
+
+                ((ImageView) view.findViewById(R.id.imageView_profil_image))
+                        .setImageBitmap(bitmap);
+
+                System.out.println("ImageUpload -> load default image");
+
+            }
+
+        }else{
+
+            System.out.println("ProfileLoading -> Objects doesn't match");
+
+        }
+        //Define Intent for Image picking:
+        // An Intent is a messaging object you can use to request an action from another app component.
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK);
+        pickPhoto.setType("image/*");
+
+        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
+
             if (result.getResultCode() == Activity.RESULT_OK) {
 
                 // Get image data out of google gallery
                 Intent data = result.getData();
                 Bitmap bitmap = null;
-
+                Uri fullPhotoUri = data.getData();
                 // try to decode Image
                 try {
-                    System.out.println(data.getType());
-                    bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(view.getContext().getContentResolver(), data.getData()));
+                    bitmap = ImageDecoder.decodeBitmap(
+                            ImageDecoder.createSource(getContext().getContentResolver(), data.getData())
+                    );
                 } // if Image decoding fails
                 catch (IOException e) {
                     System.out.println("ImageUpload -> image decoding failed...");
@@ -153,7 +151,11 @@ public class ProfileForm extends Fragment {
                 }
 
                 // Resize IMG
-                IMG_Resize resizedBMP = new IMG_Resize(bitmap, IMG_Resize.PIXEL.X128, IMG_Resize.QUALITY_PERCENT.X100);
+                IMG_Resize resizedBMP = new IMG_Resize(
+                        bitmap,
+                        IMG_Resize.PIXEL.X128,
+                        IMG_Resize.QUALITY_PERCENT.X100
+                );
                 // Set IMG -> ImageView
                 ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(resizedBMP.GetBitmap());
                 // Send data to server

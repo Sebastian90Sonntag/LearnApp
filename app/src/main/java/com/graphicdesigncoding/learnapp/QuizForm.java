@@ -39,63 +39,58 @@ public class QuizForm extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(R.id.cardview_content).setVisibility(View.GONE);
-        JSONObject jsonObject = ((MainActivity)getActivity()).getUserPreferences();
+        MainActivity mA = ((MainActivity)getContext());
+        SharedPreferences sPref = mA.GetSharedPrefs("LoginData");
+        String token = sPref.getString("UToken",null);
 
-        try {
+        new CallAPI().Post(
+            "https://api.graphic-design-coding.de/quiz",
+            "{\"t\":\"" + token + "\"}",
+            new Callback() {
+                @Override
+                public void finished(Object obj) {
 
-            String token = jsonObject.get("UToken").toString();
+                    try {
 
-            new CallAPI().Post(
-                "https://api.graphic-design-coding.de/quiz",
-                "{\"t\":\"" + token + "\"}",
-                new Callback() {
-                    @Override
-                    public void finished(Object obj) {
+                        JSONObject jobj = new JSONObject(obj.toString());
 
-                        try {
+                        if(!jobj.has(new Crypt().md5("error")) && jobj.length() > 0){
 
-                            JSONObject jobj = new JSONObject(obj.toString());
+                            CurrentId  = jobj.getString(new Crypt().md5("questionID"));
+                            CurrentTitle = jobj.getString(new Crypt().md5("title"));
+                            CurrentQuestion = jobj.getString(new Crypt().md5("question"));
+                            CurrentAnswer = jobj.getString(new Crypt().md5("answer"));
 
-                            if(!jobj.has(new Crypt().md5("error")) && jobj.length() > 0){
+                            // Set Strings to Views
+                            ((TextView)view.findViewById(R.id.textView_card_title)).setText(CurrentTitle);
+                            ((TextView)view.findViewById(R.id.textView_card_content)).setText(CurrentQuestion);
+                            view.findViewById(R.id.cardview_content).setVisibility(View.VISIBLE);
 
-                                CurrentId  = jobj.getString(new Crypt().md5("questionID"));
-                                CurrentTitle = jobj.getString(new Crypt().md5("title"));
-                                CurrentQuestion = jobj.getString(new Crypt().md5("question"));
-                                CurrentAnswer = jobj.getString(new Crypt().md5("answer"));
+                        } else {
 
-                                // Set Strings to Views
-                                ((TextView)view.findViewById(R.id.textView_card_title)).setText(CurrentTitle);
-                                ((TextView)view.findViewById(R.id.textView_card_content)).setText(CurrentQuestion);
-                                view.findViewById(R.id.cardview_content).setVisibility(View.VISIBLE);
+                            if(jobj.has(new Crypt().md5("error"))){
 
-                            } else {
+                                System.out.println(jobj.getString(new Crypt().md5("error")));
+                            }else{
 
-                                if(jobj.has(new Crypt().md5("error"))){
-
-                                    System.out.println(jobj.getString(new Crypt().md5("error")));
-                                }else{
-
-                                    System.out.println("EMPTY JSON");
-                                }
+                                System.out.println("EMPTY JSON");
                             }
-
-                        } catch (JSONException e) {
-
-                            e.printStackTrace();
-                            //No Connection Information
                         }
-                    }
 
-                    @Override
-                    public void canceled() {
+                    } catch (JSONException e) {
+
+                        e.printStackTrace();
                         //No Connection Information
                     }
                 }
-            );
-        } catch (JSONException e) {
-            e.printStackTrace();
-            //Error Handling User Response
-        }
+
+                @Override
+                public void canceled() {
+                    //No Connection Information
+                }
+            }
+        );
+
         //Show Button Binding -> Show Answer
         binding.buttonShow.setOnClickListener((View btn_view) -> {
 
@@ -151,78 +146,75 @@ public class QuizForm extends Fragment {
         LinearLayout ll = view.findViewById(R.id.cardview_content);
         ll.animate().setDuration(500).rotationY(90).alpha(0).withEndAction(() -> {
             ll.animate().rotationY(-90).withEndAction(() -> {
-                try {
 
-                    JSONObject jsonObject = ((MainActivity)getActivity()).getUserPreferences();
-                    String token = jsonObject.get("UToken").toString();
+                MainActivity mA = ((MainActivity)getContext());
+                SharedPreferences sPref = mA.GetSharedPrefs("LoginData");
+                String token = sPref.getString("UToken",null);
 
-                    new CallAPI().Post(
-                        "https://api.graphic-design-coding.de/quiz",
-                        "{\"t\":\"" + token + "\", \"qid\":\"" + question_id + "\", \"sid\":\"" + status_id + "\"}",
-                        new Callback() {
+                new CallAPI().Post(
+                    "https://api.graphic-design-coding.de/quiz",
+                    "{\"t\":\"" + token + "\", \"qid\":\"" + question_id + "\", \"sid\":\"" + status_id + "\"}",
+                    new Callback() {
 
-                            @Override
-                            public void finished(Object obj) {
+                        @Override
+                        public void finished(Object obj) {
 
-                                new CallAPI().Post(
-                                        "https://api.graphic-design-coding.de/quiz",
-                                        "{\"t\":\"" + token + "\"}",
-                                        new Callback() {
+                            new CallAPI().Post(
+                                    "https://api.graphic-design-coding.de/quiz",
+                                    "{\"t\":\"" + token + "\"}",
+                                    new Callback() {
 
-                                            @Override
-                                            public void finished(Object obj) {
-                                                try {
+                                        @Override
+                                        public void finished(Object obj) {
+                                            try {
 
-                                                    JSONObject jobj = new JSONObject(obj.toString());
+                                                JSONObject jobj = new JSONObject(obj.toString());
 
-                                                    if (!jobj.has(new Crypt().md5("error")) && jobj.length() > 0) {
+                                                if (!jobj.has(new Crypt().md5("error")) && jobj.length() > 0) {
 
-                                                        CurrentTitle = jobj.getString(new Crypt().md5("title"));
-                                                        CurrentQuestion = jobj.getString(new Crypt().md5("question"));
-                                                        CurrentAnswer = jobj.getString(new Crypt().md5("answer"));
-                                                        // Set Strings to Views
-                                                        ((TextView) view.findViewById(R.id.textView_card_title)).setText(CurrentTitle);
-                                                        ((TextView) view.findViewById(R.id.textView_card_content)).setText(CurrentQuestion);
+                                                    CurrentTitle = jobj.getString(new Crypt().md5("title"));
+                                                    CurrentQuestion = jobj.getString(new Crypt().md5("question"));
+                                                    CurrentAnswer = jobj.getString(new Crypt().md5("answer"));
+                                                    // Set Strings to Views
+                                                    ((TextView) view.findViewById(R.id.textView_card_title)).setText(CurrentTitle);
+                                                    ((TextView) view.findViewById(R.id.textView_card_content)).setText(CurrentQuestion);
 
-                                                        ll.animate().setDuration(500).rotationY(0).alpha(1).withEndAction(() -> {
+                                                    ll.animate().setDuration(500).rotationY(0).alpha(1).withEndAction(() -> {
 
-                                                            view.findViewById(R.id.button_show).setVisibility(View.VISIBLE);
-                                                        });
+                                                        view.findViewById(R.id.button_show).setVisibility(View.VISIBLE);
+                                                    });
+                                                } else {
+
+                                                    if (jobj.has(new Crypt().md5("error"))) {
+
+                                                        System.out.println(jobj.getString(new Crypt().md5("error")));
                                                     } else {
 
-                                                        if (jobj.has(new Crypt().md5("error"))) {
-
-                                                            System.out.println(jobj.getString(new Crypt().md5("error")));
-                                                        } else {
-
-                                                            System.out.println("EMPTY JSON");
-                                                        }
+                                                        System.out.println("EMPTY JSON");
                                                     }
-
-                                                } catch (JSONException e) {
-
-                                                    e.printStackTrace();
-                                                    //No Connection Information
                                                 }
-                                            }
 
-                                            @Override
-                                            public void canceled() {
+                                            } catch (JSONException e) {
 
+                                                e.printStackTrace();
+                                                //No Connection Information
                                             }
                                         }
-                                );
-                            }
 
-                            @Override
-                            public void canceled() {
+                                        @Override
+                                        public void canceled() {
 
-                            }
+                                        }
+                                    }
+                            );
                         }
-                    );
-                }catch (JSONException e){
 
-                }
+                        @Override
+                        public void canceled() {
+
+                        }
+                    }
+                );
             });
         }).start();
     }

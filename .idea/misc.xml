@@ -3,11 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/drawable-v24/ic_launcher_adaptive_back.xml" value="0.1" />
+        <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/drawable-v24/ic_launcher_fore.xml" value="0.1" />
+        <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/drawable/ic_account_avatar.xml" value="0.1" />
+        <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/drawable/ic_gdclogo.xml" value="0.1" />
+        <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/layout/listview_row_layout.xml" value="0.15704154002026344" />
         <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/layout/login_form.xml" value="0.20208333333333334" />
         <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/layout/quiz_form.xml" value="0.2703804347826087" />
         <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/layout/row.xml" value="0.15704154002026344" />
         <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/layout/scoreboard_form.xml" value="0.15704154002026344" />
+        <entry key="..\:/Users/Sebastian Sonntag/AndroidStudioProjects/LearnApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
       </map>
     </option>
   </component>

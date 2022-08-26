@@ -40,10 +40,10 @@ public class StartUpForm extends Fragment {
         view.findViewById(R.id.textview_app_title).animate().setStartDelay(1500).setDuration(4000).alpha(1).start();
 
         view.findViewById(R.id.imageView_gdc).animate().setDuration(5000).rotation(720.0f).start();
-        String unm=sharedPref.getString("UName", null);
-        String pass = sharedPref.getString("UPwd", null);
+        String unm=sharedPref.getString("UEmail", null);
+        String pass = sharedPref.getString("UPassword", null);
         if(unm != null && pass != null) {
-            Handler handler = new Handler(Looper.getMainLooper());
+            Handler handler = new Handler();
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
@@ -54,7 +54,7 @@ public class StartUpForm extends Fragment {
             };
             handler.postDelayed(runnable, 5000);
         }else{
-            Handler handler = new Handler(Looper.getMainLooper());
+            Handler handler = new Handler();
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {

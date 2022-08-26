@@ -79,61 +79,28 @@ public class MainActivity extends AppCompatActivity {
             memoryCache.put(key, bitmap);
         }
     }
+
     public boolean isBitmapInMemoryCache(String key) {
-        if (getBitmapFromMemCache(key) == null) {
-            return false;
-        }else{
-            return true;
-        }
+        return (getBitmapFromMemCache(key) != null);
     }
+
     public Bitmap getBitmapFromMemCache(String key) {
+
         return memoryCache.get(key);
     }
+
     public void removeBitmapFromMemCache(String key){
         if (isBitmapInMemoryCache(key)){
             memoryCache.remove(key);
         }
     }
 
-    public JSONObject getUserPreferences(){
-
-        JSONObject jobj;
-        SharedPreferences sharedPref = getSharedPreferences("LoginData", Context.MODE_PRIVATE);
-        Map<String,?> mapSharedpref = sharedPref.getAll();
-        StringBuilder s = new StringBuilder();
-
-        for (Map.Entry<String,?> sItem :  mapSharedpref.entrySet()) {
-
-            s.append("\"" + sItem.getKey() + "\":\"" + sItem.getValue().toString() + "\",");
-        }
-        s.deleteCharAt(s.length() - 1);
-        String jString = "{" + s + "}";
-
-        try {
-
-            jobj = new JSONObject(jString);
-
-        } catch (JSONException e) {
-
-            e.printStackTrace();
-            jobj = null;
-        }
-
-        return jobj;
-    }
-
-    public void setUserPreferences(String prefName,String prefValue){
-
-        SharedPreferences sharedPref = getSharedPreferences("LoginData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(prefName, prefValue);
-        editor.apply();
-    }
     public SharedPreferences GetSharedPrefs(String name){
         SharedPreferences sharedPref;
         sharedPref = getSharedPreferences(name,MODE_PRIVATE);
         return sharedPref;
     }
+
     public void showExtendedBar(boolean isVisible,String title,boolean nav_backwards_allowed){
 
         AppBarLayout abl = this.findViewById(R.id.appBarLayout);
@@ -154,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
             ibb.setEnabled(false);
         }
     }
+
     public Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {
         Drawable drawable = ContextCompat.getDrawable(context, drawableId);
 
@@ -166,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
         return bitmap;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
