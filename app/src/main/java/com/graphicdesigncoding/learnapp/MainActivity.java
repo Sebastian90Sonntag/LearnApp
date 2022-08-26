@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             jobj = null;
         }
-        System.out.println(jobj);
+
         return jobj;
     }
 
