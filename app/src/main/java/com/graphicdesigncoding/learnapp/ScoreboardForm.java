@@ -27,6 +27,7 @@ public class ScoreboardForm extends Fragment {
     private ScoreboardFormBinding binding;
     private CustomArrayAdapter userArrayAdapter;
     private int resultListCount;
+    private final MainActivity activity = ((MainActivity)getActivity());
     private final List<User> resultList = new ArrayList<>();
     @Override
     public View onCreateView(
@@ -88,11 +89,9 @@ public class ScoreboardForm extends Fragment {
                                             String u_img = j_object.getString("image_link");
                                             user.name = j_object.getString("username");
                                             user.score = j_object.getString("score");
-                                            MainActivity activity = (((MainActivity) getActivity()));
                                             if (activity != null){
                                                 if (activity.isBitmapInMemoryCache(u_img)) {
-
-                                                    user.image = ((MainActivity) getActivity()).getBitmapFromMemCache(u_img);
+                                                    user.image = activity.getBitmapFromMemCache(u_img);
                                                     resultList.add(new User(user.image, user.name, user.score));
                                                     OrderList();
 
@@ -105,8 +104,8 @@ public class ScoreboardForm extends Fragment {
                                                                 @Override
                                                                 public void finished(Object responseMsg) {
 
-                                                                    ((MainActivity) getActivity()).addBitmapToMemoryCache(u_img, (Bitmap) responseMsg);
-                                                                    user.image = ((MainActivity) getActivity()).getBitmapFromMemCache(u_img);
+                                                                    activity.addBitmapToMemoryCache(u_img, (Bitmap) responseMsg);
+                                                                    user.image = activity.getBitmapFromMemCache(u_img);
                                                                     resultList.add(new User(user.image, user.name, user.score));
                                                                     OrderList();
                                                                 }
@@ -174,7 +173,6 @@ public class ScoreboardForm extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        MainActivity activity = ((MainActivity)getActivity());
                 if(activity!=null){
                     activity.showExtendedBar(true,"Score Board", true);
                 }
