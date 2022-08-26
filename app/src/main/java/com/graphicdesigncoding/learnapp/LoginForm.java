@@ -27,27 +27,42 @@ public class LoginForm extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+
         binding = LoginFormBinding.inflate(inflater, container, false);
 
         return binding.getRoot();
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        Context context = view.getContext().getApplicationContext();
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // Update View
         super.onViewCreated(view, savedInstanceState);
-        //binding.getRoot().findViewById(R.id.imageButton_Account).setVisibility(View.VISIBLE);
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // Get TextChangedListener from Email TextInput
         binding.editTextEmailAddress.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
+                // Set TintColor to Email TextInput
                 EditText et = view.findViewById(R.id.editText_EmailAddress);
                 et.getBackground().setTint(Color.TRANSPARENT);
+
+                // Get Input String from email
                 String email = s.toString();
+
                 //General Email Regex (RFC 5322 Official Standard)
-                if(!email.equals("") && new RegExPattern().Email(email)){
+                if (!email.equals("") && new RegExPattern().Email(email)){
+
                     et.getBackground().setTint(Color.GREEN);
-                }else{
+
+                }
+
+                else{
+
                     et.requestFocus();
                     et.getBackground().setTint(Color.RED);
+
                 }
             }
 
@@ -55,26 +70,45 @@ public class LoginForm extends Fragment {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // Get TextChangedListener from Email TextInput
         binding.editTextPassword.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
+
+                // Set TintColor to Password TextInput
                 EditText et = view.findViewById(R.id.editText_Password);
                 et.getBackground().setTint(Color.TRANSPARENT);
+
+                // Get Input String from Password
                 String password = s.toString();
+
                 if(!password.equals("") && new RegExPattern().Password(password)){
+
+                    // Set TintColor when RegEx succeed
                     et.getBackground().setTint(Color.GREEN);
+
                 }else{
+
+                    // Set TintColor when RegEx failed
                     et.requestFocus();
                     et.getBackground().setTint(Color.RED);
+
                 }
             }
 
+            ///////////////////////////////////////////////////////////////////////////////////////////
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+            ///////////////////////////////////////////////////////////////////////////////////////////
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
         });
 
 
+        ///////////////////////////////////////////////////////////////////////////////////////////
         //Login Button Binding -> Send Login Data To Server
         binding.buttonLogin.setOnClickListener(btn_view -> {
 
@@ -201,18 +235,24 @@ public class LoginForm extends Fragment {
             }
         });
 
+        ///////////////////////////////////////////////////////////////////////////////////////////
         //Register Link Binding -> Show Register Form
         binding.textViewRegister.setOnClickListener(view1 -> {
             Log.i("Login Window","Register Pressed");
             NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_LoginForm_to_RegisterForm);
+
         });
 
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void onResume() {
         super.onResume();
         ((MainActivity)getActivity()).showExtendedBar(true,"Login",false);
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void onDestroyView() {
         super.onDestroyView();
