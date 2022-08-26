@@ -27,22 +27,20 @@ public class ScoreboardForm extends Fragment {
     private ScoreboardFormBinding binding;
     private CustomArrayAdapter userArrayAdapter;
     private int resultListCount;
-    private final MainActivity activity = ((MainActivity)getActivity());
     private final List<User> resultList = new ArrayList<>();
 
-    ///////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public View onCreateView(
+
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
+
     ) {
 
         binding = ScoreboardFormBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
@@ -53,13 +51,15 @@ public class ScoreboardForm extends Fragment {
 
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////
+
+
     public void readData(View view,Context context){
+
         SharedPreferences sharedPref;
+
         if (context != null) {
+
             sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
-            ///////////////////////////////////////////////////////////////////////////////////////////
-            // Call Server Scoreboard
             new CallAPI().Post(
                 "https://api.graphic-design-coding.de/scoreboard",
                 "{\"t\":\"" + sharedPref.getString("UToken", null) + "\"}",
@@ -78,9 +78,8 @@ public class ScoreboardForm extends Fragment {
 
                             try {
 
+                                String error = new Crypt().md5("error");
                                 if (obj.has(str_md5Token) && obj.has(str_md5Data)) {
-
-
                                     token = obj.getString(str_md5Token);
 
                                     if (token.equals(sharedPref.getString("UToken", null))) {
@@ -95,12 +94,11 @@ public class ScoreboardForm extends Fragment {
                                             String u_img = j_object.getString("image_link");
                                             user.name = j_object.getString("username");
                                             user.score = j_object.getString("score");
-
+                                            MainActivity activity = (((MainActivity) getActivity()));
                                             if (activity != null){
+                                                if ((((MainActivity) getActivity())).isBitmapInMemoryCache(u_img)) {
 
-                                                if (activity.isBitmapInMemoryCache(u_img)) {
-
-                                                    user.image = activity.getBitmapFromMemCache(u_img);
+                                                    user.image = ((MainActivity) getActivity()).getBitmapFromMemCache(u_img);
                                                     resultList.add(new User(user.image, user.name, user.score));
                                                     OrderList();
 
@@ -113,21 +111,15 @@ public class ScoreboardForm extends Fragment {
                                                                 @Override
                                                                 public void finished(Object responseMsg) {
 
-                                                                    // add Bitmap to Cache
-                                                                    activity.addBitmapToMemoryCache(u_img, (Bitmap) responseMsg);
-
-                                                                    // Set added Bitmap to "user" object
-                                                                    user.image = activity.getBitmapFromMemCache(u_img);
-
-                                                                    // add image to resultList & order it
+                                                                    ((MainActivity) getActivity()).addBitmapToMemoryCache(u_img, (Bitmap) responseMsg);
+                                                                    user.image = ((MainActivity) getActivity()).getBitmapFromMemCache(u_img);
                                                                     resultList.add(new User(user.image, user.name, user.score));
                                                                     OrderList();
-
                                                                 }
 
                                                                 @Override
                                                                 public void canceled() {
-                                                                    user.image = activity.getBitmapFromVectorDrawable(getContext(), R.drawable.ic_account_avatar);
+                                                                    user.image = ((MainActivity) getActivity()).getBitmapFromVectorDrawable(getContext(), R.drawable.ic_account_avatar);
                                                                     resultList.add(new User(user.image, user.name, user.score));
                                                                     OrderList();
                                                                 }
@@ -136,7 +128,7 @@ public class ScoreboardForm extends Fragment {
 
                                                 } else {
 
-                                                    user.image = activity.getBitmapFromVectorDrawable(getContext(), R.drawable.ic_account_avatar);
+                                                    user.image = ((MainActivity) getActivity()).getBitmapFromVectorDrawable(getContext(), R.drawable.ic_account_avatar);
                                                     resultList.add(new User(user.image, user.name, user.score));
                                                     OrderList();
 
@@ -150,10 +142,7 @@ public class ScoreboardForm extends Fragment {
 
                                     }
 
-                                } else if (obj.has(new Crypt().md5("error"))) {
-
-                                    String error;
-
+                                } else if (obj.has(error)) {
 
                                     error = obj.getString(new Crypt().md5("error"));
                                     System.out.println("idk1");
@@ -165,6 +154,7 @@ public class ScoreboardForm extends Fragment {
                                     //User not exist :D
                                     System.out.println("idk3");
                                     Toast.makeText(view.getContext(), "Wrong login data", Toast.LENGTH_LONG).show();
+
                                 }
                             }catch (JSONException e) {
 
@@ -180,18 +170,17 @@ public class ScoreboardForm extends Fragment {
                         // No connection to server || No internet
                         Toast.makeText(view.getContext(), "No Connection to Server", Toast.LENGTH_LONG).show();
                     }
-
                 });
         }
 
     }
-
     @Override
     public void onResume() {
         super.onResume();
-            if(activity!=null){
-                activity.showExtendedBar(true,"Score Board", true);
-            }
+        MainActivity activity = ((MainActivity)getActivity());
+                if(activity!=null){
+                    activity.showExtendedBar(true,"Score Board", true);
+                }
     }
 
     @Override
@@ -199,7 +188,6 @@ public class ScoreboardForm extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
     private void OrderList(){
         if (resultList.size() == resultListCount){
             resultList.sort(Collections.reverseOrder());
