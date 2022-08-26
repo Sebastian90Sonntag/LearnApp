@@ -147,6 +147,7 @@ public class LoginForm extends Fragment {
                                         try {
 
                                             if (obj.has(token) && obj.has(imgLink)) {
+
                                                 // Set data to variables from JSONObj
                                                 token = obj.get(token).toString();
                                                 imgLink = obj.get(imgLink).toString();
