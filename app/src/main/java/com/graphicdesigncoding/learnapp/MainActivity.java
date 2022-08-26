@@ -197,8 +197,9 @@ public class MainActivity extends AppCompatActivity {
         int navId = Navigation.findNavController(this, R.id.nav_host_fragment_content_main).getCurrentDestination().getId();
         if(navId == R.id.RegisterForm || navId == R.id.ProfileForm || navId == R.id.ScoreboardForm || navId == R.id.QuizForm){
             super.onBackPressed();
-        }else{
-            return;
+        }else if(navId == R.id.StartUpForm || navId == R.id.MainMenuForm || navId == R.id.LoginForm){
+            this.finish();
         }
     }
+
 }
