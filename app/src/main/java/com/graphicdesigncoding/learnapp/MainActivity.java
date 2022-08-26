@@ -96,35 +96,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public JSONObject getUserPreferences(){
+
         JSONObject jobj;
         SharedPreferences sharedPref = getSharedPreferences("LoginData", Context.MODE_PRIVATE);
         Map<String,?> mapSharedpref = sharedPref.getAll();
         StringBuilder s = new StringBuilder();
 
         for (Map.Entry<String,?> sItem :  mapSharedpref.entrySet()) {
-            s.append("\"" + sItem.getKey() + "\":\"" + sItem.getValue().toString() + "\", ");
+
+            s.append("\"" + sItem.getKey() + "\":\"" + sItem.getValue().toString() + "\",");
         }
         s.deleteCharAt(s.length() - 1);
         String jString = "{" + s + "}";
 
         try {
+
             jobj = new JSONObject(jString);
+
         } catch (JSONException e) {
+
             e.printStackTrace();
             jobj = null;
         }
+        System.out.println(jobj);
         return jobj;
     }
 
     public void setUserPreferences(String prefName,String prefValue){
+
         SharedPreferences sharedPref = getSharedPreferences("LoginData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(prefName, prefValue);
         editor.apply();
+
     }
     public void showExtendedBar(boolean isVisible,String title,boolean nav_backwards_allowed){
+
         AppBarLayout abl = this.findViewById(R.id.appBarLayout);
         ((TextView)abl.findViewById(R.id.textView_subtitle)).setText(title);
+
         if(isVisible){
             abl.setVisibility(View.VISIBLE);
         }else{
