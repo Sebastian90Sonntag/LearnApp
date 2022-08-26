@@ -164,7 +164,7 @@ public class LoginForm extends Fragment {
                                         } catch (JSONException e) {
 
                                             System.out.println("Login -> JSONObject didn't match required");
-                                            Toast.makeText(view.getContext(), "Wrong login data", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(view.getContext(), "Server Error", Toast.LENGTH_LONG).show();
 
                                         }
                                     } catch (Throwable e) {
