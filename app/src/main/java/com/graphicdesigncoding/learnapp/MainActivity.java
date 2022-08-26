@@ -128,7 +128,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(prefName, prefValue);
         editor.apply();
-
+    }
+    public SharedPreferences GetSharedPrefs(String name){
+        SharedPreferences sharedPref;
+        sharedPref = getSharedPreferences(name,MODE_PRIVATE);
+        return sharedPref;
     }
     public void showExtendedBar(boolean isVisible,String title,boolean nav_backwards_allowed){
 

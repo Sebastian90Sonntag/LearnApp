@@ -1,6 +1,7 @@
 package com.graphicdesigncoding.learnapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.graphicdesigncoding.learnapp.databinding.ProfileFormBinding;
@@ -38,8 +40,7 @@ public class ProfileForm extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences sharedPref = GetSharedPrefs();
-        String token = sharedPref.getString("UToken",null);
+        String token = ((MainActivity)getContext()).GetSharedPrefs("LoginData").getString("UToken",null);
         new CallAPI().Post(
                 "https://api.graphic-design-coding.de/profile/",
                 "{\"t\":\"" + token + "\"}",
@@ -68,11 +69,10 @@ public class ProfileForm extends Fragment {
                                     jobj.has(email)){
 
                                 try{
-
-                                    SetTextViewText(view,R.id.textView_username,jobj.get(username).toString());
-                                    SetTextViewText(view,R.id.textView_firstname,jobj.get(firstname).toString());
-                                    SetTextViewText(view,R.id.textView_lastname,jobj.get(lastname).toString());
-                                    SetTextViewText(view,R.id.textView_email,jobj.get(email).toString());
+                                    ((TextView) view.findViewById(R.id.textView_email)).setText(jobj.get(username).toString());
+                                    ((TextView) view.findViewById(R.id.textView_firstname)).setText(jobj.get(firstname).toString());
+                                    ((TextView) view.findViewById(R.id.textView_lastname)).setText(jobj.get(lastname).toString());
+                                    ((TextView) view.findViewById(R.id.textView_username)).setText(jobj.get(username).toString());
 
                                 }catch (JSONException e){
 
@@ -80,15 +80,16 @@ public class ProfileForm extends Fragment {
                                 }
 
                             }else{
+
                                 System.out.println("ProfileLoading -> JSONObject doesn't match");
+
                             }
                         } catch (JSONException e) {
 
                             System.out.println("ProfileLoading -> JSONObject failed");
                             e.printStackTrace();
                         }
-                        SharedPreferences sharedPref = GetSharedPrefs();
-                        String key = sharedPref.getString("UImage",null);
+                        String key = ((MainActivity)getContext()).GetSharedPrefs("LoginData").getString("UImage",null);
                         System.out.println("ImageUpload -> image key: " + key);
                         if (!key.equals("")){
                             // Check if Bitmap is in Memory
@@ -100,7 +101,7 @@ public class ProfileForm extends Fragment {
                                 new CallAPI().GetImage(key, new Callback() {
                                     @Override
                                     public void finished(Object obj) {
-                                        SharedPreferences sharedPref = GetSharedPrefs();
+                                        SharedPreferences sharedPref = ((MainActivity)getContext()).GetSharedPrefs("LoginData");
                                         String key = sharedPref.getString("UImage",null);
                                         if (!key.equals("")){
                                             // Load new Image into the ImageView
@@ -153,7 +154,7 @@ public class ProfileForm extends Fragment {
                 // Set IMG -> ImageView
                 ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(resizedBMP.GetBitmap());
                 // Send data to server
-                SharedPreferences sharedPref1 = GetSharedPrefs();
+                SharedPreferences sharedPref1 = ((MainActivity)getContext()).GetSharedPrefs("LoginData");
                     // Get memorized 'UToken' from sharedPreferences
                 String token1 = sharedPref1.getString("UToken",null);
                     // Get Editor from sharedPreferences
@@ -223,16 +224,8 @@ public class ProfileForm extends Fragment {
             _view.findViewById(R.id.button_send).setEnabled(false);
         }
     }
-    private void SetTextViewText(View _view,int _id,String _txt){
 
-        TextView txtview = _view.findViewById(_id);
-        txtview.setText(_txt);
-    }
-    private SharedPreferences GetSharedPrefs(){
-        SharedPreferences sharedPref;
-        sharedPref = getContext().getSharedPreferences("LoginData",getContext().MODE_PRIVATE);
-        return sharedPref;
-    }
+
     @Override
     public void onResume() {
 
