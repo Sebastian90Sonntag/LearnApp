@@ -53,6 +53,8 @@ public class ProfileForm extends Fragment {
                         try {
 
                             jobj = new JSONObject(obj.toString());
+                            System.out.println(jobj);
+
                             String token = new Crypt().md5("token");
                             String username = new Crypt().md5("username");
                             String lastname = new Crypt().md5("lastname");
@@ -71,6 +73,7 @@ public class ProfileForm extends Fragment {
                                     SetTextViewText(view,R.id.textView_firstname,jobj.get(firstname).toString());
                                     SetTextViewText(view,R.id.textView_lastname,jobj.get(lastname).toString());
                                     SetTextViewText(view,R.id.textView_email,jobj.get(email).toString());
+
                                 }catch (JSONException e){
 
                                     System.out.println("JSON Exception thrown");
@@ -121,6 +124,7 @@ public class ProfileForm extends Fragment {
                             Bitmap bitmap = ((MainActivity)getContext()).getBitmapFromVectorDrawable(getContext(),R.drawable.ic_account_avatar);
                             ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(bitmap);
                             System.out.println("ImageUpload -> load default image");
+
                         }
                     }
                     @Override
@@ -168,17 +172,21 @@ public class ProfileForm extends Fragment {
                                 JSONObject jobj = new JSONObject(obj.toString());
                                 String _token = jobj.getString(new Crypt().md5("token"));
                                 String imgLink = jobj.getString(new Crypt().md5("image_link"));
+                                System.out.println("ImageUpload -> Done");
+
                                 // replace new Image in Memory Cache if some exist
                                 if(((MainActivity) getActivity()).isBitmapInMemoryCache(imgLink) && token1.equals(_token)){
-
                                     ((MainActivity) getActivity()).removeBitmapFromMemCache(imgLink);
                                     ((MainActivity) getActivity()).addBitmapToMemoryCache(imgLink, resizedBMP.GetBitmap());
+                                    System.out.println("ImageUpload -> updated Image to Profile");
                                     //Set received imgLink to sharedPreferences
                                     editor.putString("UImage", imgLink);
                                     editor.apply();
+                                    System.out.println("SharedPreferences -> updated Image");
                                 }else{
-                                    // if non memory Image exist just add it...
+                                    // if no memory Image exist just add it...
                                     ((MainActivity) getActivity()).addBitmapToMemoryCache(imgLink, resizedBMP.GetBitmap());
+                                    System.out.println("SharedPreferences -> added Image");
                                 }
                             } catch (JSONException e) {
                                 System.out.println("ImageUpload -> JSON obj didn't match...");

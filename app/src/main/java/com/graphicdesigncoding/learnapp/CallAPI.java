@@ -105,7 +105,6 @@ public class CallAPI implements Callback{
                     byte[] fileContents = bitmap.GetStream().toByteArray();
                     String fileContent = android.util.Base64.encodeToString(fileContents, android.util.Base64.DEFAULT);
                     String params = new Crypt().md5("token") + "=" + userToken + "&" + new Crypt().md5("image")  + "=" + fileContent;
-                    System.out.println("Stream Upload String: " + params);
                     urlConnection.connect();
                     OutputStreamWriter image = new OutputStreamWriter(urlConnection.getOutputStream()); //Stream
                     image.write(params);
