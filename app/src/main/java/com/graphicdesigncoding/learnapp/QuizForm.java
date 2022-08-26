@@ -54,7 +54,6 @@ public class QuizForm extends Fragment {
 
                         try {
 
-                            System.out.println(obj);
                             JSONObject jobj = new JSONObject(obj.toString());
 
                             if(!jobj.has(new Crypt().md5("error")) && jobj.length() > 0){
@@ -63,6 +62,7 @@ public class QuizForm extends Fragment {
                                 CurrentTitle = jobj.getString(new Crypt().md5("title"));
                                 CurrentQuestion = jobj.getString(new Crypt().md5("question"));
                                 CurrentAnswer = jobj.getString(new Crypt().md5("answer"));
+
                                 // Set Strings to Views
                                 ((TextView)view.findViewById(R.id.textView_card_title)).setText(CurrentTitle);
                                 ((TextView)view.findViewById(R.id.textView_card_content)).setText(CurrentQuestion);
@@ -155,7 +155,7 @@ public class QuizForm extends Fragment {
 
                     JSONObject jsonObject = ((MainActivity)getActivity()).getUserPreferences();
                     String token = jsonObject.get("UToken").toString();
-                    System.out.println(question_id + " " + status_id);
+
                     new CallAPI().Post(
                         "https://api.graphic-design-coding.de/quiz",
                         "{\"t\":\"" + token + "\", \"qid\":\"" + question_id + "\", \"sid\":\"" + status_id + "\"}",
@@ -163,6 +163,7 @@ public class QuizForm extends Fragment {
 
                             @Override
                             public void finished(Object obj) {
+
                                 new CallAPI().Post(
                                         "https://api.graphic-design-coding.de/quiz",
                                         "{\"t\":\"" + token + "\"}",
@@ -172,7 +173,6 @@ public class QuizForm extends Fragment {
                                             public void finished(Object obj) {
                                                 try {
 
-                                                    System.out.println(obj);
                                                     JSONObject jobj = new JSONObject(obj.toString());
 
                                                     if (!jobj.has(new Crypt().md5("error")) && jobj.length() > 0) {
