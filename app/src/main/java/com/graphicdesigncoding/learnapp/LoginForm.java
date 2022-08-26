@@ -250,7 +250,10 @@ public class LoginForm extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity)getActivity()).showExtendedBar(true,"Login",false);
+        MainActivity activity = ((MainActivity)getActivity());
+        if (activity != null){
+            activity.showExtendedBar(true,"Login",false);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
