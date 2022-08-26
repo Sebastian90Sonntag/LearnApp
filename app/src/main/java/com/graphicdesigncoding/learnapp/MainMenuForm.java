@@ -37,20 +37,24 @@ public class MainMenuForm extends Fragment {
         //Quiz Button Binding -> Open Quiz
         binding.buttonQuiz.setOnClickListener(btn_view -> {
             NavHostFragment.findNavController(MainMenuForm.this).navigate(R.id.action_MainMenuForm_to_QuizForm);
+            System.out.println("Login QuizForm...");
         });
 
         //Scoreboard Button Binding -> Open Scoreboard
         binding.buttonScoreboard.setOnClickListener(btn_view -> {
             NavHostFragment.findNavController(MainMenuForm.this).navigate(R.id.action_MainMenuForm_to_ScoreboardForm);
+            System.out.println("Nav to ScoreboardForm...");
         });
 
         //Profile Button Binding -> Open Profile
         binding.buttonProfil.setOnClickListener(btn_view -> {
             NavHostFragment.findNavController(MainMenuForm.this).navigate(R.id.action_MainMenuForm_to_ProfileForm);
+            System.out.println("Nav to ProfileForm...");
         });
 
-        //Scoreboard Button Binding -> Open Scoreboard
+        //Quit Button Binding -> Quit Application
         binding.buttonQuit.setOnClickListener(btn_view -> {
+            System.out.println("Quit Application...");
             getActivity().finish();
         });
     }
