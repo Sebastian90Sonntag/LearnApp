@@ -29,6 +29,8 @@ public class ScoreboardForm extends Fragment {
     private int resultListCount;
     private final MainActivity activity = ((MainActivity)getActivity());
     private final List<User> resultList = new ArrayList<>();
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
@@ -39,7 +41,10 @@ public class ScoreboardForm extends Fragment {
         return binding.getRoot();
 
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
         ListView listView = view.findViewById(R.id.listView_scoreboard);
         userArrayAdapter = new CustomArrayAdapter(getContext(), R.layout.listview_row_layout);
@@ -48,12 +53,13 @@ public class ScoreboardForm extends Fragment {
 
     }
 
-
-
+    ///////////////////////////////////////////////////////////////////////////////////////////
     public void readData(View view,Context context){
         SharedPreferences sharedPref;
         if (context != null) {
             sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
+            ///////////////////////////////////////////////////////////////////////////////////////////
+            // Call Server Scoreboard
             new CallAPI().Post(
                 "https://api.graphic-design-coding.de/scoreboard",
                 "{\"t\":\"" + sharedPref.getString("UToken", null) + "\"}",
@@ -89,8 +95,11 @@ public class ScoreboardForm extends Fragment {
                                             String u_img = j_object.getString("image_link");
                                             user.name = j_object.getString("username");
                                             user.score = j_object.getString("score");
+
                                             if (activity != null){
+
                                                 if (activity.isBitmapInMemoryCache(u_img)) {
+
                                                     user.image = activity.getBitmapFromMemCache(u_img);
                                                     resultList.add(new User(user.image, user.name, user.score));
                                                     OrderList();
@@ -104,10 +113,16 @@ public class ScoreboardForm extends Fragment {
                                                                 @Override
                                                                 public void finished(Object responseMsg) {
 
+                                                                    // add Bitmap to Cache
                                                                     activity.addBitmapToMemoryCache(u_img, (Bitmap) responseMsg);
+
+                                                                    // Set added Bitmap to "user" object
                                                                     user.image = activity.getBitmapFromMemCache(u_img);
+
+                                                                    // add image to resultList & order it
                                                                     resultList.add(new User(user.image, user.name, user.score));
                                                                     OrderList();
+
                                                                 }
 
                                                                 @Override
@@ -170,12 +185,13 @@ public class ScoreboardForm extends Fragment {
         }
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
-                if(activity!=null){
-                    activity.showExtendedBar(true,"Score Board", true);
-                }
+            if(activity!=null){
+                activity.showExtendedBar(true,"Score Board", true);
+            }
     }
 
     @Override
@@ -183,6 +199,7 @@ public class ScoreboardForm extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
     private void OrderList(){
         if (resultList.size() == resultListCount){
             resultList.sort(Collections.reverseOrder());
