@@ -82,17 +82,25 @@ public class ScoreboardForm extends Fragment {
 
                         System.out.println(responseMsg.toString());
                         try {
+
                             obj = new JSONObject(responseMsg.toString());
                             String token;
                             String str_md5Data = new Crypt().md5("data");
                             String str_md5Token = new Crypt().md5("token");
+
                             if (obj.has(str_md5Token) && obj.has(str_md5Data)) {
+
                                 try {
+
                                     token = obj.getString(str_md5Token);
+
                                     if (token.equals(sharedPref.getString("UToken", null))) {
+
                                         JSONArray data_j_array = obj.getJSONArray(str_md5Data);
                                         resultListlen = obj.getJSONArray(str_md5Data).length();
+
                                         for (int i = 0; i < obj.getJSONArray(str_md5Data).length(); i++) {
+
                                             UserItem user = new UserItem();
                                             JSONObject j_object = data_j_array.getJSONObject(i);
                                             String u_img = j_object.getString("image_link");
@@ -100,20 +108,26 @@ public class ScoreboardForm extends Fragment {
                                             user.score = j_object.getString("score");
 
                                             if(((MainActivity)getActivity()).isBitmapInMemoryCache(u_img)) {
+
                                                 user.image = ((MainActivity) getActivity()).getBitmapFromMemCache(u_img);
                                                 resultList.add(new User(user.image, user.name, user.score));
                                                 OrderList();
+
                                             }else if(!u_img.isEmpty()){
+
                                                 new CallAPI().GetImage(
                                                         u_img,
                                                         new Callback() {
+
                                                             @Override
                                                             public void finished(Object responseMsg) {
+
                                                                 ((MainActivity) getActivity()).addBitmapToMemoryCache(u_img, (Bitmap) responseMsg);
                                                                 user.image = ((MainActivity) getActivity()).getBitmapFromMemCache(u_img);
                                                                 resultList.add(new User(user.image, user.name, user.score));
                                                                 OrderList();
                                                             }
+
                                                             @Override
                                                             public void canceled() {
                                                                 user.image = ((MainActivity)getContext()).getBitmapFromVectorDrawable(getContext(),R.drawable.ic_account_avatar);
@@ -122,16 +136,20 @@ public class ScoreboardForm extends Fragment {
                                                             }
                                                         }
                                                 );
+
                                             }else{
+
                                                 user.image = ((MainActivity)getContext()).getBitmapFromVectorDrawable(getContext(),R.drawable.ic_account_avatar);
                                                 resultList.add(new User(user.image, user.name, user.score));
                                                 OrderList();
                                             }
                                         }
                                     }else{
+
                                         System.out.println("token wrong inner control");
                                     }
                                 } catch (JSONException e) {
+
                                     //User not exist :D
                                     Toast.makeText(view.getContext(), "json error", Toast.LENGTH_LONG).show();
 
@@ -140,20 +158,26 @@ public class ScoreboardForm extends Fragment {
                             } else if (obj.has(new Crypt().md5("error"))) {
 
                                 String error;
+
                                 try {
+
                                     error = obj.getString(new Crypt().md5("error"));
                                     System.out.println("idk1");
                                     System.out.println(error);
                                     Toast.makeText(view.getContext(), "Wrong login data", Toast.LENGTH_LONG).show();
+
                                 } catch (JSONException e) {
+
                                     Toast.makeText(view.getContext(), "Service error", Toast.LENGTH_LONG).show();
                                 }
                             } else {
+
                                 //User not exist :D
                                 System.out.println("idk3");
                                 Toast.makeText(view.getContext(), "Wrong login data", Toast.LENGTH_LONG).show();
                             }
                         } catch (Throwable e) {
+
                             Toast.makeText(view.getContext(), "Device Service error", Toast.LENGTH_LONG).show();
                         }
                     }
