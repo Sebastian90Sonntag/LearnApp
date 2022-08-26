@@ -44,42 +44,56 @@ public class ProfileForm extends Fragment {
                 "https://api.graphic-design-coding.de/profile/",
                 "{\"t\":\"" + token + "\"}",
                 new Callback() {
+
                     @Override
                     public void finished(Object obj) {
+
                         JSONObject jobj;
+
                         try {
+
                             jobj = new JSONObject(obj.toString());
                             String token = new Crypt().md5("token");
                             String username = new Crypt().md5("username");
                             String lastname = new Crypt().md5("lastname");
                             String firstname = new Crypt().md5("firstname");
                             String email = new Crypt().md5("email");
-                            if (jobj.has(token) &&
+
+                            if (    jobj.has(token) &&
                                     jobj.has(username) &&
                                     jobj.has(lastname) &&
                                     jobj.has(firstname) &&
                                     jobj.has(email)){
+
                                 try{
+
                                     SetTextViewText(view,R.id.textView_username,jobj.get(username).toString());
                                     SetTextViewText(view,R.id.textView_firstname,jobj.get(firstname).toString());
                                     SetTextViewText(view,R.id.textView_lastname,jobj.get(lastname).toString());
                                     SetTextViewText(view,R.id.textView_email,jobj.get(email).toString());
                                 }catch (JSONException e){
+
                                     System.out.println("JSON Exception thrrrrroooowwwnnnnn");
                                 }
+
                             }else{
                                 System.out.println("jobj doesn't match");
                             }
                         } catch (JSONException e) {
+
                             e.printStackTrace();
                         }
                         SharedPreferences sharedPref = GetSharedPrefs();
                         String key = sharedPref.getString("UImage",null);
                         System.out.println("key: " + key);
+
                         if (!key.equals("")){
+
                             if(((MainActivity) getActivity()).isBitmapInMemoryCache(key)){
+
                                 ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(((MainActivity) getActivity()).getBitmapFromMemCache(key));
                             }else{
+
                                 new CallAPI().GetImage(key, new Callback() {
                                     @Override
                                     public void finished(Object obj) {
@@ -101,6 +115,7 @@ public class ProfileForm extends Fragment {
                                 });
                             }
                         }else {
+
                             Bitmap bitmap = ((MainActivity)getContext()).getBitmapFromVectorDrawable(getContext(),R.drawable.ic_account_avatar);
                             ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(bitmap);
                         }
@@ -116,10 +131,13 @@ public class ProfileForm extends Fragment {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 Intent data = result.getData();
                 Bitmap bitmap = null;
+
                 try {
+
                     bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(view.getContext().getContentResolver(), data.getData()));
 
                 } catch (IOException e) {
+
                     e.printStackTrace();
                 }
                 // Resize IMG
@@ -135,13 +153,17 @@ public class ProfileForm extends Fragment {
                         token1,
                     resizedBMP,
                     new Callback() {
+
                         @Override
                         public void finished(Object obj) {
+
                             try {
                                 JSONObject jobj = new JSONObject(obj.toString());
                                 String _token = jobj.getString(new Crypt().md5("token"));
                                 String imgLink = jobj.getString(new Crypt().md5("image_link"));
+
                                 if(((MainActivity) getActivity()).isBitmapInMemoryCache(imgLink) && token1.equals(_token)){
+
                                     ((MainActivity) getActivity()).removeBitmapFromMemCache(imgLink);
                                     ((MainActivity) getActivity()).addBitmapToMemoryCache(imgLink, resizedBMP.GetBitmap());
                                     editor.putString("UImage", imgLink);
@@ -150,6 +172,7 @@ public class ProfileForm extends Fragment {
                                     ((MainActivity) getActivity()).addBitmapToMemoryCache(imgLink, resizedBMP.GetBitmap());
                                 }
                             } catch (JSONException e) {
+
                                 e.printStackTrace();
                             }
                             SetUploadButtonVisibility(view,true);
@@ -172,15 +195,19 @@ public class ProfileForm extends Fragment {
         });
     }
     private void SetUploadButtonVisibility(View _view,boolean _bool){
+
         if (_bool){
+
             _view.findViewById(R.id.button_send).setVisibility(View.VISIBLE);
             _view.findViewById(R.id.button_send).setEnabled(true);
         }else{
+
             _view.findViewById(R.id.button_send).setVisibility(View.INVISIBLE);
             _view.findViewById(R.id.button_send).setEnabled(false);
         }
     }
     private void SetTextViewText(View _view,int _id,String _txt){
+
         TextView txtview = _view.findViewById(_id);
         txtview.setText(_txt);
     }
@@ -191,11 +218,13 @@ public class ProfileForm extends Fragment {
     }
     @Override
     public void onResume() {
+
         super.onResume();
         ((MainActivity)getActivity()).showExtendedBar(true,"Profile",true);
     }
     @Override
     public void onDestroyView() {
+
         super.onDestroyView();
         binding = null;
     }

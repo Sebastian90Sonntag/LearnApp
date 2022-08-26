@@ -102,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
         StringBuilder s = new StringBuilder();
 
         for (Map.Entry<String,?> sItem :  mapSharedpref.entrySet()) {
-            s.append("\"").append(sItem.getKey()).append("\":\"").append(sItem.getValue().toString()).append("\"");
+            s.append("\"" + sItem.getKey() + "\":\"" + sItem.getValue().toString() + "\", ");
         }
-
+        s.deleteCharAt(s.length() - 1);
         String jString = "{" + s + "}";
 
         try {
