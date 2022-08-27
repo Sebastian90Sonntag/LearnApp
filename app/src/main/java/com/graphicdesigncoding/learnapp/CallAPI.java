@@ -4,8 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.util.Base64;
+import android.util.Pair;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.StringDef;
+
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -21,120 +25,93 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
-////////////////////////////////ERROR !!!! WENN FEHLER IN PHP DANN ABSTURZ
 public class CallAPI implements Callback{
+
     final Handler main_Handler = new Handler();
-    enum Method{ POST,GET}
 
     public void finished(Object obj){}
-    public void canceled() {}
+    public void canceled(Object obj) {}
 
-    // POST WITH SENDING JSON AND RETURN
-    public void Post(String urlstr, String json, Callback callback){
+    public CallAPI(String url_str,@Nullable String params,ContentType contentType, TransferMethod method, Callback callback){
+
         new Thread(() -> {
+
             StringBuilder s = new StringBuilder();
-            HttpURLConnection urlConnection = ServerCon(urlstr, Method.POST , true,true);
+            Bitmap bmp;
+            String str;
+            HttpURLConnection urlConnection;
+
+            if(params == null){
+
+                urlConnection = ServerCon(url_str, method, false, true);
+
+            }else{
+
+                urlConnection = ServerCon(url_str, method, true, true);
+
+            }
+
             try {
+
                 OutputStream out_stream;
                 InputStream in_stream;
+
                 if (urlConnection != null) {
+
+                    urlConnection.setRequestProperty("Content-Type",contentType.getAction());
                     out_stream = urlConnection.getOutputStream();
-                    OutputStreamWriter out = new OutputStreamWriter(new BufferedOutputStream(out_stream));
-                    out.write("data=" + json);
-                    out.close();
+                    if(params != null) {
+                        OutputStreamWriter out = new OutputStreamWriter(new BufferedOutputStream(out_stream));
+                        out.write(params);
+                        out.close();
+                    }
                     in_stream = urlConnection.getInputStream();
                     BufferedReader in = new BufferedReader(new InputStreamReader(in_stream));
                     String response;
                     while ((response = in.readLine()) != null) {
                         s.append(response);
                     }
-                    in.close();
-                    urlConnection.disconnect();
-                }else {
-                    main_Handler.post(callback::canceled);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                main_Handler.post(callback::canceled);
-            }
-            String finalS = s.toString();
-            main_Handler.post(() -> callback.finished(finalS));
-        }).start();
-    }
-    // Executed in an Activity, so 'this' is the Context
-// The fileUrl is a string URL, such as "http://www.example.com/image.png"
-//    Intent downloadIntent = new Intent(this, DownloadService.class);
-//downloadIntent.setData(Uri.parse(fileUrl));
-//    startService(downloadIntent);
+                    boolean error = s.toString().trim().toLowerCase().contains("error") || s.toString().trim().toLowerCase().contains("mysql");
+                    boolean isJson = ((s.toString().trim().startsWith("{") && s.toString().trim().endsWith("}")) ||
+                            (s.toString().trim().startsWith("[") && s.toString().trim().endsWith("]")) || s.toString().trim().isEmpty());
 
-    public void GetImage(String urlstr, Callback callback) {
-        new Thread(() -> {
-                Bitmap bmp;
-                HttpURLConnection urlConnection = ServerCon(urlstr, Method.POST , false,true);
-                try {
-                    if (urlConnection != null) {
-                        StringBuilder s = new StringBuilder();
-                        InputStream in_stream = urlConnection.getInputStream();
-                        BufferedReader in = new BufferedReader(new InputStreamReader(in_stream));
-                        String response;
-                        while ((response = in.readLine()) != null) {
-                            s.append(response);
+                    if(error || isJson){
+
+                        str = s.toString();
+
+                        if(error){
+                            main_Handler.post(() -> callback.canceled(str));
+                        }else{
+                            main_Handler.post(() -> callback.finished(str));
                         }
+
+                    }else{
+
                         byte[] decoded = Base64.decode(s.toString(),0);
                         bmp = BitmapFactory.decodeByteArray(decoded,0, decoded.length);
-                        in.close();
-                        urlConnection.disconnect();
-                    }else {
-                        main_Handler.post(callback::canceled);
-                        return;
+
+                        if(bmp != null){
+
+                            main_Handler.post(() -> callback.finished(bmp));
+                        }else{
+
+                            main_Handler.post(() -> callback.finished(null));
+                        }
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    main_Handler.post(callback::canceled);
-                    return;
-                }
-            Bitmap finalBmp = bmp;
-            main_Handler.post(() -> callback.finished(finalBmp));
-        }).start();
-    }
-    //Stream
-    public void SendImage(String urlstr,String userToken,IMG_Resize bitmap, Callback callback) {
-        new Thread(() -> {
-            HttpURLConnection urlConnection = ServerCon(urlstr, Method.POST , true,true);
-            StringBuilder s = new StringBuilder();
-            try {
-                InputStream in_stream;
-                if (urlConnection != null) {
-                    urlConnection.setRequestProperty("Content-Type","image/png");
-                    byte[] fileContents = bitmap.GetStream().toByteArray();
-                    String fileContent = android.util.Base64.encodeToString(fileContents, android.util.Base64.DEFAULT);
-                    String params = new Crypt().md5("token") + "=" + userToken + "&" + new Crypt().md5("image")  + "=" + fileContent;
-                    urlConnection.connect();
-                    OutputStreamWriter image = new OutputStreamWriter(urlConnection.getOutputStream()); //Stream
-                    image.write(params);
-                    image.flush();
-                    in_stream = urlConnection.getInputStream();
-                    BufferedReader in = new BufferedReader(new InputStreamReader(in_stream));
-                    String response;
-                    while ((response = in.readLine()) != null) {
-                        s.append(response);
-                    }
-                    in.close();
-                    urlConnection.disconnect();
                 }else {
-                    main_Handler.post(callback::canceled);
-                    System.out.println("no connection");
+                    main_Handler.post(() -> callback.canceled("{\"" + new Crypt().md5("error") + "\":\"NoConnection\"}"));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                main_Handler.post(callback::canceled);
+                main_Handler.post(() -> callback.canceled("{\"" + new Crypt().md5("error") + "\":\"NoConnection\"}"));
             }
-            main_Handler.post(() -> callback.finished(s));
         }).start();
     }
 
-    private HttpURLConnection ServerCon(String _url,Method _method,boolean allow_out,boolean allow_in){
+    private HttpURLConnection ServerCon(String _url,TransferMethod _method,boolean allow_out,boolean allow_in){
         URL url;
         try {
             url = new URL(_url);

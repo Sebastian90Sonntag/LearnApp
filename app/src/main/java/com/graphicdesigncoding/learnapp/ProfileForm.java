@@ -61,7 +61,7 @@ public class ProfileForm extends Fragment
             ((TextView) view.findViewById(R.id.textView_lastname)).setText(lastname);
             ((TextView) view.findViewById(R.id.textView_username)).setText(username);
 
-            if (!ImageURL.isEmpty()){
+            if (!ImageURL.isEmpty() && !ImageURL.contains("null")){
                 // Check if Bitmap is in Memory
                 if(mA.isBitmapInMemoryCache(ImageURL)){
 
@@ -71,7 +71,11 @@ public class ProfileForm extends Fragment
 
                 }else{
 
-                    new CallAPI().GetImage(ImageURL, new Callback() {
+                    new CallAPI(ImageURL,
+                            null,
+                            ContentType.TEXT_PLAIN,
+                            TransferMethod.POST,
+                            new Callback() {
                         @Override
                         public void finished(Object obj) {
 
@@ -92,7 +96,7 @@ public class ProfileForm extends Fragment
                             }
                         }
                         @Override
-                        public void canceled() {
+                        public void canceled(Object obj) {
                             MainActivity mA = ((MainActivity)getContext());
                             // Load default Image into the ImageView
                             Bitmap bitmap = mA.getBitmapFromVectorDrawable(
@@ -165,10 +169,11 @@ public class ProfileForm extends Fragment
                     // Get Editor from sharedPreferences
                 SharedPreferences.Editor editor = sharedPref1.edit();
                 // Send Image to Server
-                new CallAPI().SendImage("https://api.graphic-design-coding.de/profile/",
-                        token1,
-                    resizedBMP,
-                    new Callback() {
+                new CallAPI("https://api.graphic-design-coding.de/profile/",
+                        new Crypt().md5("token") + "=" + token1 + "&" + new Crypt().md5("image")  + "=" + new PrepareImageToBase64().Convert(resizedBMP),
+                        ContentType.TEXT_PLAIN,
+                        TransferMethod.POST,
+                        new Callback() {
 
                         @Override
                         public void finished(Object obj) {
@@ -201,7 +206,8 @@ public class ProfileForm extends Fragment
                             SetUploadButtonVisibility(view,true);
                         }
                         @Override
-                        public void canceled() {
+                        public void canceled(Object obj) {
+                            System.out.println(obj);
                             SetUploadButtonVisibility(view,true);
                         }
                     }

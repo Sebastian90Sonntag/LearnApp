@@ -159,7 +159,7 @@ public class RegisterForm  extends Fragment {
             String RepeatPassword = ((EditText)view.findViewById(R.id.editText_RepeatPassword)).getText().toString();
             if(!Username.isEmpty() && !FirstName.isEmpty() && !LastName.isEmpty() && !EmailAddress.isEmpty() && !Password.isEmpty() && !RepeatPassword.isEmpty() && (Password.compareTo(RepeatPassword) == 0)){
                 // Send data to server
-                new CallAPI().Post(
+                new CallAPI(
                         "https://api.graphic-design-coding.de/register",
                         "{  \"u\":\"" + Username + "\"," +
                                 "\"f\":\"" + FirstName + "\"," +
@@ -168,6 +168,8 @@ public class RegisterForm  extends Fragment {
                                 "\"p\":\"" + Password + "\","+
                                 "\"rp\":\"" + RepeatPassword + "\"" +
                                 "}",
+                        ContentType.APPLICATION_JSON,
+                        TransferMethod.POST,
 
                         new Callback() {
 
@@ -179,7 +181,7 @@ public class RegisterForm  extends Fragment {
                             }
 
                             @Override
-                            public void canceled() {
+                            public void canceled(Object obj) {
                                 Toast.makeText(view.getContext(),"Register Error",Toast.LENGTH_LONG).show();
                             }
                         }

@@ -43,9 +43,11 @@ public class QuizForm extends Fragment {
         SharedPreferences sPref = mA.GetSharedPrefs("LoginData");
         String token = sPref.getString("UToken",null);
 
-        new CallAPI().Post(
-            "https://api.graphic-design-coding.de/quiz",
-            "{\"t\":\"" + token + "\"}",
+        new CallAPI(
+        "https://api.graphic-design-coding.de/quiz",
+        "{\"t\":\"" + token + "\"}",
+                ContentType.APPLICATION_JSON,
+            TransferMethod.POST,
             new Callback() {
                 @Override
                 public void finished(Object obj) {
@@ -85,7 +87,7 @@ public class QuizForm extends Fragment {
                 }
 
                 @Override
-                public void canceled() {
+                public void canceled(Object obj) {
                     //No Connection Information
                 }
             }
@@ -151,17 +153,21 @@ public class QuizForm extends Fragment {
                 SharedPreferences sPref = mA.GetSharedPrefs("LoginData");
                 String token = sPref.getString("UToken",null);
 
-                new CallAPI().Post(
+                new CallAPI(
                     "https://api.graphic-design-coding.de/quiz",
                     "{\"t\":\"" + token + "\", \"qid\":\"" + question_id + "\", \"sid\":\"" + status_id + "\"}",
+                        ContentType.APPLICATION_JSON,
+                    TransferMethod.POST,
                     new Callback() {
 
                         @Override
                         public void finished(Object obj) {
 
-                            new CallAPI().Post(
-                                    "https://api.graphic-design-coding.de/quiz",
-                                    "{\"t\":\"" + token + "\"}",
+                            new CallAPI(
+                            "https://api.graphic-design-coding.de/quiz",
+                            "{\"t\":\"" + token + "\"}",
+                                    ContentType.APPLICATION_JSON,
+                                    TransferMethod.POST,
                                     new Callback() {
 
                                         @Override
@@ -202,7 +208,7 @@ public class QuizForm extends Fragment {
                                         }
 
                                         @Override
-                                        public void canceled() {
+                                        public void canceled(Object obj) {
 
                                         }
                                     }
@@ -210,7 +216,7 @@ public class QuizForm extends Fragment {
                         }
 
                         @Override
-                        public void canceled() {
+                        public void canceled(Object obj) {
 
                         }
                     }

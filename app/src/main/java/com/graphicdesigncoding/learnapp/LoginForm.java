@@ -126,9 +126,11 @@ public class LoginForm extends Fragment {
                 //Check if password matches requirements
                 if(new RegExPattern().Password(password)){
                     // Send data to server
-                    new CallAPI().Post(
+                    new CallAPI(
                             "https://api.graphic-design-coding.de/login",
                             "{\"e\":\"" + email + "\",\"p\":\"" + password + "\"}",
+                            ContentType.APPLICATION_JSON,
+                            TransferMethod.POST,
                             new Callback() {
                                 @Override
                                 public void finished(Object _obj) {
@@ -215,7 +217,7 @@ public class LoginForm extends Fragment {
                                 }
 
                                 @Override
-                                public void canceled() {
+                                public void canceled(Object _obj) {
                                     // No connection to server || No internet
                                     Toast.makeText(view.getContext(),"No Connection to Server",Toast.LENGTH_LONG).show();
                                 }

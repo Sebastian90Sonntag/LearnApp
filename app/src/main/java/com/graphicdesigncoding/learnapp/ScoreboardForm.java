@@ -60,9 +60,11 @@ public class ScoreboardForm extends Fragment {
         if (context != null) {
 
             sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
-            new CallAPI().Post(
+            new CallAPI(
                 "https://api.graphic-design-coding.de/scoreboard",
                 "{\"t\":\"" + sharedPref.getString("UToken", null) + "\"}",
+                ContentType.APPLICATION_JSON,
+                TransferMethod.POST,
                 new Callback() {
                     @Override
                     public void finished(Object responseMsg) {
@@ -104,8 +106,11 @@ public class ScoreboardForm extends Fragment {
 
                                                 } else if (!u_img.isEmpty()) {
 
-                                                    new CallAPI().GetImage(
+                                                    new CallAPI(
                                                             u_img,
+                                                            null,
+                                                            ContentType.TEXT_PLAIN,
+                                                            TransferMethod.POST,
                                                             new Callback() {
 
                                                                 @Override
@@ -118,7 +123,8 @@ public class ScoreboardForm extends Fragment {
                                                                 }
 
                                                                 @Override
-                                                                public void canceled() {
+                                                                public void canceled(Object responseMsg) {
+                                                                    System.out.println(responseMsg);
                                                                     user.image = ((MainActivity) getActivity()).getBitmapFromVectorDrawable(getContext(), R.drawable.ic_account_avatar);
                                                                     resultList.add(new User(user.image, user.name, user.score));
                                                                     OrderList();
@@ -166,7 +172,7 @@ public class ScoreboardForm extends Fragment {
                         }
                     }
                     @Override
-                    public void canceled() {
+                    public void canceled(Object responseMsg) {
                         // No connection to server || No internet
                         Toast.makeText(view.getContext(), "No Connection to Server", Toast.LENGTH_LONG).show();
                     }
