@@ -9,6 +9,7 @@ import android.util.Pair;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringDef;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -74,7 +75,7 @@ public class CallAPI implements Callback{
                     while ((response = in.readLine()) != null) {
                         s.append(response);
                     }
-                    boolean error = s.toString().trim().toLowerCase().contains("error") || s.toString().trim().toLowerCase().contains("mysql");
+                    boolean error = s.toString().trim().toLowerCase().contains("error");
                     boolean isJson = ((s.toString().trim().startsWith("{") && s.toString().trim().endsWith("}")) ||
                             (s.toString().trim().startsWith("[") && s.toString().trim().endsWith("]")) || s.toString().trim().isEmpty());
 
@@ -82,8 +83,23 @@ public class CallAPI implements Callback{
 
                         str = s.toString();
 
-                        if(error){
-                            main_Handler.post(() -> callback.canceled(str));
+                        if(error && isJson){
+
+                            try {
+
+                                JSONObject jsonObject = new JSONObject(s.toString());
+
+                                if(jsonObject.has("error")){
+                                    main_Handler.post(() -> callback.canceled(str));
+                                }else{
+                                    main_Handler.post(() -> callback.finished(str));
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                main_Handler.post(() -> callback.canceled(str));
+                            }
+
                         }else{
                             main_Handler.post(() -> callback.finished(str));
                         }
