@@ -16,7 +16,7 @@ import java.security.AccessControlContext;
 import java.security.AccessController;
 
 
-
+//COPYRIGHT BY GraphicDesignCoding
 public class IMG_Resize {
     Bitmap bmp;
     Bitmap resized;

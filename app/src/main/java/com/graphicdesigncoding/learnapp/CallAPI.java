@@ -28,7 +28,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
-
+//COPYRIGHT BY GraphicDesignCoding
 public class CallAPI implements Callback{
 
     final Handler main_Handler = new Handler();

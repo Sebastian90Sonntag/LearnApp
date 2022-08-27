@@ -1,7 +1,7 @@
 package com.graphicdesigncoding.learnapp;
-
+//COPYRIGHT BY GraphicDesignCoding
 public enum ContentType {
-    //IMAGE TYPES//////////////////////////////////////////////////////////////////////////////////////
+    //IMAGE TYPES///////////////////////////////////////////////////////////////////////////////////
     IMAGE_PNG("image/png"),
     IMAGE_JPEG("image/jpeg"),
     IMAGE_GIF("image/gif"),
@@ -11,7 +11,7 @@ public enum ContentType {
     IMAGE_SVG_XML("image/svg+xml"),
     IMAGE_TIF_TIFF("image/tiff"),
     IMAGE_WEBP("image/webp"),
-    //VIDEO TYPES//////////////////////////////////////////////////////////////////////////////////////
+    //VIDEO TYPES///////////////////////////////////////////////////////////////////////////////////
     VIDEO_AVI("video/x-msvideo"),
     VIDEO_MP4("video/mp4"),
     VIDEO_MPEG("video/mpeg"),
@@ -19,7 +19,7 @@ public enum ContentType {
     VIDEO_TS("video/mp2t"),
     VIDEO_WEBM("video/webm"),
     VIDEO_3GP("video/mp2t"),
-    //AUDIO TYPES//////////////////////////////////////////////////////////////////////////////////////
+    //AUDIO TYPES///////////////////////////////////////////////////////////////////////////////////
     AUDIO_AAC("audio/aac"),
     AUDIO_MID("audio/midi"),
     AUDIO_MIDI("audio/x-midi"),
@@ -27,14 +27,14 @@ public enum ContentType {
     AUDIO_OGG("audio/ogg"),
     AUDIO_OPUS("audio/opus"),
     AUDIO_WEBA("audio/webm"),
-    //TEXT TYPES//////////////////////////////////////////////////////////////////////////////////////
+    //TEXT TYPES////////////////////////////////////////////////////////////////////////////////////
     TEXT_CSS("text/css"),
     TEXT_CSV("text/csv"),
     TEXT_HTML("text/html"),
     TEXT_ICS("text/calendar"),
     TEXT_JS("text/javascript"),
     TEXT_PLAIN("text/plain"),
-    //APPLICATION TYPES//////////////////////////////////////////////////////////////////////////////////////
+    //APPLICATION TYPES/////////////////////////////////////////////////////////////////////////////
     APPLICATION_7Z("application/x-7z-compressed"),
     APPLICATION_ZIP("application/zip"),
     APPLICATION_XUL("application/vnd.mozilla.xul+xml"),
@@ -72,7 +72,7 @@ public enum ContentType {
     APPLICATION_AZW("application/vnd.amazon.ebook"),
     APPLICATION_ARC("application/x-freearc"),
     APPLICATION_ABW("application/x-abiword"),
-    //FONT TYPES//////////////////////////////////////////////////////////////////////////////////////
+    //FONT TYPES////////////////////////////////////////////////////////////////////////////////////
     FONT_OTF("font/otf"),
     FONT_TTF("font/ttf"),
     FONT_WOFF("font/woff"),

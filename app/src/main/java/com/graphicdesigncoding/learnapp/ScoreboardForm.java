@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+//COPYRIGHT BY GraphicDesignCoding
 public class ScoreboardForm extends Fragment {
     private ScoreboardFormBinding binding;
     private CustomArrayAdapter userArrayAdapter;

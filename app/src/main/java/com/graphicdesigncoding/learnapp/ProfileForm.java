@@ -1,7 +1,6 @@
 package com.graphicdesigncoding.learnapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -18,7 +17,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.graphicdesigncoding.learnapp.databinding.ProfileFormBinding;
@@ -28,6 +26,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+//COPYRIGHT BY GraphicDesignCoding
 public class ProfileForm extends Fragment
 {
     private ProfileFormBinding binding;

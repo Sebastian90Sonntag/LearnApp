@@ -15,6 +15,7 @@ import com.graphicdesigncoding.learnapp.databinding.QuizFormBinding;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+//COPYRIGHT BY GraphicDesignCoding
 public class QuizForm extends Fragment {
 
     ///VARIABLES

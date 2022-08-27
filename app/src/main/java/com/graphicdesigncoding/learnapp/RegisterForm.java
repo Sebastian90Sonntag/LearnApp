@@ -17,7 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.graphicdesigncoding.learnapp.databinding.MainmenuFormBinding;
 import com.graphicdesigncoding.learnapp.databinding.RegisterFormBinding;
 
-
+//COPYRIGHT BY GraphicDesignCoding
 public class RegisterForm  extends Fragment {
     private RegisterFormBinding binding;
     @Override

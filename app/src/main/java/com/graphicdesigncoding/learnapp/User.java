@@ -1,8 +1,8 @@
 package com.graphicdesigncoding.learnapp;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 
+//COPYRIGHT BY GraphicDesignCoding
 public class User implements Comparable<User>{
 
     private static final String TAG = "User";

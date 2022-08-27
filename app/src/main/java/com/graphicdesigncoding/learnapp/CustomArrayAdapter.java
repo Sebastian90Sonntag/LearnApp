@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+//COPYRIGHT BY GraphicDesignCoding
 public class CustomArrayAdapter  extends ArrayAdapter<User> {
     private static final String TAG = "FruitArrayAdapter";
     private List<User> userList = new ArrayList<User>();

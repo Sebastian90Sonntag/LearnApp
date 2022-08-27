@@ -2,14 +2,12 @@ package com.graphicdesigncoding.learnapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.io.Serializable;
-import java.util.AbstractList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.RandomAccess;
 
+//COPYRIGHT BY GraphicDesignCoding
 public class UserList<E>  implements List<E> {
 
         private UserItem<E> head;

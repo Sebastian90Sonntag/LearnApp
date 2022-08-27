@@ -2,6 +2,7 @@ package com.graphicdesigncoding.learnapp;
 
 import java.util.regex.Pattern;
 
+//COPYRIGHT BY GraphicDesignCoding
 public class RegExPattern {
 
     public boolean Email(String email){

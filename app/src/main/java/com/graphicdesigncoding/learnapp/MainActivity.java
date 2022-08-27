@@ -35,7 +35,7 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-
+//COPYRIGHT BY GraphicDesignCoding
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
