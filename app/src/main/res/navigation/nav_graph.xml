@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/StartUpForm"
-        android:name="com.graphicdesigncoding.learnapp.StartUpForm"
+        android:name="com.graphicdesigncoding.learnapp.forms.StartUpForm"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/startup_form">
         <action
@@ -21,7 +21,7 @@
         app:startDestination="@id/LoginForm">
         <fragment
             android:id="@+id/LoginForm"
-            android:name="com.graphicdesigncoding.learnapp.LoginForm"
+            android:name="com.graphicdesigncoding.learnapp.forms.LoginForm"
             android:label="@string/second_fragment_label">
 
             <action
@@ -38,7 +38,7 @@
         </fragment>
         <fragment
             android:id="@+id/RegisterForm"
-            android:name="com.graphicdesigncoding.learnapp.RegisterForm"
+            android:name="com.graphicdesigncoding.learnapp.forms.RegisterForm"
             android:label="@string/second_fragment_label"
             tools:layout="@layout/register_form">
             <action
@@ -53,7 +53,7 @@
         app:startDestination="@id/MainMenuForm">
         <fragment
             android:id="@+id/ScoreboardForm"
-            android:name="com.graphicdesigncoding.learnapp.ScoreboardForm"
+            android:name="com.graphicdesigncoding.learnapp.forms.ScoreboardForm"
             android:label="@string/second_fragment_label"
             tools:layout="@layout/scoreboard_form">
             <action
@@ -62,7 +62,7 @@
         </fragment>
         <fragment
             android:id="@+id/MainMenuForm"
-            android:name="com.graphicdesigncoding.learnapp.MainMenuForm"
+            android:name="com.graphicdesigncoding.learnapp.forms.MainMenuForm"
             android:label="@string/second_fragment_label"
             tools:layout="@layout/mainmenu_form">
             <action
@@ -77,7 +77,7 @@
         </fragment>
         <fragment
             android:id="@+id/QuizForm"
-            android:name="com.graphicdesigncoding.learnapp.QuizForm"
+            android:name="com.graphicdesigncoding.learnapp.forms.QuizForm"
             android:label="@string/second_fragment_label">
             <action
                 android:id="@+id/action_QuizForm_to_MainMenuForm"
@@ -85,7 +85,7 @@
         </fragment>
         <fragment
             android:id="@+id/ProfileForm"
-            android:name="com.graphicdesigncoding.learnapp.ProfileForm"
+            android:name="com.graphicdesigncoding.learnapp.forms.ProfileForm"
             android:label="@string/second_fragment_label"
             tools:layout="@layout/profile_form">
             <action

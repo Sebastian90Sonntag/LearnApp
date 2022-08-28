@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#000000"
     android:backgroundTint="#000000"
-    tools:context=".StartUpForm">
+    tools:context=".forms.StartUpForm">
 
     <ImageView
         android:id="@+id/imageView_app_logo"

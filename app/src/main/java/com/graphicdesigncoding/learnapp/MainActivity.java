@@ -1,53 +1,43 @@
 package com.graphicdesigncoding.learnapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.google.android.material.appbar.AppBarLayout;
+import java.util.Objects;
 import com.graphicdesigncoding.learnapp.databinding.ActivityMainBinding;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.Map;
 
 //COPYRIGHT BY GraphicDesignCoding
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
     private LruCache<String, Bitmap> memoryCache;
-    private Thread activityTask;
+    ////////DEBUG///////////////////////////////////////DEBUG/////////////////////DEBUG//////////
+    private boolean debugMode = true;
+    /////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater()); //Sets the binding Layout
+        com.graphicdesigncoding.learnapp.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater()); //Sets the binding Layout
         setContentView(binding.getRoot()); // Set the Layout Root
 
         setSupportActionBar(binding.toolbar); // Set Toolbar
@@ -77,6 +67,14 @@ public class MainActivity extends AppCompatActivity {
     public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
         if (getBitmapFromMemCache(key) == null) {
             memoryCache.put(key, bitmap);
+        }
+    }
+
+    public void Debug(String trigger, Object obj){
+        /////////////////////////////////Activate Debug///////////
+
+        if(debugMode) {
+            System.out.println("Trigger: " + trigger + " Message: " + obj.toString());
         }
     }
 
@@ -167,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        int navId = Navigation.findNavController(this, R.id.nav_host_fragment_content_main).getCurrentDestination().getId();
+        int navId = Objects.requireNonNull(Navigation.findNavController(this, R.id.nav_host_fragment_content_main).getCurrentDestination()).getId();
         if(navId == R.id.RegisterForm || navId == R.id.ProfileForm || navId == R.id.ScoreboardForm || navId == R.id.QuizForm){
             super.onBackPressed();
         }else if(navId == R.id.StartUpForm || navId == R.id.MainMenuForm || navId == R.id.LoginForm){
