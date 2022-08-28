@@ -24,15 +24,16 @@ import com.graphicdesigncoding.learnapp.api.Callback;
 import com.graphicdesigncoding.learnapp.api.ContentType;
 import com.graphicdesigncoding.learnapp.api.Crypt;
 import com.graphicdesigncoding.learnapp.api.RegExPattern;
+import com.graphicdesigncoding.learnapp.api.SimpleJson;
 import com.graphicdesigncoding.learnapp.api.TransferMethod;
 import com.graphicdesigncoding.learnapp.databinding.LoginFormBinding;
-
-import org.json.JSONException;
 import org.json.JSONObject;
+
 //COPYRIGHT BY GraphicDesignCoding
 public class LoginForm extends Fragment {
 
     private LoginFormBinding binding;
+
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
@@ -63,13 +64,11 @@ public class LoginForm extends Fragment {
                 String email = s.toString();
 
                 //General Email Regex (RFC 5322 Official Standard)
-                if (!email.equals("") && new RegExPattern().Email(email)){
+                if (!email.isEmpty() && new RegExPattern().Email(email)){
 
                     et.getBackground().setTint(Color.GREEN);
 
-                }
-
-                else{
+                }else{
 
                     et.requestFocus();
                     et.getBackground().setTint(Color.RED);
@@ -96,7 +95,7 @@ public class LoginForm extends Fragment {
                 // Get Input String from Password
                 String password = s.toString();
 
-                if(!password.equals("") && new RegExPattern().Password(password)){
+                if(!password.isEmpty() && new RegExPattern().Password(password)){
 
                     // Set TintColor when RegEx succeed
                     et.getBackground().setTint(Color.GREEN);
@@ -145,84 +144,46 @@ public class LoginForm extends Fragment {
                             new Callback() {
                                 @Override
                                 public void finished(Object _obj) {
-                                    JSONObject obj;
 
-                                    try {
+                                    SimpleJson simpleJson = new SimpleJson();
+                                    JSONObject obj = simpleJson.Decode(_obj.toString());
+                                    Crypt crypt = new Crypt();
+                                    String token = crypt.md5("token");
+                                    String imgLink = crypt.md5("image_link");
+                                    String firstname = crypt.md5("firstname");
+                                    String lastname = crypt.md5("lastname");
+                                    String username = crypt.md5("username");
 
-                                        obj = new JSONObject(_obj.toString());
-                                        String token = new Crypt().md5("token");
-                                        String imgLink = new Crypt().md5("image_link");
-                                        String firstname = new Crypt().md5("firstname");
-                                        String lastname = new Crypt().md5("lastname");
-                                        String username = new Crypt().md5("username");
-                                        String error = new Crypt().md5("error");
+                                    if (obj.has(token) && obj.has(imgLink) && obj.has(firstname) && obj.has(lastname) && obj.has(username)) {
 
-                                        try {
+                                        // Set data to variables from JSONObj
+                                        token = simpleJson.Get(obj, token).toString();
+                                        imgLink = simpleJson.Get(obj, imgLink).toString();
+                                        firstname = simpleJson.Get(obj, firstname).toString();
+                                        lastname = simpleJson.Get(obj, lastname).toString();
+                                        username = simpleJson.Get(obj, username).toString();
 
-                                            if (obj.has(token) && obj.has(imgLink)) {
+                                        // Check for login data
+                                        Context context = requireContext();
+                                        SharedPreferences sharedPref;
 
-                                                // Set data to variables from JSONObj
-                                                token = obj.get(token).toString();
-                                                imgLink = obj.get(imgLink).toString();
-                                                firstname = obj.get(firstname).toString();
-                                                lastname = obj.get(lastname).toString();
-                                                username = obj.get(username).toString();
+                                        // Write shared Preferences
+                                        sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putString("UEmail", email);
+                                        editor.putString("UPwd", password);
+                                        editor.putString("UFirstname", firstname);
+                                        editor.putString("ULastname", lastname);
+                                        editor.putString("UUsername", username);
+                                        editor.putString("UToken", token);
+                                        editor.putString("UImage", imgLink);
+                                        editor.apply();
+                                        ((MainActivity) context).Debug("LoginForm", "SharedPreferences -> written");
 
-                                                // Check for login data
-                                                Context context = getActivity();
-                                                SharedPreferences sharedPref;
+                                        // Go to MainMenu
+                                        NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_global_nav_main);
+                                        ((MainActivity) context).Debug("LoginForm", "Login -> performed");
 
-                                                if (context != null) {
-
-                                                    // Write shared Preferences
-                                                    sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
-                                                    SharedPreferences.Editor editor = sharedPref.edit();
-                                                    editor.putString("UEmail", email);
-                                                    editor.putString("UPwd", password);
-                                                    editor.putString("UFirstname", firstname);
-                                                    editor.putString("ULastname", lastname);
-                                                    editor.putString("UUsername", username);
-                                                    editor.putString("UToken", token);
-                                                    editor.putString("UImage", imgLink);
-                                                    editor.apply();
-                                                    System.out.println("SharedPreferences -> written");
-
-
-                                                    // Go to MainMenu
-                                                    NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_global_nav_main);
-                                                    System.out.println("Login -> performed...");
-
-
-                                                } else {
-
-                                                    System.out.println("SharedPreferences -> failed to write data.");
-
-                                                }
-
-                                            } else if (obj.has(error)) {
-
-                                                error = obj.getString(error);
-                                                System.out.println(error);
-                                                System.out.println("Login -> Server Error");
-                                                Toast.makeText(view.getContext(), "Server Error", Toast.LENGTH_LONG).show();
-
-                                            } else {
-
-                                                System.out.println("Login -> Wrong login data");
-                                                Toast.makeText(view.getContext(), "Wrong login data", Toast.LENGTH_LONG).show();
-
-                                            }
-
-                                        } catch (JSONException e) {
-
-                                            System.out.println("Login -> JSONObject didn't match required");
-                                            Toast.makeText(view.getContext(), "Server Error", Toast.LENGTH_LONG).show();
-
-                                        }
-
-                                    } catch (Throwable e) {
-
-                                        Toast.makeText(view.getContext(), "Device Service error", Toast.LENGTH_LONG).show();
 
                                     }
                                 }
@@ -230,7 +191,23 @@ public class LoginForm extends Fragment {
                                 @Override
                                 public void canceled(Object _obj) {
                                     // No connection to server || No internet
-                                    Toast.makeText(view.getContext(),"No Connection to Server",Toast.LENGTH_LONG).show();
+                                    SimpleJson simpleJson = new SimpleJson();
+                                    JSONObject obj = simpleJson.Decode(_obj.toString());
+                                    Crypt crypt = new Crypt();
+                                    String error = crypt.md5("error");
+
+                                    if (obj.has(error)) {
+
+                                        String the_error = simpleJson.Get(obj,error).toString();
+                                        ((MainActivity) requireActivity()).Debug("LoginForm", the_error);
+                                        Toast.makeText(view.getContext(), "Wrong login data", Toast.LENGTH_LONG).show();
+
+                                    } else {
+
+                                        ((MainActivity) requireActivity()).Debug("LoginForm", "Server Error");
+                                        Toast.makeText(view.getContext(), "Server Error", Toast.LENGTH_LONG).show();
+
+                                    }
                                 }
                             }
                     );

@@ -51,7 +51,7 @@ public class CallAPI implements Callback {
                 InputStream in_stream;
 
                 if (urlConnection != null) {
-
+                    Crypt crypt = new Crypt();
                     urlConnection.setRequestProperty("Content-Type",contentType.getAction());
                     out_stream = urlConnection.getOutputStream();
                     if(params != null) {
@@ -65,7 +65,7 @@ public class CallAPI implements Callback {
                     while ((response = in.readLine()) != null) {
                         s.append(response);
                     }
-                    boolean error = s.toString().trim().toLowerCase().contains("error");
+                    boolean error = s.toString().trim().toLowerCase().contains(crypt.md5("error"));
                     boolean isJson = ((s.toString().trim().startsWith("{") && s.toString().trim().endsWith("}")) ||
                             (s.toString().trim().startsWith("[") && s.toString().trim().endsWith("]")) || s.toString().trim().isEmpty());
 
@@ -77,9 +77,9 @@ public class CallAPI implements Callback {
 
                             try {
 
-                                JSONObject jsonObject = new JSONObject(s.toString());
+                                JSONObject jsonObject = new JSONObject(str);
 
-                                if(jsonObject.has("error")){
+                                if(jsonObject.has(crypt.md5("error"))){
                                     main_Handler.post(() -> callback.canceled(str));
                                 }else{
                                     main_Handler.post(() -> callback.finished(str));
