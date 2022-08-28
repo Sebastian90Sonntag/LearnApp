@@ -154,7 +154,8 @@ public class LoginForm extends Fragment {
                                     String lastname = crypt.md5("lastname");
                                     String username = crypt.md5("username");
 
-                                    if (obj.has(token) && obj.has(imgLink) && obj.has(firstname) && obj.has(lastname) && obj.has(username)) {
+                                    if (obj.has(token) && obj.has(imgLink) && obj.has(firstname) &&
+                                            obj.has(lastname) && obj.has(username)) {
 
                                         // Set data to variables from JSONObj
                                         token = simpleJson.Get(obj, token).toString();
