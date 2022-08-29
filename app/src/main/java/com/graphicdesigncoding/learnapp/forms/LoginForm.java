@@ -142,7 +142,6 @@ public class LoginForm extends Fragment {
                             ContentType.APPLICATION_JSON,
                             TransferMethod.POST,
                             new Callback() {
-
                                 @Override
                                 public void finished(Object _obj) {
 
