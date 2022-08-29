@@ -1,13 +1,12 @@
 package com.graphicdesigncoding.learnapp.forms;
 
 import android.graphics.Color;
-import android.text.Editable;
 import android.widget.EditText;
-
 import com.graphicdesigncoding.learnapp.R;
 import com.graphicdesigncoding.learnapp.api.RegExPattern;
 
 public class InputChecker{
+
     public boolean editText(EditText editText, String str, RegExPattern regExPattern){
         editText.getBackground().setTint(R.style.Theme_LearnApp_EditText);
         if(str.length() > 0) {
@@ -23,4 +22,5 @@ public class InputChecker{
             return false;
         }
     }
+
 }
