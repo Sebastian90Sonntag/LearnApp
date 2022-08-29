@@ -70,7 +70,8 @@ public class CallAPI implements Callback {
                             (s.toString().trim().startsWith("[") && s.toString().trim().endsWith("]")) || s.toString().trim().isEmpty());
 
                     if(error || isJson){
-
+                        System.out.println("DEF");
+                        System.out.println(s.toString());
                         str = s.toString();
 
                         if(error && isJson){
@@ -95,7 +96,7 @@ public class CallAPI implements Callback {
                         }
 
                     }else{
-
+                        System.out.println(s.toString());
                         byte[] decoded = Base64.decode(s.toString(),0);
                         bmp = BitmapFactory.decodeByteArray(decoded,0, decoded.length);
 
