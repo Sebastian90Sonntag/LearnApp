@@ -54,24 +54,31 @@ public class CallAPI implements Callback {
                     Crypt crypt = new Crypt();
                     urlConnection.setRequestProperty("Content-Type",contentType.getAction());
                     out_stream = urlConnection.getOutputStream();
+
                     if(params != null) {
                         OutputStreamWriter out = new OutputStreamWriter(new BufferedOutputStream(out_stream));
                         out.write(params);
                         out.close();
                     }
                     in_stream = urlConnection.getInputStream();
+
                     BufferedReader in = new BufferedReader(new InputStreamReader(in_stream));
+
                     String response;
+
                     while ((response = in.readLine()) != null) {
+
                         s.append(response);
+
                     }
                     boolean error = s.toString().trim().toLowerCase().contains(crypt.md5("error"));
                     boolean isJson = ((s.toString().trim().startsWith("{") && s.toString().trim().endsWith("}")) ||
                             (s.toString().trim().startsWith("[") && s.toString().trim().endsWith("]")) || s.toString().trim().isEmpty());
 
                     if(error || isJson){
+
                         System.out.println("DEF");
-                        System.out.println(s.toString());
+                        System.out.println(s);
                         str = s.toString();
 
                         if(error && isJson){
@@ -81,39 +88,53 @@ public class CallAPI implements Callback {
                                 JSONObject jsonObject = new JSONObject(str);
 
                                 if(jsonObject.has(crypt.md5("error"))){
+
                                     main_Handler.post(() -> callback.canceled(str));
+
                                 }else{
+
                                     main_Handler.post(() -> callback.finished(str));
+
                                 }
 
                             } catch (JSONException e) {
+
                                 e.printStackTrace();
                                 main_Handler.post(() -> callback.canceled(str));
+
                             }
 
                         }else{
+
                             main_Handler.post(() -> callback.finished(str));
+
                         }
 
                     }else{
-                        System.out.println(s.toString());
+                        System.out.println(s);
                         byte[] decoded = Base64.decode(s.toString(),0);
                         bmp = BitmapFactory.decodeByteArray(decoded,0, decoded.length);
 
                         if(bmp != null){
 
                             main_Handler.post(() -> callback.finished(bmp));
+
                         }else{
 
                             main_Handler.post(() -> callback.finished(null));
+
                         }
                     }
                 }else {
+
                     main_Handler.post(() -> callback.canceled("{\"" + new Crypt().md5("error") + "\":\"NoConnection\"}"));
+
                 }
             } catch (IOException e) {
+
                 e.printStackTrace();
                 main_Handler.post(() -> callback.canceled("{\"" + new Crypt().md5("error") + "\":\"NoConnection\"}"));
+
             }
         }).start();
     }

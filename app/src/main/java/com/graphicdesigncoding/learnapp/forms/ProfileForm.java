@@ -213,46 +213,32 @@ public class ProfileForm extends Fragment
                                 mA.Debug("ProfileForm","JSON Object don't match");
                             }
 
-                            SetUploadButtonVisibility(view,true);
+                            mA.SetControlVisibility(view,R.id.button_send,true);
 
                         }
                         @Override
                         public void canceled(Object obj) {
                             MainActivity mA = ((MainActivity)requireContext());
-                            SetUploadButtonVisibility(view,true);
+                            mA.SetControlVisibility(view,R.id.button_send,true);
                             mA.Debug("ProfileForm",obj.toString());
 
                         }
                     }
                 );
 
-            }else {
-
-                SetUploadButtonVisibility(view,true);
-            }
+            }else ((MainActivity)requireContext()).SetControlVisibility(view,R.id.button_send, true);
 
         });
 
         // Send Btn EVENT
         binding.buttonSend.setOnClickListener((View btn_view) -> {
 
-            SetUploadButtonVisibility(view,false);
+            ((MainActivity)requireContext()).SetControlVisibility(view,R.id.button_send,false);
             someActivityResultLauncher.launch(pickPhoto);
 
         });
     }
-    private void SetUploadButtonVisibility(View _view,boolean _bool){
 
-        if (_bool){
-
-            _view.findViewById(R.id.button_send).setVisibility(View.VISIBLE);
-            _view.findViewById(R.id.button_send).setEnabled(true);
-        }else{
-
-            _view.findViewById(R.id.button_send).setVisibility(View.INVISIBLE);
-            _view.findViewById(R.id.button_send).setEnabled(false);
-        }
-    }
 
 
     @Override

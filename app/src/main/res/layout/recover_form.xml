@@ -10,15 +10,12 @@
         android:id="@+id/recover_button_sendcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="293dp"
         android:text="@string/button_code"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recover_edit_email"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/recover_edit_email" />
 
     <EditText
         android:id="@+id/recover_edit_email"
@@ -41,36 +38,34 @@
         android:id="@+id/recover_edit_newpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="25dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="@string/edit_new_password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:textColorHint="#757575"
         android:tooltipText="A-z,Number,Special Char"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/recover_edit_email" />
 
     <EditText
         android:id="@+id/recover_edit_repeatpassword"
-        android:layout_width="209dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="360dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="@string/edit_repeat_new_password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        android:visibility="invisible"
+        android:textColorHint="#757575"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recover_edit_newpassword"
         app:layout_constraintVertical_bias="0.0" />
@@ -81,10 +76,11 @@
         android:layout_height="48dp"
         android:layout_marginTop="25dp"
         android:ems="10"
+        android:enabled="false"
+        android:hint="@string/edit_code"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress"
-        android:text="@string/edit_code"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -94,20 +90,10 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="8dp"
+        android:enabled="false"
         android:text="@string/button_submit_code"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/recover_edit_email"
-        app:layout_constraintTop_toTopOf="@+id/recover_button_sendcode" />
-
-    <Button
-        android:id="@+id/recover_button_newpassword"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:text="@string/button_submit_code"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/recover_edit_email"
-        app:layout_constraintTop_toBottomOf="@+id/recover_button_codecheck" />
+        app:layout_constraintTop_toBottomOf="@+id/recover_edit_repeatpassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -92,7 +92,18 @@ public class MainActivity extends AppCompatActivity {
             memoryCache.remove(key);
         }
     }
+    public void SetControlVisibility(View _view,int _id,boolean _bool){
 
+        if (_bool){
+
+            _view.findViewById(_id).setVisibility(View.VISIBLE);
+            _view.findViewById(_id).setEnabled(true);
+        }else{
+
+            _view.findViewById(_id).setVisibility(View.INVISIBLE);
+            _view.findViewById(_id).setEnabled(false);
+        }
+    }
     public SharedPreferences GetSharedPrefs(String name){
         SharedPreferences sharedPref;
         sharedPref = getSharedPreferences(name,MODE_PRIVATE);
