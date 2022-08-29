@@ -10,7 +10,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.graphicdesigncoding.learnapp.MainActivity;
 import com.graphicdesigncoding.learnapp.R;
 import com.graphicdesigncoding.learnapp.databinding.MainmenuFormBinding;
-//COPYRIGHT BY GraphicDesignCoding
+
+/////////////////////////////////////
+//COPYRIGHT BY GraphicDesignCoding///
+/////////////////////////////////////
+
 public class MainMenuForm extends Fragment {
 
     private MainmenuFormBinding binding;

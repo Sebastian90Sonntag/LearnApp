@@ -16,7 +16,10 @@ import com.graphicdesigncoding.learnapp.MainActivity;
 import com.graphicdesigncoding.learnapp.R;
 import com.graphicdesigncoding.learnapp.databinding.StartupFormBinding;
 
-//COPYRIGHT BY GraphicDesignCoding
+/////////////////////////////////////
+//COPYRIGHT BY GraphicDesignCoding///
+/////////////////////////////////////
+
 public class StartUpForm extends Fragment {
     private StartupFormBinding binding;
 

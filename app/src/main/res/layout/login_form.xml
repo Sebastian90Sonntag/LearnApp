@@ -20,6 +20,7 @@
 
     <EditText
         android:id="@+id/editText_EmailAddress"
+        style="@style/Theme.LearnApp.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -28,7 +29,6 @@
         android:hint="@string/hint_email_address"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
-        android:textColorHint="#757575"
         android:tooltipText="Example: example@mail.com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +45,7 @@
 
     <EditText
         android:id="@+id/editText_Password"
+        style="@style/Theme.LearnApp.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -53,7 +54,6 @@
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        android:textColorHint="#757575"
         android:tooltipText="A-z,Number,Special Char"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

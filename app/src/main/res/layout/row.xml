@@ -37,9 +37,9 @@
         android:layout_alignBottom="@+id/unitEditText"
         android:layout_alignParentRight="true"
 
-        android:onClick="removeItem"
-
         android:contentDescription="gg"
+
+        android:onClick="removeItem"
         android:src="@android:drawable/ic_menu_delete" />
 
 </RelativeLayout>

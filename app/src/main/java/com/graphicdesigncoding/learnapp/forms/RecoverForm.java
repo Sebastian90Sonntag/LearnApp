@@ -1,7 +1,5 @@
 package com.graphicdesigncoding.learnapp.forms;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,12 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.digest.Md5Crypt;
 import com.graphicdesigncoding.learnapp.MainActivity;
 import com.graphicdesigncoding.learnapp.R;
 import com.graphicdesigncoding.learnapp.api.CallAPI;
@@ -27,10 +22,12 @@ import com.graphicdesigncoding.learnapp.api.RegExPattern;
 import com.graphicdesigncoding.learnapp.api.SimpleJson;
 import com.graphicdesigncoding.learnapp.api.TransferMethod;
 import com.graphicdesigncoding.learnapp.databinding.RecoverFormBinding;
-
 import org.json.JSONObject;
 
-//COPYRIGHT BY GraphicDesignCoding
+/////////////////////////////////////
+//COPYRIGHT BY GraphicDesignCoding///
+/////////////////////////////////////
+
 public class RecoverForm extends Fragment {
     private RecoverFormBinding binding;
 
@@ -59,22 +56,7 @@ public class RecoverForm extends Fragment {
 
                 // Set TintColor to Password TextInput
                 EditText et = view.findViewById(R.id.recover_edit_code);
-                et.getBackground().setTint(Color.TRANSPARENT);
-
-                // Get Input String from Email
-                String email = s.toString();
-
-                if (!email.isEmpty() && new RegExPattern().Email(email)) {
-
-                    // Set TintColor when RegEx succeed
-                    et.getBackground().setTint(Color.GREEN);
-                } else {
-
-                    // Set TintColor when RegEx failed
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-
-                }
+                new InputChecker().editText(et,s.toString(),RegExPattern.Email);
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -88,22 +70,7 @@ public class RecoverForm extends Fragment {
 
                 // Set TintColor to Password TextInput
                 EditText et = view.findViewById(R.id.recover_edit_newpassword);
-                et.getBackground().setTint(Color.TRANSPARENT);
-
-                // Get Input String from Email
-                String password = s.toString();
-
-                if (!password.isEmpty() && new RegExPattern().Password(password)) {
-
-                    // Set TintColor when RegEx succeed
-                    et.getBackground().setTint(Color.GREEN);
-                } else {
-
-                    // Set TintColor when RegEx failed
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-
-                }
+                new InputChecker().editText(et,s.toString(),RegExPattern.Password);
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -117,22 +84,7 @@ public class RecoverForm extends Fragment {
 
                 // Set TintColor to Password TextInput
                 EditText et = view.findViewById(R.id.recover_edit_repeatpassword);
-                et.getBackground().setTint(Color.TRANSPARENT);
-
-                // Get Input String from Email
-                String reppassword = s.toString();
-
-                if (!reppassword.isEmpty() && new RegExPattern().Password(reppassword)) {
-
-                    // Set TintColor when RegEx succeed
-                    et.getBackground().setTint(Color.GREEN);
-                } else {
-
-                    // Set TintColor when RegEx failed
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-
-                }
+                new InputChecker().editText(et,s.toString(),RegExPattern.Password);
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }

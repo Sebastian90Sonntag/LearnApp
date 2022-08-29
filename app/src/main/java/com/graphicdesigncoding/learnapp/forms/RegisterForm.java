@@ -22,7 +22,10 @@ import com.graphicdesigncoding.learnapp.api.RegExPattern;
 import com.graphicdesigncoding.learnapp.api.TransferMethod;
 import com.graphicdesigncoding.learnapp.databinding.RegisterFormBinding;
 
-//COPYRIGHT BY GraphicDesignCoding
+/////////////////////////////////////
+//COPYRIGHT BY GraphicDesignCoding///
+/////////////////////////////////////
+
 public class RegisterForm  extends Fragment {
 
     private RegisterFormBinding binding;
@@ -48,14 +51,7 @@ public class RegisterForm  extends Fragment {
             public void afterTextChanged(Editable s) {
 
                 EditText et = view.findViewById(R.id.editText_Username);
-                et.getBackground().setTint(Color.TRANSPARENT);
-                String name = s.toString();
-                if(!name.equals("") && new RegExPattern().Name(name)){
-                    et.getBackground().setTint(Color.GREEN);
-                }else{
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-                }
+                new InputChecker().editText(et,s.toString(),RegExPattern.Name);
 
             }
 
@@ -70,15 +66,7 @@ public class RegisterForm  extends Fragment {
             public void afterTextChanged(Editable s) {
 
                 EditText et = view.findViewById(R.id.editText_FirstName);
-                et.getBackground().setTint(Color.TRANSPARENT);
-                String name = s.toString();
-                if(!name.equals("") && new RegExPattern().Name(name)){
-                    et.getBackground().setTint(Color.GREEN);
-                }else{
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-                }
-
+                new InputChecker().editText(et,s.toString(),RegExPattern.Name);
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -92,14 +80,7 @@ public class RegisterForm  extends Fragment {
 
             public void afterTextChanged(Editable s) {
                 EditText et = view.findViewById(R.id.editText_LastName);
-                et.getBackground().setTint(Color.TRANSPARENT);
-                String name = s.toString();
-                if(!name.equals("") && new RegExPattern().Name(name)){
-                    et.getBackground().setTint(Color.GREEN);
-                }else{
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-                }
+                new InputChecker().editText(et,s.toString(),RegExPattern.Name);
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -112,15 +93,7 @@ public class RegisterForm  extends Fragment {
         binding.editTextEmailAddress.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 EditText et = view.findViewById(R.id.editText_EmailAddress);
-                et.getBackground().setTint(Color.TRANSPARENT);
-                String email = s.toString();
-                //General Email Regex (RFC 5322 Official Standard)
-                if(!email.equals("") && new RegExPattern().Email(email)){
-                    et.getBackground().setTint(Color.GREEN);
-                }else{
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-                }
+                new InputChecker().editText(et,s.toString(),RegExPattern.Email);
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -132,14 +105,7 @@ public class RegisterForm  extends Fragment {
         binding.editTextPassword.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 EditText et = view.findViewById(R.id.editText_Password);
-                et.getBackground().setTint(Color.TRANSPARENT);
-                String password = s.toString();
-                if(!password.equals("") && new RegExPattern().Password(password)){
-                    et.getBackground().setTint(Color.GREEN);
-                }else{
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-                }
+                new InputChecker().editText(et,s.toString(),RegExPattern.Password);
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -152,14 +118,7 @@ public class RegisterForm  extends Fragment {
 
             public void afterTextChanged(Editable s) {
                 EditText et = view.findViewById(R.id.editText_RepeatPassword);
-                et.getBackground().setTint(Color.TRANSPARENT);
-                String password = s.toString();
-                if(!password.equals("") && new RegExPattern().Password(password)){
-                    et.getBackground().setTint(Color.GREEN);
-                }else{
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-                }
+                new InputChecker().editText(et,s.toString(),RegExPattern.Password);
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
