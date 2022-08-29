@@ -12,11 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-
 import com.graphicdesigncoding.learnapp.MainActivity;
 import com.graphicdesigncoding.learnapp.R;
 import com.graphicdesigncoding.learnapp.api.CallAPI;
