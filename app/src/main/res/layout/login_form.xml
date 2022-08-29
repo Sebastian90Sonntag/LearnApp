@@ -10,12 +10,13 @@
         android:id="@+id/button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-20dp"
         android:layout_marginTop="15dp"
         android:text="@string/next"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.345"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_Password" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_Recover" />
 
     <EditText
         android:id="@+id/editText_EmailAddress"
@@ -32,6 +33,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_Recover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/password_recovery"
+        app:layout_constraintStart_toStartOf="@+id/editText_Password"
+        app:layout_constraintTop_toBottomOf="@+id/editText_Password" />
 
     <EditText
         android:id="@+id/editText_Password"
@@ -53,7 +63,7 @@
         android:id="@+id/textView_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="23dp"
         android:outlineProvider="bounds"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
@@ -67,6 +77,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_Password" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_Recover" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

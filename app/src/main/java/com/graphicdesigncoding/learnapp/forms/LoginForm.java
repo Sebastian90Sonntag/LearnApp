@@ -53,37 +53,6 @@ public class LoginForm extends Fragment {
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Get TextChangedListener from Email TextInput
-        binding.editTextEmailAddress.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-                // Set TintColor to Email TextInput
-                EditText et = view.findViewById(R.id.editText_EmailAddress);
-                et.getBackground().setTint(Color.TRANSPARENT);
-
-                // Get Input String from email
-                String email = s.toString();
-
-                //General Email Regex (RFC 5322 Official Standard)
-                if (!email.isEmpty() && new RegExPattern().Email(email)){
-
-                    et.getBackground().setTint(Color.GREEN);
-
-                }else{
-
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-
-                }
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-        });
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        // Get TextChangedListener from Email TextInput
         binding.editTextPassword.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
@@ -117,7 +86,35 @@ public class LoginForm extends Fragment {
 
         });
 
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // Get TextChangedListener from Email TextInput
+        binding.editTextEmailAddress.addTextChangedListener(new TextWatcher() {
 
+            public void afterTextChanged(Editable s) {
+                // Set TintColor to Email TextInput
+                EditText et = view.findViewById(R.id.editText_EmailAddress);
+                et.getBackground().setTint(Color.TRANSPARENT);
+
+                // Get Input String from email
+                String email = s.toString();
+
+                //General Email Regex (RFC 5322 Official Standard)
+                if (!email.isEmpty() && new RegExPattern().Email(email)){
+
+                    et.getBackground().setTint(Color.GREEN);
+
+                }else{
+
+                    et.requestFocus();
+                    et.getBackground().setTint(Color.RED);
+
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
         ///////////////////////////////////////////////////////////////////////////////////////////
         //Login Button Binding -> Send Login Data To Server
         binding.buttonLogin.setOnClickListener(btn_view -> {
@@ -232,6 +229,13 @@ public class LoginForm extends Fragment {
         binding.textViewRegister.setOnClickListener(view1 -> {
             Log.i("Login Window","Register Pressed");
             NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_LoginForm_to_RegisterForm);
+
+        });
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        //Register Link Binding -> Show Register Form
+        binding.textViewRecover.setOnClickListener(view1 -> {
+            Log.i("Login Window","Recover Pressed");
+            NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_LoginForm_to_RecoverForm);
 
         });
 

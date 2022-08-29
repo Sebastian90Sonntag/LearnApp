@@ -36,7 +36,7 @@
                 android:id="@+id/action_LoginForm_to_StartUpForm"
                 app:popUpToInclusive="false" />
             <action
-                android:id="@+id/action_LoginForm_to_recoverForm"
+                android:id="@+id/action_LoginForm_to_RecoverForm"
                 app:destination="@id/RecoverForm" />
         </fragment>
         <fragment
@@ -54,8 +54,8 @@
         <fragment
             android:id="@+id/RecoverForm"
             android:name="com.graphicdesigncoding.learnapp.forms.RecoverForm"
-            android:label="recover_form"
-            tools:layout="@layout/recover_form" >
+            android:label="Recover_form"
+            tools:layout="@layout/recover_form">
             <action
                 android:id="@+id/action_recoverForm_to_LoginForm"
                 app:destination="@id/LoginForm" />
