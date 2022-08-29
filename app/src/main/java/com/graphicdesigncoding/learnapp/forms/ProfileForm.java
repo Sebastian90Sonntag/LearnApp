@@ -34,7 +34,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-//COPYRIGHT BY GraphicDesignCoding
+/////////////////////////////////////
+//COPYRIGHT BY GraphicDesignCoding///
+/////////////////////////////////////
+
 public class ProfileForm extends Fragment
 {
     private ProfileFormBinding binding;
@@ -166,11 +169,11 @@ public class ProfileForm extends Fragment
                 // Set IMG -> ImageView
                 ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(resizedBMP.GetBitmap());
                 // Send data to server
-                SharedPreferences sharedPref1 = ((MainActivity)requireContext()).GetSharedPrefs("LoginData");
+                SharedPreferences sharedPref = ((MainActivity)requireContext()).GetSharedPrefs("LoginData");
                     // Get memorized 'UToken' from sharedPreferences
-                String token1 = sharedPref1.getString("UToken",null);
-                    // Get Editor from sharedPreferences
-                SharedPreferences.Editor editor = sharedPref1.edit();
+                String token1 = sharedPref.getString("UToken",null);
+
+
                 // Send Image to Server
                 new CallAPI("https://api.graphic-design-coding.de/profile/",
                         new Crypt().md5("token") + "=" + token1 + "&" + new Crypt().md5("image")  + "=" + new PrepareImageToBase64().Convert(resizedBMP),
@@ -181,6 +184,9 @@ public class ProfileForm extends Fragment
                         @Override
                         public void finished(Object obj) {
                             MainActivity mA = ((MainActivity)requireContext());
+                            SharedPreferences sharedPref = mA.GetSharedPrefs("LoginData");
+                            // Get Editor from sharedPreferences
+                            SharedPreferences.Editor editor = sharedPref.edit();
                             try {
 
                                 // Get the returned Object from Server request

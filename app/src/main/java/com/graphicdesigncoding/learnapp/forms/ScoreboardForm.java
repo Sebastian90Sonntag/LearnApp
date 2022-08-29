@@ -30,7 +30,10 @@ import com.graphicdesigncoding.learnapp.api.SimpleJson;
 import com.graphicdesigncoding.learnapp.api.TransferMethod;
 import com.graphicdesigncoding.learnapp.databinding.ScoreboardFormBinding;
 
-//COPYRIGHT BY GraphicDesignCoding
+/////////////////////////////////////
+//COPYRIGHT BY GraphicDesignCoding///
+/////////////////////////////////////
+
 public class ScoreboardForm extends Fragment {
     private ScoreboardFormBinding binding;
     private CustomArrayAdapter userArrayAdapter;

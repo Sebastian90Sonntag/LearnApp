@@ -27,7 +27,10 @@ import com.graphicdesigncoding.learnapp.api.TransferMethod;
 import com.graphicdesigncoding.learnapp.databinding.LoginFormBinding;
 import org.json.JSONObject;
 
-//COPYRIGHT BY GraphicDesignCoding
+/////////////////////////////////////
+//COPYRIGHT BY GraphicDesignCoding///
+/////////////////////////////////////
+
 public class LoginForm extends Fragment {
 
     private LoginFormBinding binding;
@@ -57,23 +60,7 @@ public class LoginForm extends Fragment {
 
                 // Set TintColor to Password TextInput
                 EditText et = view.findViewById(R.id.editText_Password);
-                et.getBackground().setTint(Color.TRANSPARENT);
-
-                // Get Input String from Password
-                String password = s.toString();
-
-                if(!password.isEmpty() && new RegExPattern().Password(password)){
-
-                    // Set TintColor when RegEx succeed
-                    et.getBackground().setTint(Color.GREEN);
-
-                }else{
-
-                    // Set TintColor when RegEx failed
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-
-                }
+                new InputChecker().editText(et,s.toString(),RegExPattern.Password);
             }
 
             ///////////////////////////////////////////////////////////////////////////////////////////
@@ -91,22 +78,7 @@ public class LoginForm extends Fragment {
             public void afterTextChanged(Editable s) {
                 // Set TintColor to Email TextInput
                 EditText et = view.findViewById(R.id.editText_EmailAddress);
-                et.getBackground().setTint(Color.TRANSPARENT);
-
-                // Get Input String from email
-                String email = s.toString();
-
-                //General Email Regex (RFC 5322 Official Standard)
-                if (!email.isEmpty() && new RegExPattern().Email(email)){
-
-                    et.getBackground().setTint(Color.GREEN);
-
-                }else{
-
-                    et.requestFocus();
-                    et.getBackground().setTint(Color.RED);
-
-                }
+                new InputChecker().editText(et,s.toString(),RegExPattern.Email);
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -120,16 +92,17 @@ public class LoginForm extends Fragment {
             //Set Input tint color
             view.findViewById(R.id.editText_EmailAddress).getBackground().setTint(Color.TRANSPARENT);
             view.findViewById(R.id.editText_Password).getBackground().setTint(Color.TRANSPARENT);
-
-            //Get Input data
-            String email = ((EditText) view.findViewById(R.id.editText_EmailAddress)).getText().toString();
-            String password = ((EditText) view.findViewById(R.id.editText_Password)).getText().toString();
+            EditText et_email = view.findViewById(R.id.editText_EmailAddress);
+            EditText et_password= view.findViewById(R.id.editText_Password);
+                    //Get Input data
+            String email = et_email.getText().toString();
+            String password = et_password.getText().toString();
 
             //Check if email data matches requirements
-            if(new RegExPattern().Email(email)){
+            if(new InputChecker().editText(et_email,email,RegExPattern.Email)){
 
                 //Check if password matches requirements
-                if(new RegExPattern().Password(password)){
+                if(new InputChecker().editText(et_password,password,RegExPattern.Password)){
                     // Send data to server
                     new CallAPI(
                             "https://api.graphic-design-coding.de/login",
@@ -174,6 +147,7 @@ public class LoginForm extends Fragment {
                                         editor.putString("UToken", token);
                                         editor.putString("UImage", imgLink);
                                         editor.apply();
+
                                         ((MainActivity) context).Debug("LoginForm", "SharedPreferences -> written");
 
                                         // Go to MainMenu
@@ -211,13 +185,11 @@ public class LoginForm extends Fragment {
                 }else{
                     //Set ViewInput to red
                     view.findViewById(R.id.editText_Password).requestFocus();
-                    view.findViewById(R.id.editText_Password).getBackground().setTint(Color.RED);
                     Toast.makeText(view.getContext(),"Password must match",Toast.LENGTH_LONG).show();
                 }
             }else{
                 //Set ViewInput to red
                 view.findViewById(R.id.editText_EmailAddress).requestFocus();
-                view.findViewById(R.id.editText_EmailAddress).getBackground().setTint(Color.RED);
                 Toast.makeText(view.getContext(),"Email must match",Toast.LENGTH_LONG).show();
             }
         });
