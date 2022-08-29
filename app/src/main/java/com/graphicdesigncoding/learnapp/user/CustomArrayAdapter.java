@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 //COPYRIGHT BY GraphicDesignCoding
 public class CustomArrayAdapter  extends ArrayAdapter<User> {
-    private static final String TAG = "FruitArrayAdapter";
+    private static final String TAG = "CustomArrayAdapter";
     private List<User> userList = new ArrayList<User>();
 
     static class UserViewHolder {
