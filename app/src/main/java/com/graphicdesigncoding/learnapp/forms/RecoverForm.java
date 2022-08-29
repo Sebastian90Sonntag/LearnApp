@@ -82,6 +82,64 @@ public class RecoverForm extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
+        binding.recoverEditNewpassword.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+
+                // Set TintColor to Password TextInput
+                EditText et = view.findViewById(R.id.recover_edit_newpassword);
+                et.getBackground().setTint(Color.TRANSPARENT);
+
+                // Get Input String from Email
+                String password = s.toString();
+
+                if (!password.isEmpty() && new RegExPattern().Password(password)) {
+
+                    // Set TintColor when RegEx succeed
+                    et.getBackground().setTint(Color.GREEN);
+                } else {
+
+                    // Set TintColor when RegEx failed
+                    et.requestFocus();
+                    et.getBackground().setTint(Color.RED);
+
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+        binding.recoverEditRepeatpassword.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+
+                // Set TintColor to Password TextInput
+                EditText et = view.findViewById(R.id.recover_edit_repeatpassword);
+                et.getBackground().setTint(Color.TRANSPARENT);
+
+                // Get Input String from Email
+                String reppassword = s.toString();
+
+                if (!reppassword.isEmpty() && new RegExPattern().Password(reppassword)) {
+
+                    // Set TintColor when RegEx succeed
+                    et.getBackground().setTint(Color.GREEN);
+                } else {
+
+                    // Set TintColor when RegEx failed
+                    et.requestFocus();
+                    et.getBackground().setTint(Color.RED);
+
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         binding.recoverButtonSendcode.setOnClickListener(btn_view -> {
@@ -101,6 +159,12 @@ public class RecoverForm extends Fragment {
                                     SimpleJson simpleJson = new SimpleJson();
                                     JSONObject jobj = simpleJson.Decode(_obj.toString());
                                     if(jobj.has(new Crypt().md5("ok"))) {
+                                        MainActivity activity = ((MainActivity)getActivity());
+                                        if (activity != null){
+
+                                            activity.showExtendedBar(true,"Password Recovery",false);
+
+                                        }
                                         mA.SetControlVisibility(view, R.id.recover_button_codecheck, true);
                                         mA.SetControlVisibility(view, R.id.recover_edit_newpassword, true);
                                         mA.SetControlVisibility(view, R.id.recover_edit_repeatpassword, true);
@@ -162,7 +226,11 @@ public class RecoverForm extends Fragment {
 
                             }
                         }
-                );}
+                );}else{
+
+                Toast.makeText(view.getContext(), "check input fields", Toast.LENGTH_LONG).show();
+
+            }
         });
     }
 
@@ -173,7 +241,7 @@ public class RecoverForm extends Fragment {
         MainActivity activity = ((MainActivity)getActivity());
         if (activity != null){
 
-            activity.showExtendedBar(true,"Recover",true);
+            activity.showExtendedBar(true,"Password Recovery",true);
 
         }
     }
