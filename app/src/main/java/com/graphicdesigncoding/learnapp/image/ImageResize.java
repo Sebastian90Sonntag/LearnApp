@@ -9,7 +9,7 @@ import java.util.Set;
 
 
 //COPYRIGHT BY GraphicDesignCoding
-public class IMG_Resize {
+public class ImageResize {
     private Bitmap bmp;
     private Bitmap resized;
     private ByteArrayOutputStream stream;
@@ -17,7 +17,7 @@ public class IMG_Resize {
     private int width;
     private int height;
 
-    public IMG_Resize(Bitmap _bmp, PIXEL size,@Nullable QUALITY_PERCENT qual){
+    public ImageResize(Bitmap _bmp, PIXEL size,@Nullable QUALITY_PERCENT qual){
         bmp = _bmp;
         width = size.pixel_value;
         height = size.pixel_value;
@@ -25,7 +25,7 @@ public class IMG_Resize {
         CompressResize();
     }
 
-    public IMG_Resize(Bitmap _bmp, int _width,int _height,@Nullable QUALITY_PERCENT qual){
+    public ImageResize(Bitmap _bmp, int _width,int _height,@Nullable QUALITY_PERCENT qual){
         bmp = _bmp;
         this.width = _width;
         this.height = _height;

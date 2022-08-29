@@ -18,8 +18,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.graphicdesigncoding.learnapp.image.IMG_Resize;
 import com.graphicdesigncoding.learnapp.MainActivity;
+import com.graphicdesigncoding.learnapp.image.ImageResize;
 import com.graphicdesigncoding.learnapp.image.PrepareImageToBase64;
 import com.graphicdesigncoding.learnapp.R;
 import com.graphicdesigncoding.learnapp.api.CallAPI;
@@ -158,10 +158,10 @@ public class ProfileForm extends Fragment
                 }
 
                 // Resize IMG
-                IMG_Resize resizedBMP = new IMG_Resize(
+                ImageResize resizedBMP = new ImageResize(
                         bitmap,
-                        IMG_Resize.PIXEL.X128,
-                        IMG_Resize.QUALITY_PERCENT.P100
+                        ImageResize.PIXEL.X128,
+                        ImageResize.QUALITY_PERCENT.P100
                 );
                 // Set IMG -> ImageView
                 ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(resizedBMP.GetBitmap());
