@@ -164,7 +164,7 @@ public class ProfileForm extends Fragment
                 IMG_Resize resizedBMP = new IMG_Resize(
                         bitmap,
                         IMG_Resize.PIXEL.X128,
-                        IMG_Resize.QUALITY_PERCENT.X100
+                        IMG_Resize.QUALITY_PERCENT.P100
                 );
                 // Set IMG -> ImageView
                 ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(resizedBMP.GetBitmap());

@@ -1,114 +1,90 @@
 package com.graphicdesigncoding.learnapp.image;
 
-import android.annotation.SuppressLint;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
 
 import androidx.annotation.Nullable;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.security.AccessControlContext;
-import java.security.AccessController;
+import java.util.Set;
 
 
 //COPYRIGHT BY GraphicDesignCoding
 public class IMG_Resize {
-    Bitmap bmp;
-    Bitmap resized;
-    ByteArrayOutputStream stream;
-    QUALITY_PERCENT qp;
-    int width;
-    int height;
-    public enum QUALITY_PERCENT{X10,X20,X30,X40,X50,X60,X70,X80,X90,X100}
-    public enum PIXEL{X16,X32,X64,X128,X256,X512,X1024}
+    private Bitmap bmp;
+    private Bitmap resized;
+    private ByteArrayOutputStream stream;
+    private QUALITY_PERCENT qp;
+    private int width;
+    private int height;
 
     public IMG_Resize(Bitmap _bmp, PIXEL size,@Nullable QUALITY_PERCENT qual){
-        SetContext();
         bmp = _bmp;
-        width = GetPixel(size);
-        height = GetPixel(size);
-        if (qual == null){
-            qual = QUALITY_PERCENT.X100;
-        }
-        qp = qual;
-        CompressResize(width,height);
+        width = size.pixel_value;
+        height = size.pixel_value;
+        SetDefQuality(qual);
+        CompressResize();
     }
+
     public IMG_Resize(Bitmap _bmp, int _width,int _height,@Nullable QUALITY_PERCENT qual){
-        SetContext();
         bmp = _bmp;
-        if (qual == null){
-            qual = QUALITY_PERCENT.X100;
-        }
-        qp = qual;
-        CompressResize(_width,_height);
+        this.width = _width;
+        this.height = _height;
+        SetDefQuality(qual);
+        CompressResize();
     }
     public ByteArrayOutputStream GetStream(){
         return stream;
     }
+
     public Bitmap GetBitmap(){
         return resized;
     }
-    private void SetContext(){
 
-    }
-    private void CompressResize( int width,int height){
+    private void CompressResize(){
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         stream = bytes;
         Bitmap newBmp = Bitmap.createScaledBitmap(bmp,width,height,true);
         //newBmp.compress(GetMimeType(_context,GetUri(_context,bmp)), GetQuality(qp), bytes);
-        newBmp.compress(Bitmap.CompressFormat.PNG, GetQuality(qp), bytes);
+        newBmp.compress(Bitmap.CompressFormat.PNG, qp.quality_value, bytes);
         resized = newBmp;
     }
-    private int GetQuality(QUALITY_PERCENT qual) {
-        switch(qual){
-            case X10:
-                return 10;
-            case X20:
-                return 20;
-            case X30:
-                return 30;
-            case X40:
-                return 40;
-            case X50:
-                return 50;
-            case X60:
-                return 60;
-            case X70:
-                return 70;
-            case X80:
-                return 80;
-            case X90:
-                return 90;
-            case X100:
-                return 100;
-        }
-        throw new RuntimeException("Stub!");
-    }
 
-    private int GetPixel(PIXEL _in){
-        switch (_in) {
-            case X16:
-                return 16;
-            case X32:
-                return 32;
-            case X64:
-                return 64;
-            case X128:
-                return 128;
-            case X256:
-                return 256;
-            case X512:
-                return 512;
-            case X1024:
-                return 1024;
+    private void SetDefQuality(QUALITY_PERCENT _qual){
+        if (_qual == null){
+            qp = QUALITY_PERCENT.P100;
         }
-        throw new RuntimeException("Stub!");
+        else{qp = _qual;}
     }
-
+    public enum PIXEL{
+        X16(16),
+        X32(32),
+        X64(64),
+        X128(128),
+        X256(256),
+        X512(512),
+        X1024(1024),
+        X2048(2048),
+        X4096(4096);
+        private final int pixel_value;
+        PIXEL(int pixel_value) {
+            this.pixel_value = pixel_value;
+        }
+    }
+    public enum QUALITY_PERCENT{
+        P10(10),
+        P20(20),
+        P30(30),
+        P40(40),
+        P50(50),
+        P60(60),
+        P70(70),
+        P80(80),
+        P90(90),
+        P100(100);
+        private final int quality_value;
+        QUALITY_PERCENT(int value) {
+            this.quality_value = value;
+        }
+    }
 }
 

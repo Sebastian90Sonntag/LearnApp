@@ -24,8 +24,7 @@
                 android:layout_height="128dp"
                 android:contentDescription="@string/todo"
                 android:paddingTop="10dp"
-                android:src="@drawable/ic_account_avatar"
-                app:srcCompat="@drawable/ic_gdclogo" />
+                android:src="@drawable/ic_account_avatar" />
 
             <TextView
                 android:id="@+id/textView_profil_greeting"
@@ -119,7 +118,7 @@
                 android:id="@+id/button_send"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Upload Image" />
+                android:text="@string/profile_btn" />
 
         </LinearLayout>
     </ScrollView>

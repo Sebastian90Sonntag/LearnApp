@@ -44,8 +44,15 @@ public class StartUpForm extends Fragment {
         view.findViewById(R.id.textview_app_title).animate().setDuration(0).alpha(0).start();
         view.findViewById(R.id.textview_app_title).animate().setStartDelay(1500).setDuration(4000).alpha(1).start();
 
+        view.findViewById(R.id.imageView_app_logo).animate().setStartDelay(2500).setDuration(3000).scaleX((float) 1.15).start();
+        view.findViewById(R.id.imageView_app_logo).animate().setStartDelay(2500).setDuration(3000).scaleY((float) 1.15).start();
+
         view.findViewById(R.id.imageView_gdc).animate().setDuration(5000).rotation(720.0f).start();
-        String unm=sharedPref.getString("UEmail", null);
+
+        view.findViewById(R.id.imageView_gdc).animate().setStartDelay(1500).setDuration(2500).scaleX((float) 1.5).start();
+        view.findViewById(R.id.imageView_gdc).animate().setStartDelay(1500).setDuration(2500).scaleY((float) 1.5).start();
+
+        String unm = sharedPref.getString("UEmail", null);
         String pass = sharedPref.getString("UPassword", null);
 
         if(unm != null && pass != null) {
@@ -73,11 +80,13 @@ public class StartUpForm extends Fragment {
         }
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
         ((MainActivity)getActivity()).showExtendedBar(false,"", false);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
