@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         int navId = Objects.requireNonNull(Navigation.findNavController(this, R.id.nav_host_fragment_content_main).getCurrentDestination()).getId();
-        if(navId == R.id.RegisterForm || navId == R.id.ProfileForm || navId == R.id.ScoreboardForm || navId == R.id.QuizForm){
+        if(navId == R.id.RegisterForm || navId == R.id.ProfileForm || navId == R.id.ScoreboardForm || navId == R.id.QuizForm || navId == R.id.RecoverForm){
             super.onBackPressed();
         }else if(navId == R.id.StartUpForm || navId == R.id.MainMenuForm || navId == R.id.LoginForm){
             this.finish();

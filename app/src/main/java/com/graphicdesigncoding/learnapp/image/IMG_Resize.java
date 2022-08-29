@@ -109,59 +109,6 @@ public class IMG_Resize {
         }
         throw new RuntimeException("Stub!");
     }
-/*
-public Bitmap.CompressFormat GetMimeType(Context _context, Uri _uriImage)
-{
-    String strMimeType;
-    Cursor cursor = _context.getContentResolver().query(_uriImage, new String[] { MediaStore.MediaColumns.MIME_TYPE }, null, null, null);
 
-    if (cursor != null && cursor.moveToNext()) {
-        strMimeType = cursor.getString(0);
-        switch (strMimeType) {
-            case "JPEG":
-                return Bitmap.CompressFormat.JPEG;
-            case "PNG":
-                return Bitmap.CompressFormat.PNG;
-            case "WEBP":
-                return Bitmap.CompressFormat.WEBP;
-        }
-    }else {
-        throw new RuntimeException("Stub!");
-    }
-    throw new RuntimeException("Stub!");
-}
-    public Uri GetUri(Context context, Bitmap inImage) {
-
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
-
-        return Uri.parse(path);
-    }
-    public static Uri GetUri(Context inContext, Object ResID ) {
-        String pkgName = inContext.getApplicationContext().getPackageName();
-        Uri path = Uri.parse("android.resource://"+pkgName+"/" + ResID);
-        return path;
-    }
-    public static Uri GetUri(Context context, File imageFile) {
-        String filePath = imageFile.getAbsolutePath();
-        Cursor cursor = context.getContentResolver().query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                new String[] { MediaStore.Images.Media._ID },
-                MediaStore.Images.Media.DATA + "=? ",
-                new String[] { filePath }, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
-            cursor.close();
-            return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + id);
-        } else {
-            if (imageFile.exists()) {
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.DATA, filePath);
-                return context.getContentResolver().insert(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            } else {
-                return null;
-            }
-        }
-    }*/
 }
 
