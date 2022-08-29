@@ -8,6 +8,8 @@
     <string name="previous" translatable="true">Previous</string>
     <string name="hint_email_address" translatable="true">Your Email</string>
     <string name="hint_password" translatable="true">Your Password</string>
+    <string name="password_recovery" translatable="true">Password forgotten?</string>
+
     <string name="hello_first_fragment">Login</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="learn_app" translatable="true">Learn App</string>
@@ -26,7 +28,12 @@
     <string name="scoreboard">Scoreboard</string>
     <string name="quit">Quit</string>
     <string name="main_menu">Main Menu</string>
-
+    <!-- Strings used for recovery for navigation -->
+    <string name="button_code">Send code to E-Mail</string>
+    <string name="edit_code">Enter Code</string>
+    <string name="button_submit_code">Submit</string>
+    <string name="edit_new_password">New Password</string>
+    <string name="edit_repeat_new_password">Repeat new Password</string>
     <!-- Profil -->
     <string name="btn_save" translatable="true">Save</string>
     <string name="profile">Profile</string>
