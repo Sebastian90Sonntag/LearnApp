@@ -223,14 +223,14 @@ public class LoginForm extends Fragment {
         });
 
         ///////////////////////////////////////////////////////////////////////////////////////////
-        //Register Link Binding -> Show Register Form
+        //Register Text Binding -> Show Register Form
         binding.textViewRegister.setOnClickListener(view1 -> {
             Log.i("Login Window","Register Pressed");
             NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_LoginForm_to_RegisterForm);
 
         });
         ///////////////////////////////////////////////////////////////////////////////////////////
-        //Register Link Binding -> Show Register Form
+        //Recover Text Binding -> Show Recover Form
         binding.textViewRecover.setOnClickListener(view1 -> {
             Log.i("Login Window","Recover Pressed");
             NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_LoginForm_to_RecoverForm);
