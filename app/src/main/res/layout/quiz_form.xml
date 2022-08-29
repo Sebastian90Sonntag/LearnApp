@@ -37,9 +37,6 @@
                         android:id="@+id/textView_card_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textColor="#FFFFFF"
-                        android:textColorHint="#FFFFFF"
                         android:textSize="20sp" />
 
                     <TextView
@@ -48,9 +45,6 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
-                        android:text="TextView hjkjkjkjkj ghjhhg gfhgf hgfhgfh h gh gfh ftghgfh gfhg fhgf gfh gfhgfh gfhgf hgh gf hgfh fhg h ghfg hgfh fgh fgh gfh fg h"
-                        android:textColor="@color/white"
-                        android:textColorHint="#FFFFFF"
                         android:textSize="16sp" />
 
                 </LinearLayout>
