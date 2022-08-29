@@ -24,6 +24,7 @@
                 android:id="@+id/cardview_root"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/black"
                 app:contentPadding="25dp">
 
                 <LinearLayout
@@ -38,6 +39,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="TextView"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#FFFFFF"
                         android:textSize="20sp" />
 
                     <TextView
@@ -47,6 +50,8 @@
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
                         android:text="TextView hjkjkjkjkj ghjhhg gfhgf hgfhgfh h gh gfh ftghgfh gfhg fhgf gfh gfhgfh gfhgf hgh gf hgfh fhg h ghfg hgfh fgh fgh gfh fg h"
+                        android:textColor="@color/white"
+                        android:textColorHint="#FFFFFF"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -60,7 +65,7 @@
         android:id="@+id/cl_btns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#E6E6E6"
+        android:background="?android:attr/colorBackground"
         android:paddingHorizontal="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
