@@ -24,6 +24,7 @@
                 android:id="@+id/cardview_root"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/black"
                 app:contentPadding="25dp">
 
                 <LinearLayout
@@ -60,7 +61,7 @@
         android:id="@+id/cl_btns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#E6E6E6"
+        android:background="?android:attr/colorBackground"
         android:paddingHorizontal="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
