@@ -19,25 +19,26 @@
 
     <EditText
         android:id="@+id/recover_edit_email"
+        style="@style/Theme.LearnApp.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
+        android:autofillHints=""
         android:drawableStart="@drawable/ic_baseline_email_24"
         android:drawablePadding="8dp"
         android:ems="10"
         android:hint="@string/hint_email_address"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
-        android:textColorHint="#757575"
         android:tooltipText="Example: example@mail.com"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/recover_edit_newpassword"
+        style="@style/Theme.LearnApp.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_baseline_lock_24"
@@ -57,6 +58,7 @@
 
     <EditText
         android:id="@+id/recover_edit_repeatpassword"
+        style="@style/Theme.LearnApp.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="360dp"
@@ -78,6 +80,7 @@
 
     <EditText
         android:id="@+id/recover_edit_code"
+        style="@style/Theme.LearnApp.EditText"
         android:layout_width="210dp"
         android:layout_height="48dp"
         android:layout_marginTop="25dp"
