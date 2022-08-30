@@ -21,7 +21,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.appbar.AppBarLayout;
 import java.util.Objects;
 
-import com.graphicdesigncoding.learnapp.api.Data;
 import com.graphicdesigncoding.learnapp.databinding.ActivityMainBinding;
 
 

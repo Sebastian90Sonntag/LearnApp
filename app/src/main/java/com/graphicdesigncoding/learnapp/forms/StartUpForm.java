@@ -34,7 +34,7 @@ public class StartUpForm extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
 
@@ -59,6 +59,7 @@ public class StartUpForm extends Fragment {
 
         view.findViewById(R.id.imageView_gdc).animate().setStartDelay(1500).setDuration(2500).scaleX((float) 1.5).start();
         view.findViewById(R.id.imageView_gdc).animate().setStartDelay(1500).setDuration(2500).scaleY((float) 1.5).start();
+
         // Check for login data
         Context context = requireActivity();
         SharedPreferences sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
@@ -71,7 +72,7 @@ public class StartUpForm extends Fragment {
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
-                        // Do the task...
+                        // Auto Login
                         new CallAPI(
                                 "https://api.graphic-design-coding.de/login",
                                 "{\"e\":\"" + unm + "\",\"p\":\"" + pass + "\"}",
@@ -120,8 +121,6 @@ public class StartUpForm extends Fragment {
                                             NavHostFragment.findNavController(StartUpForm.this).navigate(R.id.action_StartUpForm_to_nav_main);
 
                                             ((MainActivity) context).Debug("LoginForm", "Login -> performed");
-
-
                                         }
                                     }
 
