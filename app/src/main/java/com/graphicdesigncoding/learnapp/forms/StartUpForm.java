@@ -34,8 +34,10 @@ public class StartUpForm extends Fragment {
 
     @Override
     public View onCreateView(
+
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
+
     ) {
 
         binding = StartupFormBinding.inflate(inflater, container, false);
@@ -44,6 +46,7 @@ public class StartUpForm extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
         //Animation
@@ -66,116 +69,123 @@ public class StartUpForm extends Fragment {
         String unm = sharedPref.getString("UEmail", null);
         String pass = sharedPref.getString("UPassword", null);
 
+        Handler handler = new Handler();
+        Runnable runnable;// Do the task...
         if (unm != null && pass != null) {
-                Handler handler = new Handler();
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        // Auto Login
-                        new CallAPI(
-                                "https://api.graphic-design-coding.de/login",
-                                "{\"e\":\"" + unm + "\",\"p\":\"" + pass + "\"}",
-                                ContentType.APPLICATION_JSON,
-                                TransferMethod.POST,
-                                new Callback() {
-                                    @Override
-                                    public void finished(Object _obj) {
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+                    // Auto Login
+                    new CallAPI(
+                            "https://api.graphic-design-coding.de/login",
+                            "{\"e\":\"" + unm + "\",\"p\":\"" + pass + "\"}",
+                            ContentType.APPLICATION_JSON,
+                            TransferMethod.POST,
+                            new Callback() {
+                                @Override
+                                public void finished(Object _obj) {
 
-                                        SimpleJson simpleJson = new SimpleJson();
-                                        JSONObject obj = simpleJson.Decode(_obj.toString());
-                                        Crypt crypt = new Crypt();
-                                        String token = crypt.md5("token");
-                                        String imgLink = crypt.md5("image_link");
-                                        String firstname = crypt.md5("firstname");
-                                        String lastname = crypt.md5("lastname");
-                                        String username = crypt.md5("username");
+                                    SimpleJson simpleJson = new SimpleJson();
+                                    JSONObject obj = simpleJson.Decode(_obj.toString());
+                                    Crypt crypt = new Crypt();
+                                    String token = crypt.md5("token");
+                                    String imgLink = crypt.md5("image_link");
+                                    String firstname = crypt.md5("firstname");
+                                    String lastname = crypt.md5("lastname");
+                                    String username = crypt.md5("username");
 
-                                        if (obj.has(token) && obj.has(imgLink) && obj.has(firstname) &&
-                                                obj.has(lastname) && obj.has(username)) {
+                                    if (obj.has(token) && obj.has(imgLink) && obj.has(firstname) &&
+                                            obj.has(lastname) && obj.has(username)) {
 
-                                            // Set data to variables from JSONObj
-                                            token = simpleJson.Get(obj, token).toString();
-                                            imgLink = simpleJson.Get(obj, imgLink).toString();
-                                            firstname = simpleJson.Get(obj, firstname).toString();
-                                            lastname = simpleJson.Get(obj, lastname).toString();
-                                            username = simpleJson.Get(obj, username).toString();
+                                        // Set data to variables from JSONObj
+                                        token = simpleJson.Get(obj, token).toString();
+                                        imgLink = simpleJson.Get(obj, imgLink).toString();
+                                        firstname = simpleJson.Get(obj, firstname).toString();
+                                        lastname = simpleJson.Get(obj, lastname).toString();
+                                        username = simpleJson.Get(obj, username).toString();
 
-                                            // Check for login data
-                                            Context context = requireContext();
-                                            SharedPreferences sharedPref;
+                                        // Check for login data
+                                        Context context = requireContext();
+                                        SharedPreferences sharedPref;
 
-                                            // Write shared Preferences
-                                            sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = sharedPref.edit();
-                                            editor.putString("UFirstname", firstname);
-                                            editor.putString("ULastname", lastname);
-                                            editor.putString("UUsername", username);
-                                            editor.putString("UToken", token);
-                                            editor.putString("UImage", imgLink);
-                                            editor.apply();
+                                        // Write shared Preferences
+                                        sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putString("UEmail", unm);
+                                        editor.putString("UPassword", pass);
+                                        editor.putString("UFirstname", firstname);
+                                        editor.putString("ULastname", lastname);
+                                        editor.putString("UUsername", username);
+                                        editor.putString("UToken", token);
+                                        editor.putString("UImage", imgLink);
+                                        editor.apply();
 
-                                            ((MainActivity) context).Debug("LoginForm", "SharedPreferences -> written");
+                                        ((MainActivity) context).Debug("LoginForm", "SharedPreferences -> written");
 
-                                            // Go to MainMenu
-                                            NavHostFragment.findNavController(StartUpForm.this).navigate(R.id.action_StartUpForm_to_nav_main);
+                                        // Go to MainMenu
+                                        NavHostFragment.findNavController(StartUpForm.this).navigate(R.id.action_StartUpForm_to_nav_main);
 
-                                            ((MainActivity) context).Debug("LoginForm", "Login -> performed");
-                                        }
-                                    }
+                                        ((MainActivity) context).Debug("LoginForm", "Login -> performed");
 
-                                    @Override
-                                    public void canceled(Object _obj) {
-                                        // No connection to server || No internet
-                                        SimpleJson simpleJson = new SimpleJson();
-                                        JSONObject obj = simpleJson.Decode(_obj.toString());
-                                        Crypt crypt = new Crypt();
-                                        String error = crypt.md5("error");
-
-                                        if (obj.has(error)) {
-
-                                            String the_error = simpleJson.Get(obj,error).toString();
-                                            ((MainActivity) requireActivity()).Debug("LoginForm", the_error);
-                                            Toast.makeText(view.getContext(), "Wrong login data", Toast.LENGTH_LONG).show();
-
-                                        } else {
-
-                                            NavHostFragment.findNavController(StartUpForm.this).navigate(R.id.action_StartUpForm_to_nav_login_logout);
-                                            ((MainActivity) requireActivity()).Debug("LoginForm", "Server Error");
-                                            Toast.makeText(view.getContext(), "Server Error", Toast.LENGTH_LONG).show();
-
-                                        }
                                     }
                                 }
-                        );
-                        handler.removeCallbacks(this);
-                    }
-                };
-                handler.postDelayed(runnable, 5000);
-            } else {
-                Handler handler = new Handler();
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        // Do the task...
-                        NavHostFragment.findNavController(StartUpForm.this).navigate(R.id.action_StartUpForm_to_nav_login_logout);
-                        handler.removeCallbacks(this);
-                    }
-                };
-                handler.postDelayed(runnable, 5000);
-            }
 
+                                @Override
+                                public void canceled(Object _obj) {
+                                    // No connection to server || No internet
+                                    SimpleJson simpleJson = new SimpleJson();
+                                    JSONObject obj = simpleJson.Decode(_obj.toString());
+                                    Crypt crypt = new Crypt();
+                                    String error = crypt.md5("error");
+
+                                    if (obj.has(error)) {
+
+                                        String the_error = simpleJson.Get(obj, error).toString();
+                                        ((MainActivity) requireActivity()).Debug("LoginForm", the_error);
+                                        Toast.makeText(view.getContext(), "Wrong login data", Toast.LENGTH_LONG).show();
+
+                                    } else {
+
+                                        NavHostFragment.findNavController(StartUpForm.this).navigate(R.id.action_StartUpForm_to_nav_login_logout);
+                                        ((MainActivity) requireActivity()).Debug("LoginForm", "Server Error");
+                                        Toast.makeText(view.getContext(), "Server Error", Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+                            }
+                    );
+                    handler.removeCallbacks(this);
+                }
+            };
+        } else {
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+
+                    NavHostFragment.findNavController(StartUpForm.this).navigate(R.id.action_StartUpForm_to_nav_login_logout);
+                    handler.removeCallbacks(this);
+
+                }
+            };
         }
+        handler.postDelayed(runnable, 5000);
+
+    }
 
     @Override
     public void onResume() {
+
         super.onResume();
         ((MainActivity)requireActivity()).showExtendedBar(false,"", false);
+
     }
 
     @Override
     public void onDestroyView() {
+
         super.onDestroyView();
         binding = null;
+
     }
 
 }
