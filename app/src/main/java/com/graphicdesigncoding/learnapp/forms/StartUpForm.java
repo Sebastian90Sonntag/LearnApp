@@ -36,8 +36,9 @@ public class StartUpForm extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         // Check for login data
-        Context context = getActivity();
+        Context context = requireActivity();
         SharedPreferences sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
         view.findViewById(R.id.imageView_app_logo).animate().setDuration(0).alpha(0).start();
         view.findViewById(R.id.imageView_app_logo).animate().setDuration(3000).alpha(1).start();
@@ -58,6 +59,7 @@ public class StartUpForm extends Fragment {
         if(unm != null && pass != null) {
             Handler handler = new Handler();
             Runnable runnable = new Runnable() {
+
                 @Override
                 public void run() {
                     // Do the task...
@@ -78,13 +80,12 @@ public class StartUpForm extends Fragment {
             };
             handler.postDelayed(runnable, 5000);
         }
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity)getActivity()).showExtendedBar(false,"", false);
+        ((MainActivity)requireActivity()).showExtendedBar(false,"", false);
     }
 
     @Override
@@ -92,4 +93,5 @@ public class StartUpForm extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }

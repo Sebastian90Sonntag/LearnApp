@@ -51,7 +51,7 @@ public class QuizForm extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(R.id.cardview_content).setVisibility(View.GONE);
-        MainActivity mA = ((MainActivity)getContext());
+        MainActivity mA = ((MainActivity)requireContext());
         SharedPreferences sPref = mA.GetSharedPrefs("LoginData");
         String token = sPref.getString("UToken",null);
 
@@ -81,13 +81,15 @@ public class QuizForm extends Fragment {
                             view.findViewById(R.id.cardview_content).setVisibility(View.VISIBLE);
 
                         } else {
-
+                            MainActivity mA = (MainActivity) requireActivity();
                             if(jobj.has(new Crypt().md5("error"))){
 
-                                System.out.println(jobj.getString(new Crypt().md5("error")));
+
+                                mA.Debug("QuizForm",jobj.getString(new Crypt().md5("error")));
+
                             }else{
 
-                                System.out.println("EMPTY JSON");
+                                mA.Debug("QuizForm","Empty JSON");
                             }
                         }
 
@@ -161,7 +163,7 @@ public class QuizForm extends Fragment {
         ll.animate().setDuration(500).rotationY(90).alpha(0).withEndAction(() -> {
             ll.animate().rotationY(-90).withEndAction(() -> {
 
-                MainActivity mA = ((MainActivity)getContext());
+                MainActivity mA = ((MainActivity)requireContext());
                 SharedPreferences sPref = mA.GetSharedPrefs("LoginData");
                 String token = sPref.getString("UToken",null);
 
@@ -185,7 +187,8 @@ public class QuizForm extends Fragment {
                                         @Override
                                         public void finished(Object obj) {
                                             try {
-
+                                                MainActivity mA = (MainActivity) requireActivity();
+                                                mA.Debug("QuizForm",obj.toString());
                                                 JSONObject jobj = new JSONObject(obj.toString());
 
                                                 if (!jobj.has(new Crypt().md5("error")) && jobj.length() > 0) {
@@ -200,15 +203,17 @@ public class QuizForm extends Fragment {
                                                     ll.animate().setDuration(500).rotationY(0).alpha(1).withEndAction(() -> {
 
                                                         view.findViewById(R.id.button_show).setVisibility(View.VISIBLE);
+
                                                     });
                                                 } else {
 
                                                     if (jobj.has(new Crypt().md5("error"))) {
 
-                                                        System.out.println(jobj.getString(new Crypt().md5("error")));
+                                                        mA.Debug("QuizForm",jobj.getString(new Crypt().md5("error")));
+
                                                     } else {
 
-                                                        System.out.println("EMPTY JSON");
+                                                        mA.Debug("QuizForm",jobj.getString("Empty JSON"));
                                                     }
                                                 }
 
@@ -240,7 +245,7 @@ public class QuizForm extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity)getActivity()).showExtendedBar(true,"Quiz",true);
+        ((MainActivity)requireActivity()).showExtendedBar(true,"Quiz",true);
     }
 
     @Override
