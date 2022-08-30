@@ -67,7 +67,6 @@ public class StartUpForm extends Fragment {
         String pass = sharedPref.getString("UPassword", null);
 
         if (unm != null && pass != null) {
-            if (!unm.isEmpty() && !pass.isEmpty()) {
                 Handler handler = new Handler();
                 Runnable runnable = new Runnable() {
                     @Override
@@ -152,7 +151,7 @@ public class StartUpForm extends Fragment {
                     }
                 };
                 handler.postDelayed(runnable, 5000);
-            }} else {
+            } else {
                 Handler handler = new Handler();
                 Runnable runnable = new Runnable() {
                     @Override
