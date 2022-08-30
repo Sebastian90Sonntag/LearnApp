@@ -20,6 +20,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.appbar.AppBarLayout;
 import java.util.Objects;
+
+import com.graphicdesigncoding.learnapp.api.Data;
 import com.graphicdesigncoding.learnapp.databinding.ActivityMainBinding;
 
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build(); // Build the App Bar
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration); // Build the Navigation Controller
         binding.imageButtonBack.setOnClickListener((btn_view)-> onBackPressed());
+
         // Get max available VM memory, exceeding this amount will throw an
         // OutOfMemory exception. Stored in kilobytes as LruCache takes an
         // int in its constructor.

@@ -140,7 +140,7 @@ public class LoginForm extends Fragment {
                                         sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         editor.putString("UEmail", email);
-                                        editor.putString("UPwd", password);
+                                        editor.putString("UPassword", password);
                                         editor.putString("UFirstname", firstname);
                                         editor.putString("ULastname", lastname);
                                         editor.putString("UUsername", username);
