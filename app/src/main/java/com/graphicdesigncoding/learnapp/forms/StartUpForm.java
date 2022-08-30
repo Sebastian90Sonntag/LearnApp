@@ -108,6 +108,8 @@ public class StartUpForm extends Fragment {
                                         // Write shared Preferences
                                         sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putString("UEmail", unm);
+                                        editor.putString("UPassword", pass);
                                         editor.putString("UFirstname", firstname);
                                         editor.putString("ULastname", lastname);
                                         editor.putString("UUsername", username);
