@@ -66,7 +66,7 @@ public class ProfileForm extends Fragment
         if (!(token.isEmpty() && username.isEmpty() && lastname.isEmpty() &&
                 firstname.isEmpty() && email.isEmpty()))
         {
-            ((TextView) view.findViewById( R.id.textView_email )).setText(username);
+            ((TextView) view.findViewById( R.id.textView_email )).setText(email);
             ((TextView) view.findViewById(R.id.textView_firstname)).setText(firstname);
             ((TextView) view.findViewById(R.id.textView_lastname)).setText(lastname);
             ((TextView) view.findViewById(R.id.textView_username)).setText(username);
