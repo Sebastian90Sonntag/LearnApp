@@ -123,6 +123,7 @@ public class StartUpForm extends Fragment {
                                         NavHostFragment.findNavController(StartUpForm.this).navigate(R.id.action_StartUpForm_to_nav_main);
 
                                         ((MainActivity) context).Debug("LoginForm", "Login -> performed");
+
                                     }
                                 }
 
@@ -157,9 +158,10 @@ public class StartUpForm extends Fragment {
             runnable = new Runnable() {
                 @Override
                 public void run() {
-                    // Do the task...
+
                     NavHostFragment.findNavController(StartUpForm.this).navigate(R.id.action_StartUpForm_to_nav_login_logout);
                     handler.removeCallbacks(this);
+
                 }
             };
         }
@@ -169,14 +171,18 @@ public class StartUpForm extends Fragment {
 
     @Override
     public void onResume() {
+
         super.onResume();
         ((MainActivity)requireActivity()).showExtendedBar(false,"", false);
+
     }
 
     @Override
     public void onDestroyView() {
+
         super.onDestroyView();
         binding = null;
+
     }
 
 }
