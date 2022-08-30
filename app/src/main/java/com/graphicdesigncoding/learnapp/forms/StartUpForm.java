@@ -34,8 +34,10 @@ public class StartUpForm extends Fragment {
 
     @Override
     public View onCreateView(
+
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
+
     ) {
 
         binding = StartupFormBinding.inflate(inflater, container, false);
@@ -44,6 +46,7 @@ public class StartUpForm extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
         //Animation
