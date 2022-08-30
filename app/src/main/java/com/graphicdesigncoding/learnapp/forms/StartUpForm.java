@@ -46,9 +46,7 @@ public class StartUpForm extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Check for login data
-        Context context = requireActivity();
-        SharedPreferences sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
+        //Animation
         view.findViewById(R.id.imageView_app_logo).animate().setDuration(0).alpha(0).start();
         view.findViewById(R.id.imageView_app_logo).animate().setDuration(3000).alpha(1).start();
         view.findViewById(R.id.textview_app_title).animate().setDuration(0).alpha(0).start();
@@ -61,7 +59,9 @@ public class StartUpForm extends Fragment {
 
         view.findViewById(R.id.imageView_gdc).animate().setStartDelay(1500).setDuration(2500).scaleX((float) 1.5).start();
         view.findViewById(R.id.imageView_gdc).animate().setStartDelay(1500).setDuration(2500).scaleY((float) 1.5).start();
-
+        // Check for login data
+        Context context = requireActivity();
+        SharedPreferences sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
         String unm = sharedPref.getString("UEmail", null);
         String pass = sharedPref.getString("UPassword", null);
 
