@@ -154,7 +154,8 @@ public class RegisterForm  extends Fragment {
 
                             @Override
                             public void finished(Object obj) {
-                                System.out.println(obj);
+                                MainActivity mA = (MainActivity) requireActivity();
+                                mA.Debug("RegisterForm",obj.toString());
                                 NavHostFragment.findNavController(RegisterForm.this).navigate(R.id.action_RegisterForm_to_LoginForm);
                                 Toast.makeText(view.getContext(),"Registered",Toast.LENGTH_LONG).show();
                             }

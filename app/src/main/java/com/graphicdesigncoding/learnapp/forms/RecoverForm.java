@@ -101,38 +101,37 @@ public class RecoverForm extends Fragment {
                     String email = ((EditText) view.findViewById(R.id.recover_edit_email)).getText().toString();
 
                     new CallAPI(
-                            "https://api.graphic-design-coding.de/login",
-                            "{\"e\":\"" + email + "\",\"r\":\"" + new Crypt().md5("recover") + "\"}",
-                            ContentType.APPLICATION_JSON,
-                            TransferMethod.POST,
-                            new Callback() {
-                                @Override
-                                public void finished(Object _obj) {
-                                    SimpleJson simpleJson = new SimpleJson();
-                                    JSONObject jobj = simpleJson.Decode(_obj.toString());
-                                    if(jobj.has(new Crypt().md5("ok"))) {
-                                        MainActivity activity = ((MainActivity)getActivity());
-                                        if (activity != null){
+                        "https://api.graphic-design-coding.de/login",
+                        "{\"e\":\"" + email + "\",\"r\":\"" + new Crypt().md5("recover") + "\"}",
+                        ContentType.APPLICATION_JSON,
+                        TransferMethod.POST,
+                        new Callback() {
+                            @Override
+                            public void finished(Object _obj) {
+                                SimpleJson simpleJson = new SimpleJson();
+                                JSONObject jobj = simpleJson.Decode(_obj.toString());
 
-                                            activity.showExtendedBar(true,"Password Recovery",false);
+                                if(jobj.has(new Crypt().md5("ok"))) {
 
-                                        }
-                                        mA.SetControlVisibility(view, R.id.recover_button_codecheck, true);
-                                        mA.SetControlVisibility(view, R.id.recover_edit_newpassword, true);
-                                        mA.SetControlVisibility(view, R.id.recover_edit_repeatpassword, true);
-                                        mA.SetControlVisibility(view, R.id.recover_edit_code, true);
-                                    }
-                                }
+                                    MainActivity mA = ((MainActivity)requireActivity());
+                                    mA.showExtendedBar(true,"Password Recovery",false);
 
-                                @Override
-                                public void canceled(Object _obj) {
-
-                                    Toast.makeText(view.getContext(), "no valid email", Toast.LENGTH_LONG).show();
-                                    mA.SetControlVisibility(view,R.id.recover_edit_email,true);
-                                    mA.SetControlVisibility(view,R.id.recover_button_sendcode,true);
-
+                                    mA.SetControlVisibility(view, R.id.recover_button_codecheck, true);
+                                    mA.SetControlVisibility(view, R.id.recover_edit_newpassword, true);
+                                    mA.SetControlVisibility(view, R.id.recover_edit_repeatpassword, true);
+                                    mA.SetControlVisibility(view, R.id.recover_edit_code, true);
                                 }
                             }
+
+                            @Override
+                            public void canceled(Object _obj) {
+
+                                Toast.makeText(view.getContext(), "no valid email", Toast.LENGTH_LONG).show();
+                                mA.SetControlVisibility(view,R.id.recover_edit_email,true);
+                                mA.SetControlVisibility(view,R.id.recover_button_sendcode,true);
+
+                            }
+                        }
                     );
                 });
         binding.recoverButtonCodecheck.setOnClickListener(btn_view->{
@@ -141,10 +140,6 @@ public class RecoverForm extends Fragment {
             String password = ((EditText) view.findViewById(R.id.recover_edit_newpassword)).getText().toString();
             String repeatpassword = ((EditText) view.findViewById(R.id.recover_edit_repeatpassword)).getText().toString();
 
-            System.out.println(code);
-            System.out.println(password);
-            System.out.println(repeatpassword);
-            System.out.println("{\"rt\":\"" + code + "\",\"r\":\"" + new Crypt().md5("recoverToken")+"\",\"p\":\"" + password + "\",\"rp\":\"" + repeatpassword +"\"}");
             if (!code.isEmpty() && !password.isEmpty() && !repeatpassword.isEmpty() && password.equals(repeatpassword)){
                 mA.SetControlVisibility(view, R.id.recover_button_codecheck, false);
                 mA.SetControlVisibility(view, R.id.recover_edit_newpassword, false);

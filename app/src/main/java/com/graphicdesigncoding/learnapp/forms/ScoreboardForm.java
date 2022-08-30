@@ -77,10 +77,10 @@ public class ScoreboardForm extends Fragment {
                 new Callback() {
                     @Override
                     public void finished(Object responseMsg) {
-
+                        MainActivity mA = (MainActivity) requireActivity();
                         JSONObject obj;
                         SimpleJson simpleJson = new SimpleJson();
-                        System.out.println(responseMsg.toString());
+                        mA.Debug("ScoreboardForm",responseMsg.toString());
                         obj = simpleJson.Decode(responseMsg.toString());
                         String token;
                         String str_md5Data = new Crypt().md5("data");
@@ -94,7 +94,6 @@ public class ScoreboardForm extends Fragment {
 
                                 JSONArray data_j_array = simpleJson.GetArray(obj,str_md5Data);
                                 resultListCount = data_j_array.length();
-                                MainActivity activity = (((MainActivity) requireActivity()));
                                 for (int i = 0; i < resultListCount; i++) {
 
                                     UserItem user = new UserItem();
@@ -104,9 +103,9 @@ public class ScoreboardForm extends Fragment {
                                     user.score = simpleJson.Get(j_object, "score").toString();
 
 
-                                    if (activity.isBitmapInMemoryCache(u_img)) {
+                                    if (mA.isBitmapInMemoryCache(u_img)) {
 
-                                        user.image = activity.getBitmapFromMemCache(u_img);
+                                        user.image = mA.getBitmapFromMemCache(u_img);
                                         resultList.add(new User(user.image, user.name, user.score));
                                         OrderList();
 
@@ -121,17 +120,18 @@ public class ScoreboardForm extends Fragment {
 
                                                     @Override
                                                     public void finished(Object responseMsg) {
-
-                                                        activity.addBitmapToMemoryCache(u_img, (Bitmap) responseMsg);
-                                                        user.image = activity.getBitmapFromMemCache(u_img);
+                                                        MainActivity mA = (MainActivity) requireActivity();
+                                                        mA.addBitmapToMemoryCache(u_img, (Bitmap) responseMsg);
+                                                        user.image = mA.getBitmapFromMemCache(u_img);
                                                         resultList.add(new User(user.image, user.name, user.score));
                                                         OrderList();
                                                     }
 
                                                     @Override
                                                     public void canceled(Object responseMsg) {
-                                                        System.out.println(responseMsg);
-                                                        user.image = activity.getBitmapFromVectorDrawable(getContext(), R.drawable.ic_account_avatar);
+                                                        MainActivity mA = (MainActivity) requireActivity();
+                                                        mA.Debug("ScoreboardForm",responseMsg.toString());
+                                                        user.image = mA.getBitmapFromVectorDrawable(getContext(), R.drawable.ic_account_avatar);
                                                         resultList.add(new User(user.image, user.name, user.score));
                                                         OrderList();
                                                     }
@@ -140,7 +140,7 @@ public class ScoreboardForm extends Fragment {
 
                                     } else {
 
-                                        user.image = activity.getBitmapFromVectorDrawable(getContext(), R.drawable.ic_account_avatar);
+                                        user.image = mA.getBitmapFromVectorDrawable(getContext(), R.drawable.ic_account_avatar);
                                         resultList.add(new User(user.image, user.name, user.score));
                                         OrderList();
 
@@ -168,10 +168,8 @@ public class ScoreboardForm extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        MainActivity activity = ((MainActivity)getActivity());
-                if(activity!=null){
-                    activity.showExtendedBar(true,"Score Board", true);
-                }
+        MainActivity mA = ((MainActivity)requireActivity());
+        mA.showExtendedBar(true,"Score Board", true);
     }
 
     @Override
