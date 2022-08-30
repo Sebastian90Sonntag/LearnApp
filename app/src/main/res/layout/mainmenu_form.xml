@@ -23,7 +23,7 @@
             android:layout_marginTop="25dp"
             android:backgroundTint="#673AB7"
             android:text="@string/quiz"
-            android:textColor="#C5CAE9"
+            android:textColor="?android:attr/colorBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +36,7 @@
             android:layout_marginTop="30dp"
             android:backgroundTint="#686868"
             android:text="@string/scoreboard"
-            android:textColor="#DCEDC8"
+            android:textColor="?android:attr/colorBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_quiz" />
@@ -49,6 +49,7 @@
             android:layout_marginTop="30dp"
             android:backgroundTint="#686868"
             android:text="@string/profile"
+            android:textColor="?android:attr/colorBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_scoreboard" />
@@ -59,8 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="25dp"
             android:layout_marginTop="100dp"
+            android:backgroundTint="#673AB7"
             android:text="@string/quit"
-            android:textColor="#FFFFFF"
+            android:textColor="?android:attr/colorBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_profil"

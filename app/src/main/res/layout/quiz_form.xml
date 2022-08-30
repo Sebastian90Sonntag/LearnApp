@@ -24,6 +24,7 @@
                 android:id="@+id/cardview_root"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="?android:attr/colorBackground"
                 app:contentPadding="25dp">
 
                 <LinearLayout
@@ -88,6 +89,7 @@
             android:layout_height="wrap_content"
             android:text="Known"
             android:visibility="gone"
+            android:textColor="?android:attr/colorBackground"
             tools:layout_editor_absoluteX="265dp"
             tools:layout_editor_absoluteY="48dp" />
 
@@ -97,6 +99,7 @@
             android:layout_height="wrap_content"
             android:text="Sooo close"
             android:visibility="gone"
+            android:textColor="?android:attr/colorBackground"
             tools:layout_editor_absoluteX="60dp" />
 
         <Button
@@ -105,6 +108,7 @@
             android:layout_height="wrap_content"
             android:text="Dont know"
             android:visibility="gone"
+            android:textColor="?android:attr/colorBackground"
             tools:layout_editor_absoluteX="45dp"
             tools:layout_editor_absoluteY="48dp" />
 
@@ -113,6 +117,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Show answer"
+            android:textColor="?android:attr/colorBackground"
             tools:layout_editor_absoluteX="227dp"
             tools:layout_editor_absoluteY="48dp" />
 
