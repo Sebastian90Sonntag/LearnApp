@@ -4,7 +4,7 @@ THIS PROJECT IS A PART OF GraphicDesignCoding UG.
 
 All constributers are not allowed to use any code of this project in projects outside of this organisation.
 
-All apps that are developed by any code from this project will be a property of GraphicDesignCoding.
+All apps that are developed by any code of this project will be a property of GraphicDesignCoding.
 
 
 
