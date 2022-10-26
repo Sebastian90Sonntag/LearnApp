@@ -13,3 +13,5 @@ Die Nutzung von Codesnippets oder ähnlichen Zeilen an Code ist untersagt, auße
 Constributoren ist es ebenfalls untersagt, den Code dieses Projekts außerhalb von der Organisation zu nutzen.
 
 Alle Apps, die mit diesem Code oder Strukturell gleicher Art erstellt werden, gehen automatisch in den Besitz von GraphicDesignCoding UG über.
+
+COPYRIGHT BY GraphicDesignCoding UG.
