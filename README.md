@@ -1,6 +1,6 @@
 # LearnApp
 
-THIS PROJECT IS A PART OF GraphicDesignCoding UG.
+THIS PROJECT IS A PART OF GraphicDesignCoding.
 
 All constributers are not allowed to use any code of this project in projects outside of this organisation.
 
