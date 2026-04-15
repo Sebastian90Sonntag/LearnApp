@@ -1,56 +1,56 @@
-# 📚 LearnApp
+# LearnApp
 
-Eine Android-Lernplattform, entwickelt als Einwochenprojekt im Rahmen von **Extreme Programming** bei [GraphicDesignCoding](https://github.com/graphicdesigncoding).
+![Android CI](https://github.com/Sebastian90Sonntag/LearnApp/actions/workflows/android.yml/badge.svg)
 
-## Über das Projekt
+A collaborative Android learning platform built with Java and Firebase.
 
-Die LearnApp wurde als kollaboratives Projekt konzipiert, um Lerninhalte mobil zugänglich zu machen. Das Projekt entstand in einer intensiven Entwicklungswoche mit Fokus auf agile Methoden und Teamarbeit.
+> Developed in a one-week Extreme Programming sprint.
 
 ## Features
 
-- 📖 Lernmodule mit strukturierten Inhalten
-- 🧭 Fragment-basierte Navigation
-- 🔐 Verschlüsselte Datenhaltung (AndroidX Security Crypto)
-- 📊 Grid-basiertes Layout für Übersichtlichkeit
-- 🔥 Firebase Crashlytics Integration
+- User management with score tracking and ranking
+- Custom list adapters for user display
+- Firebase Crashlytics integration
+- Secure storage with AndroidX Security Crypto
 
 ## Tech Stack
 
-| Technologie | Details |
-|-------------|---------|
-| **Sprache** | Java |
-| **Plattform** | Android (API 29+) |
-| **Build** | Gradle |
-| **UI** | Material Design, ViewBinding, ConstraintLayout, GridLayout |
-| **Navigation** | AndroidX Navigation Component |
-| **Sicherheit** | AndroidX Security Crypto |
-| **Monitoring** | Firebase Crashlytics |
+| Component | Detail |
+|-----------|--------|
+| Language | Java |
+| Build System | Gradle (Groovy) |
+| Min SDK | 29 (Android 10) |
+| Target SDK | 32 |
+| Backend | Firebase |
 
-## Projektstruktur
-
-```
-LearnApp/
-├── app/              # Hauptanwendung
-├── mylibrary/        # Wiederverwendbare Bibliothek
-├── build.gradle
-├── settings.gradle
-└── LICENSE.txt
-```
-
-## Schnellstart
-
-1. Projekt in **Android Studio** öffnen
-2. Gradle Sync abwarten
-3. Auf Emulator oder physischem Gerät starten (min. API 29)
+## Getting Started
 
 ```bash
-./gradlew assembleDebug
+git clone https://github.com/Sebastian90Sonntag/LearnApp.git
 ```
+
+1. Add your `google-services.json` to `app/`
+2. Open in Android Studio
+3. Sync Gradle and run
+
+## Tests
+
+```bash
+./gradlew test
+```
+
+Unit tests cover the `User` model (comparison, getters/setters).
+
+## CI
+
+GitHub Actions runs **build** and **lint** checks on every push and PR to `main`.
 
 ## Team
 
-Entwickelt von **Sebastian**, **Alexander** und **Ikram** im Rahmen von GraphicDesignCoding.
+- Sebastian Sonntag
+- Alexander
+- Ikram
 
-## Lizenz
+## License
 
-Siehe [LICENSE.txt](LICENSE.txt)
+See [LICENSE.txt](LICENSE.txt)
