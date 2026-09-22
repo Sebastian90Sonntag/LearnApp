@@ -47,6 +47,10 @@ public class User implements Comparable<User>{
         if (getScore() == null || user.getScore() == null) {
             return 0;
         }
+        try {
             return Integer.compare(Integer.parseInt(getScore()), Integer.parseInt(user.getScore()));
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 }

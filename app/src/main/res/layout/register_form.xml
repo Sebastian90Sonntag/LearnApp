@@ -48,30 +48,16 @@
                 android:textColorHint="#757575" />
 
             <EditText
-                android:id="@+id/editText_FirstName"
+                android:id="@+id/editText_Password"
                 style="@style/Theme.LearnApp.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginTop="5dp"
-                android:autofillHints=""
                 android:ems="10"
-                android:hint="@string/hint_firstname"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:textColorHint="#757575" />
-
-            <EditText
-                android:id="@+id/editText_LastName"
-                style="@style/Theme.LearnApp.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="5dp"
-                android:autofillHints=""
-                android:ems="10"
-                android:hint="@string/hint_lastname"
-                android:inputType="textPersonName"
+                android:hint="@string/hint_password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
                 android:minHeight="48dp"
                 android:textColorHint="#757575" />
 
@@ -84,20 +70,6 @@
                 android:layout_marginTop="5dp"
                 android:ems="10"
                 android:hint="@string/hint_repeat_password"
-                android:importantForAutofill="no"
-                android:inputType="textPassword"
-                android:minHeight="48dp"
-                android:textColorHint="#757575" />
-
-            <EditText
-                android:id="@id/editText_Password"
-                style="@style/Theme.LearnApp.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/hint_password"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
                 android:minHeight="48dp"

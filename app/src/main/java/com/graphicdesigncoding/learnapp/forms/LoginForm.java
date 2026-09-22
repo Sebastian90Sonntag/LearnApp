@@ -1,7 +1,5 @@
 package com.graphicdesigncoding.learnapp.forms;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,214 +12,109 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+
 import com.graphicdesigncoding.learnapp.MainActivity;
 import com.graphicdesigncoding.learnapp.R;
-import com.graphicdesigncoding.learnapp.api.CallAPI;
-import com.graphicdesigncoding.learnapp.api.Callback;
-import com.graphicdesigncoding.learnapp.api.ContentType;
-import com.graphicdesigncoding.learnapp.api.Crypt;
 import com.graphicdesigncoding.learnapp.api.RegExPattern;
-import com.graphicdesigncoding.learnapp.api.SimpleJson;
-import com.graphicdesigncoding.learnapp.api.TransferMethod;
 import com.graphicdesigncoding.learnapp.databinding.LoginFormBinding;
-import org.json.JSONObject;
+import com.graphicdesigncoding.learnapp.repository.Resource;
+import com.graphicdesigncoding.learnapp.viewmodel.LoginViewModel;
 
-/////////////////////////////////////
-//COPYRIGHT BY GraphicDesignCoding///
-/////////////////////////////////////
-
+//COPYRIGHT BY GraphicDesignCoding
 public class LoginForm extends Fragment {
 
     private LoginFormBinding binding;
+    private LoginViewModel viewModel;
 
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-
         binding = LoginFormBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        // Update View
         super.onViewCreated(view, savedInstanceState);
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        // Get TextChangedListener from Email TextInput
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
         binding.editTextPassword.addTextChangedListener(new TextWatcher() {
-
             public void afterTextChanged(Editable s) {
-
-                // Set TintColor to Password TextInput
                 EditText et = view.findViewById(R.id.editText_Password);
-                new InputChecker().editText(et,s.toString(),RegExPattern.Password);
+                new InputChecker().editText(et, s.toString(), RegExPattern.Password);
             }
-
-            ///////////////////////////////////////////////////////////////////////////////////////////
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            ///////////////////////////////////////////////////////////////////////////////////////////
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
         });
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        // Get TextChangedListener from Email TextInput
         binding.editTextEmailAddress.addTextChangedListener(new TextWatcher() {
-
             public void afterTextChanged(Editable s) {
-                // Set TintColor to Email TextInput
                 EditText et = view.findViewById(R.id.editText_EmailAddress);
-                new InputChecker().editText(et,s.toString(),RegExPattern.Email);
+                new InputChecker().editText(et, s.toString(), RegExPattern.Email);
             }
-
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        //Login Button Binding -> Send Login Data To Server
-        binding.buttonLogin.setOnClickListener(btn_view -> {
 
-            //Set Input tint color
+        viewModel.getLoginResult().observe(getViewLifecycleOwner(), resource -> {
+            if (resource == null) return;
+
+            if (resource.status == Resource.Status.SUCCESS) {
+                ((MainActivity) requireContext()).Debug("LoginForm", "Login -> performed");
+                NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_global_nav_main);
+            } else if (resource.status == Resource.Status.ERROR) {
+                ((MainActivity) requireActivity()).Debug("LoginForm", resource.message);
+                Toast.makeText(view.getContext(), resource.message != null ? resource.message : "Server Error", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        binding.buttonLogin.setOnClickListener(btn_view -> {
             view.findViewById(R.id.editText_EmailAddress).getBackground().setTint(Color.TRANSPARENT);
             view.findViewById(R.id.editText_Password).getBackground().setTint(Color.TRANSPARENT);
+
             EditText et_email = view.findViewById(R.id.editText_EmailAddress);
-            EditText et_password= view.findViewById(R.id.editText_Password);
-                    //Get Input data
+            EditText et_password = view.findViewById(R.id.editText_Password);
+
             String email = et_email.getText().toString();
             String password = et_password.getText().toString();
 
-            //Check if email data matches requirements
-            if(new InputChecker().editText(et_email,email,RegExPattern.Email)){
-
-                //Check if password matches requirements
-                if(new InputChecker().editText(et_password,password,RegExPattern.Password)){
-                    // Send data to server
-                    new CallAPI(
-                            "https://api.graphic-design-coding.de/login",
-                            "{\"e\":\"" + email + "\",\"p\":\"" + password + "\"}",
-                            ContentType.APPLICATION_JSON,
-                            TransferMethod.POST,
-                            new Callback() {
-                                @Override
-                                public void finished(Object _obj) {
-
-                                    SimpleJson simpleJson = new SimpleJson();
-                                    JSONObject obj = simpleJson.Decode(_obj.toString());
-                                    Crypt crypt = new Crypt();
-                                    String token = crypt.md5("token");
-                                    String imgLink = crypt.md5("image_link");
-                                    String firstname = crypt.md5("firstname");
-                                    String lastname = crypt.md5("lastname");
-                                    String username = crypt.md5("username");
-
-                                    if (obj.has(token) && obj.has(imgLink) && obj.has(firstname) &&
-                                            obj.has(lastname) && obj.has(username)) {
-
-                                        // Set data to variables from JSONObj
-                                        token = simpleJson.Get(obj, token).toString();
-                                        imgLink = simpleJson.Get(obj, imgLink).toString();
-                                        firstname = simpleJson.Get(obj, firstname).toString();
-                                        lastname = simpleJson.Get(obj, lastname).toString();
-                                        username = simpleJson.Get(obj, username).toString();
-
-                                        // Check for login data
-                                        Context context = requireContext();
-                                        SharedPreferences sharedPref;
-
-                                        // Write shared Preferences
-                                        sharedPref = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = sharedPref.edit();
-                                        editor.putString("UEmail", email);
-                                        editor.putString("UPassword", password);
-                                        editor.putString("UFirstname", firstname);
-                                        editor.putString("ULastname", lastname);
-                                        editor.putString("UUsername", username);
-                                        editor.putString("UToken", token);
-                                        editor.putString("UImage", imgLink);
-                                        editor.apply();
-
-                                        ((MainActivity) context).Debug("LoginForm", "SharedPreferences -> written");
-
-                                        // Go to MainMenu
-                                        NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_global_nav_main);
-                                        ((MainActivity) context).Debug("LoginForm", "Login -> performed");
-
-
-                                    }
-                                }
-
-                                @Override
-                                public void canceled(Object _obj) {
-                                    // No connection to server || No internet
-                                    SimpleJson simpleJson = new SimpleJson();
-                                    JSONObject obj = simpleJson.Decode(_obj.toString());
-                                    Crypt crypt = new Crypt();
-                                    String error = crypt.md5("error");
-
-                                    if (obj.has(error)) {
-
-                                        String the_error = simpleJson.Get(obj,error).toString();
-                                        ((MainActivity) requireActivity()).Debug("LoginForm", the_error);
-                                        Toast.makeText(view.getContext(), "Wrong login data", Toast.LENGTH_LONG).show();
-
-                                    } else {
-
-                                        ((MainActivity) requireActivity()).Debug("LoginForm", "Server Error");
-                                        Toast.makeText(view.getContext(), "Server Error", Toast.LENGTH_LONG).show();
-
-                                    }
-                                }
-                            }
-                    );
-
-                }else{
-                    //Set ViewInput to red
+            if (new InputChecker().editText(et_email, email, RegExPattern.Email)) {
+                if (new InputChecker().editText(et_password, password, RegExPattern.Password)) {
+                    viewModel.login(email, password);
+                } else {
                     view.findViewById(R.id.editText_Password).requestFocus();
-                    Toast.makeText(view.getContext(),"Password must match",Toast.LENGTH_LONG).show();
+                    Toast.makeText(view.getContext(), "Password must match requirements", Toast.LENGTH_LONG).show();
                 }
-            }else{
-                //Set ViewInput to red
+            } else {
                 view.findViewById(R.id.editText_EmailAddress).requestFocus();
-                Toast.makeText(view.getContext(),"Email must match",Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), "Email must match requirements", Toast.LENGTH_LONG).show();
             }
         });
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        //Register Text Binding -> Show Register Form
         binding.textViewRegister.setOnClickListener(view1 -> {
-            Log.i("Login Window","Register Pressed");
+            Log.i("Login Window", "Register Pressed");
             NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_LoginForm_to_RegisterForm);
-
         });
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        //Recover Text Binding -> Show Recover Form
+
         binding.textViewRecover.setOnClickListener(view1 -> {
-            Log.i("Login Window","Recover Pressed");
+            Log.i("Login Window", "Recover Pressed");
             NavHostFragment.findNavController(LoginForm.this).navigate(R.id.action_LoginForm_to_RecoverForm);
-
         });
-
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void onResume() {
         super.onResume();
-        MainActivity activity = ((MainActivity)getActivity());
-        if (activity != null){
-            activity.showExtendedBar(true,"Login",false);
+        MainActivity activity = ((MainActivity) getActivity());
+        if (activity != null) {
+            activity.showExtendedBar(true, "Login", false);
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void onDestroyView() {
         super.onDestroyView();

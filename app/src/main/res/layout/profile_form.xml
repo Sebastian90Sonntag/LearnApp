@@ -58,44 +58,6 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textView_lbl_firstname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="15dp"
-                android:text="@string/profile_firstname"
-                android:textColor="#616161"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView_firstname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/textView_lbl_lastname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="15dp"
-                android:text="@string/profile_lastname"
-                android:textColor="#616161"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView_lastname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:textSize="20sp" />
-
-            <TextView
                 android:id="@+id/textView_lbl_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
