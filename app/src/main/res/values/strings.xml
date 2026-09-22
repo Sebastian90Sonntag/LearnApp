@@ -43,5 +43,7 @@
     <string name="profile_lastname">Lastname:</string>
     <string name="profile_email">E-Mail:</string>
     <string name="profile_btn">Upload Image</string>
+    <string name="delete">Delete</string>
+    <string name="hint_unit_value">Unit Value</string>
 
 </resources>
