@@ -39,7 +39,6 @@
 
         android:contentDescription="gg"
 
-        android:onClick="removeItem"
         android:src="@android:drawable/ic_menu_delete" />
 
 </RelativeLayout>
