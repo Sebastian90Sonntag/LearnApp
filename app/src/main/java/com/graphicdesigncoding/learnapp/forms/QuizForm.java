@@ -47,8 +47,14 @@ public class QuizForm extends Fragment {
                 currentQuestionData = resource.data;
                 ((TextView) view.findViewById(R.id.textView_card_title)).setText(currentQuestionData.title);
                 ((TextView) view.findViewById(R.id.textView_card_content)).setText(currentQuestionData.question);
-                view.findViewById(R.id.cardview_content).setVisibility(View.VISIBLE);
+
+                LinearLayout ll = view.findViewById(R.id.cardview_content);
+                ll.setVisibility(View.VISIBLE);
                 view.findViewById(R.id.button_show).setVisibility(View.VISIBLE);
+
+                // Complete the fade-in and rotation reset for the next question card
+                ll.animate().setDuration(400).rotationY(0).alpha(1.0f).start();
+
             } else if (resource.status == Resource.Status.ERROR) {
                 MainActivity mA = (MainActivity) requireActivity();
                 mA.Debug("QuizForm", resource.message != null ? resource.message : "Error fetching question");

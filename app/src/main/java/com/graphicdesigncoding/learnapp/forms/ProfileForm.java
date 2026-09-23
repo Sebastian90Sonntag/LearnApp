@@ -73,6 +73,18 @@ public class ProfileForm extends Fragment {
             ((ImageView) view.findViewById(R.id.imageView_profil_image)).setImageBitmap(bitmap);
         }
 
+        viewModel.fetchProfile().observe(getViewLifecycleOwner(), resource -> {
+            if (resource != null && resource.status == Resource.Status.SUCCESS && resource.data != null) {
+                SessionManager updatedSession = resource.data;
+                if (updatedSession.getUsername() != null) {
+                    ((TextView) view.findViewById(R.id.textView_username)).setText(updatedSession.getUsername());
+                }
+                if (updatedSession.getEmail() != null) {
+                    ((TextView) view.findViewById(R.id.textView_email)).setText(updatedSession.getEmail());
+                }
+            }
+        });
+
         Intent pickPhoto = new Intent(Intent.ACTION_PICK);
         pickPhoto.setType("image/*");
 

@@ -10,10 +10,10 @@ LearnApp implements modern security practices across both the Android applicatio
 
 ## Supported Versions
 
-| Version | Supported          |
-| ------- | ------------------ |
+| Version     | Supported          |
+|-------------|--------------------|
 | Main (v2.x) | :white_check_mark: |
-| < 2.0   | :x:                |
+| < 2.0       | :x:                |
 
 ## Reporting a Vulnerability
 

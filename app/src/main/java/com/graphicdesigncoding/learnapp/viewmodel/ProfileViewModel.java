@@ -29,6 +29,10 @@ public class ProfileViewModel extends AndroidViewModel {
         return uploadResult;
     }
 
+    public LiveData<Resource<SessionManager>> fetchProfile() {
+        return profileRepository.fetchProfile();
+    }
+
     public void uploadAvatar(ImageResize resizedBMP) {
         profileRepository.uploadAvatar(resizedBMP).observeForever(uploadResult::setValue);
     }

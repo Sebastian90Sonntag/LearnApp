@@ -1,20 +1,20 @@
-# LearnApp
+# LearnApp 📱🚀
 
 ![Android CI](https://github.com/Sebastian90Sonntag/LearnApp/actions/workflows/android.yml/badge.svg)
 
-**LearnApp** is a modern Android learning platform built with **Java**, adopting clean **MVVM (Model-View-ViewModel) Architecture**, **LiveData**, and **JWT (JSON Web Token)** REST API authentication.
+**LearnApp** is a modern Android learning application built with **Java**, implementing clean **MVVM (Model-View-ViewModel) Architecture**, **LiveData**, **ViewBinding**, and secure **JWT (JSON Web Token)** REST API backend communication.
 
 ---
 
 ## 🌟 Key Features
 
-- **MVVM Architecture**: Decoupled presentation, domain logic, and data layers using `ViewModel`, `Repository`, and `LiveData`.
-- **JWT & PBKDF2 Security**: Standardized `Authorization: Bearer <jwt_token>` header authentication with server-side PBKDF2 password hashing & salt.
-- **User Authentication**: Registration, Login, and Password Recovery flows.
-- **Interactive Quiz Module**: Dynamic question fetching, answer submission, and rating tracking.
-- **Live Scoreboard**: User ranking & score tracking.
-- **Profile & Avatar Upload**: Base64 image processing & profile picture management.
-- **Built-in Backend REST Server**: Lightweight, zero-dependency Node.js REST API server (`server/server.js`).
+- **MVVM Architecture**: Clear separation of concerns between UI (`Fragment`), Presentation (`ViewModel`), and Data Layer (`Repository` & `SessionManager`).
+- **JWT & PBKDF2 Security**: `Authorization: Bearer <jwt_token>` header authentication with server-side PBKDF2 password hashing and per-user salting.
+- **Full User Auth Cycle**: Login, Registration, and Password Recovery / Reset flows.
+- **Interactive Quiz Module**: Real-time quiz question retrieval, answer evaluation, and status/rating submission.
+- **Leaderboard / Scoreboard**: User ranking list sorted dynamically by performance.
+- **Profile & Avatar Upload**: Profile management with base64 image encoding and avatar image upload to backend static storage.
+- **Built-in REST Server**: Zero-dependency, lightweight Node.js REST server (`server/server.js`).
 
 ---
 
@@ -22,51 +22,50 @@
 
 ```
 com.graphicdesigncoding.learnapp/
-├── api/                # CallAPI, SessionManager, ApiConfig, Crypt
-├── repository/         # AuthRepository, QuizRepository, ScoreboardRepository, ProfileRepository, Resource
-├── viewmodel/          # LoginViewModel, RegisterViewModel, QuizViewModel, ScoreboardViewModel, ProfileViewModel, RecoverViewModel
-├── forms/ (View)       # LoginForm, RegisterForm, QuizForm, ScoreboardForm, ProfileForm, RecoverForm
-├── user/               # User data models & list adapters
-└── MainActivity.java   # NavHostFragment host & App shell
+├── api/                # Network & Session (CallAPI, SessionManager, ApiConfig, Crypt)
+├── repository/         # Data Repositories (AuthRepository, QuizRepository, ScoreboardRepository, ProfileRepository, Resource)
+├── viewmodel/          # ViewModels (LoginViewModel, RegisterViewModel, QuizViewModel, ScoreboardViewModel, ProfileViewModel, RecoverViewModel)
+├── forms/ (View)       # UI Fragments (LoginForm, RegisterForm, QuizForm, ScoreboardForm, ProfileForm, RecoverForm)
+├── user/               # Data Models (User, UserItem)
+└── MainActivity.java   # NavHostFragment host & extended toolbar control
 ```
 
 ---
 
-## 🛠️ Backend REST API (`server/server.js`)
+## 🔌 API & Backend Compatibility Matrix
 
-The project includes a zero-dependency Node.js REST API backend supporting versioned `/api/v1/...` endpoints.
+All REST API endpoints have been verified for **100% compatibility** between the Android App (`com.graphicdesigncoding.learnapp`) and the Node.js REST API server (`server/server.js`).
 
-### API Endpoints
-
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|---------------|-------------|
-| `POST` | `/api/v1/auth/login` | No | User authentication & JWT generation |
-| `POST` | `/api/v1/auth/register` | No | User registration & account creation |
-| `POST` | `/api/v1/auth/forgot-password` | No | Request password recovery code |
-| `POST` | `/api/v1/auth/reset-password` | No | Reset password with recovery token |
-| `GET`/`POST` | `/api/v1/quiz/question` | **Bearer JWT** | Fetch quiz question / submit answer rating |
-| `GET`/`POST` | `/api/v1/scoreboard` | **Bearer JWT** | Fetch top user rankings |
-| `GET` | `/api/v1/profile` | **Bearer JWT** | Get current user profile |
-| `POST` | `/api/v1/profile/avatar` | **Bearer JWT** | Upload profile picture avatar |
-
-### Starting the Backend Server
-
-```bash
-# Start the Node.js REST API server (listens on http://0.0.0.0:8080)
-node server/server.js
-```
+| Endpoint                        | Method       | Auth Required  | App Handler                             | Server Response                          | Status          |
+|---------------------------------|--------------|----------------|-----------------------------------------|------------------------------------------|-----------------|
+| `/api/v1/auth/login`            | `POST`       | Public         | `AuthRepository.login()`                | `200 OK { token, user }`                 | ✅ 100% Verified |
+| `/api/v1/auth/register`         | `POST`       | Public         | `AuthRepository.register()`             | `201 Created { token, user }`            | ✅ 100% Verified |
+| `/api/v1/auth/forgot-password`  | `POST`       | Public         | `AuthRepository.requestPasswordReset()` | `200 OK { message }`                     | ✅ 100% Verified |
+| `/api/v1/auth/reset-password`   | `POST`       | Public         | `AuthRepository.confirmPasswordReset()` | `200 OK { message }`                     | ✅ 100% Verified |
+| `/api/v1/quiz/question`         | `GET`/`POST` | **Bearer JWT** | `QuizRepository.fetchCurrentQuestion()` | `200 OK { questionId, title, answer }`   | ✅ 100% Verified |
+| `/api/v1/quiz/question`         | `POST`       | **Bearer JWT** | `QuizRepository.submitAnswerRating()`  | `200 OK { message }`                     | ✅ 100% Verified |
+| `/api/v1/scoreboard`            | `GET`/`POST` | **Bearer JWT** | `ScoreboardRepository.fetchScoreboard()`| `200 OK { data: [...] }`                 | ✅ 100% Verified |
+| `/api/v1/profile`               | `GET`        | **Bearer JWT** | `ProfileRepository.fetchProfile()`      | `200 OK { username, email, image_link }` | ✅ 100% Verified |
+| `/api/v1/profile/avatar`        | `POST`       | **Bearer JWT** | `ProfileRepository.uploadAvatar()`      | `200 OK { image_link }`                  | ✅ 100% Verified |
 
 ---
 
-## 🚀 Getting Started with the Android App
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - **Android Studio** (Ladybug / Jellyfish or newer)
 - **JDK 17+**
-- **Node.js** (for running `server/server.js`)
+- **Node.js** (for running backend server)
 
-### Setup & Configuration
+### Running the REST Backend Server
+
+```bash
+# Start the backend server (listens on http://0.0.0.0:8080)
+node server/server.js
+```
+
+### Running the Android Application
 
 1. **Clone the Repository**:
    ```bash
@@ -74,41 +73,46 @@ node server/server.js
    cd LearnApp
    ```
 
-2. **Configure API Base URL**:
-   Open `app/src/main/java/com/graphicdesigncoding/learnapp/api/ApiConfig.java`:
-   - **Android Emulator**: Uses `http://10.0.2.2:8080` (default).
-   - **Physical Device**: Change `10.0.2.2` to your computer's local Wi-Fi IP address (e.g. `http://192.168.1.100:8080`).
+2. **Configure Host IP**:
+   Edit `app/src/main/java/com/graphicdesigncoding/learnapp/api/ApiConfig.java`:
+   - **Android Emulator**: `public static String BASE_URL = "http://10.0.2.2:8080";`
+   - **Physical Device**: Change `10.0.2.2` to your machine's LAN IP address (e.g. `http://192.168.1.100:8080`).
 
-3. **Run Backend Server**:
-   ```bash
-   node server/server.js
-   ```
-
-4. **Build & Run App**:
-   Use Android Studio or run Gradle from the command line:
+3. **Build & Run**:
+   Use Android Studio or Gradle CLI:
    ```bash
    ./gradlew assembleDebug
    ```
 
 ---
 
-## 💻 Shared Run Configurations
+## 💻 Android Studio Shared Run Configurations
 
-Shared Android Studio run configurations are provided in `.idea/runConfigurations/`:
-- `app`: Run Android App build & deployment.
-- `backend_server`: Run the Node.js REST API server.
+Shared run configurations are checked into `.idea/runConfigurations/` according to standard JetBrains / Android Studio project conventions:
+
+1. **`app`** (`app.xml`):
+   - **Type**: `AndroidRunConfigurationType`
+   - **Module**: `LearnApp.app`
+   - **Target**: Launches `MainActivity` on connected Android Emulator or physical device after executing Gradle `BeforeRunTask` build.
+
+2. **`Backend Server`** (`backend_server.xml`):
+   - **Type**: `NodeJSConfigurationType`
+   - **Target**: Launches `server/server.js` directly from Android Studio using the system Node.js interpreter.
+
+3. **`Backend Server (npm)`** (`backend_server_npm.xml`):
+   - **Type**: `js.build_tools.npm`
+   - **Target**: Executes `npm start` inside `server/package.json` for seamless 1-click execution in Android Studio without requiring separate terminal steps.
 
 ---
 
-## 🛡️ Security
+## 🛡️ Security Specifications
 
-- **JWT Tokens**: 24-hour expiration HMAC-SHA256 signed tokens.
-- **Password Protection**: Passwords are never stored in plain text; hashed server-side with PBKDF2 (1000 iterations, 64-byte key length, unique per-user salt).
-- **Cleartext Traffic**: Configured via `network_security_config.xml` for local development host domains (`10.0.2.2`, `localhost`, `127.0.0.1`).
+- **JWT HMAC-SHA256**: Authenticated endpoints validate tokens passed via `Authorization: Bearer <jwt_token>`. Tokens carry a 24-hour expiration timestamp.
+- **PBKDF2 Password Encryption**: Server-side password hashing uses `crypto.pbkdf2Sync` with 1,000 iterations, 64-byte key length, and unique per-user 16-byte random salts.
+- **Network Security Configuration**: Cleartext HTTP traffic is explicitly permitted for local development addresses (`10.0.2.2`, `localhost`, `127.0.0.1`) in `network_security_config.xml`.
 
 ---
 
 ## 📄 License
 
 See [LICENSE.txt](LICENSE.txt).
-

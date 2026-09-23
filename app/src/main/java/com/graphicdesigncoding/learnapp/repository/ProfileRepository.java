@@ -71,4 +71,42 @@ public class ProfileRepository {
 
         return result;
     }
+
+    public LiveData<Resource<SessionManager>> fetchProfile() {
+        MutableLiveData<Resource<SessionManager>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
+        String token = sessionManager.getToken();
+
+        new CallAPI(
+                ApiConfig.BASE_URL + "/api/v1/profile",
+                null,
+                ContentType.APPLICATION_JSON,
+                TransferMethod.GET,
+                token,
+                new Callback() {
+                    @Override
+                    public void finished(Object obj) {
+                        try {
+                            JSONObject jobj = new JSONObject(obj.toString());
+                            String username = jobj.optString("username", sessionManager.getUsername());
+                            String email = jobj.optString("email", sessionManager.getEmail());
+                            String imgLink = jobj.optString("image_link", sessionManager.getImage());
+
+                            sessionManager.saveSession(token, username, email, sessionManager.getPassword(), imgLink);
+                            result.postValue(Resource.success(sessionManager));
+                        } catch (Exception e) {
+                            result.postValue(Resource.error("Parsing error: " + e.getMessage()));
+                        }
+                    }
+
+                    @Override
+                    public void canceled(Object obj) {
+                        result.postValue(Resource.error(obj != null ? obj : "Failed to fetch profile"));
+                    }
+                }
+        );
+
+        return result;
+    }
 }
