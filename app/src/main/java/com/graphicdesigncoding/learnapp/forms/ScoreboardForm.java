@@ -35,16 +35,24 @@ public class ScoreboardForm extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ListView listView = view.findViewById(R.id.listView_scoreboard);
+        ListView listView = binding.listViewScoreboard;
         userArrayAdapter = new CustomArrayAdapter(getContext(), R.layout.listview_row_layout);
         listView.setAdapter(userArrayAdapter);
+
+        binding.swipeRefreshLayoutScoreboard.setOnRefreshListener(() -> viewModel.loadScoreboard());
 
         viewModel = new ViewModelProvider(this).get(ScoreboardViewModel.class);
 
         viewModel.getScoreboardResult().observe(getViewLifecycleOwner(), resource -> {
             if (resource == null) return;
 
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+            if (resource.status == Resource.Status.LOADING) {
+                if (!binding.swipeRefreshLayoutScoreboard.isRefreshing()) {
+                    binding.progressBarScoreboard.setVisibility(View.VISIBLE);
+                }
+            } else if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+                binding.progressBarScoreboard.setVisibility(View.GONE);
+                binding.swipeRefreshLayoutScoreboard.setRefreshing(false);
                 userArrayAdapter.clear();
                 for (User item : resource.data) {
                     if (item.getUserImg() == null) {
@@ -53,6 +61,8 @@ public class ScoreboardForm extends Fragment {
                     userArrayAdapter.add(item);
                 }
             } else if (resource.status == Resource.Status.ERROR) {
+                binding.progressBarScoreboard.setVisibility(View.GONE);
+                binding.swipeRefreshLayoutScoreboard.setRefreshing(false);
                 Toast.makeText(view.getContext(), resource.message != null ? resource.message : "Error loading scoreboard", Toast.LENGTH_LONG).show();
             }
         });

@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.graphicdesigncoding.learnapp.MainActivity;
 import com.graphicdesigncoding.learnapp.R;
@@ -132,6 +133,12 @@ public class ProfileForm extends Fragment {
         binding.buttonSend.setOnClickListener((View btn_view) -> {
             mA.SetControlVisibility(view, R.id.button_send, false);
             someActivityResultLauncher.launch(pickPhoto);
+        });
+
+        binding.buttonLogout.setOnClickListener((View btn_view) -> {
+            session.clearSession();
+            Toast.makeText(view.getContext(), R.string.logout_success, Toast.LENGTH_SHORT).show();
+            NavHostFragment.findNavController(ProfileForm.this).navigate(R.id.action_ProfileForm_to_LoginForm);
         });
     }
 

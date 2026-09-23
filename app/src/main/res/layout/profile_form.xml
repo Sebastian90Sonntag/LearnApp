@@ -80,8 +80,16 @@
                 android:id="@+id/button_send"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="?android:attr/colorBackground"
                 android:text="@string/profile_btn" />
+
+            <Button
+                android:id="@+id/button_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#D32F2F"
+                android:textColor="#FFFFFF"
+                android:text="@string/logout" />
 
         </LinearLayout>
     </ScrollView>

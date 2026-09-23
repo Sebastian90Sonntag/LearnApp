@@ -18,32 +18,38 @@
     <string name="btn_register" translatable="true">Register now</string>
     <string name="title_register" translatable="true">Register</string>
     <string name="hint_username" translatable="true">Username</string>
-    <string name="hint_firstname" translatable="true">Firstname</string>
-    <string name="hint_lastname" translatable="true">Lastname</string>
+    <string name="hint_firstname" translatable="true">First Name</string>
+    <string name="hint_lastname" translatable="true">Last Name</string>
     <string name="hint_repeat_password" translatable="true">Repeat Password</string>
     <string name="todo">TODO</string>
     <string name="to_do">TODO</string>
     <string name="gdc">gdc</string>
     <string name="quiz">Quiz</string>
+    <string name="quiz_known">Known</string>
+    <string name="quiz_maybe_known">So close</string>
+    <string name="quiz_dont_know">Don\'t know</string>
+    <string name="quiz_show_answer">Show answer</string>
     <string name="scoreboard">Scoreboard</string>
     <string name="quit">Quit</string>
     <string name="main_menu">Main Menu</string>
     <!-- Strings used for recovery for navigation -->
-    <string name="button_code">Send code to E-Mail</string>
+    <string name="button_code">Send code to Email</string>
     <string name="edit_code">Enter Code</string>
     <string name="button_submit_code">Submit</string>
     <string name="edit_new_password">New Password</string>
-    <string name="edit_repeat_new_password">Repeat new Password</string>
+    <string name="edit_repeat_new_password">Repeat New Password</string>
     <!-- Profil -->
     <string name="btn_save" translatable="true">Save</string>
     <string name="profile">Profile</string>
     <string name="profile_default" />
     <string name="profile_username">Username:</string>
-    <string name="profile_firstname">Firstname:</string>
-    <string name="profile_lastname">Lastname:</string>
-    <string name="profile_email">E-Mail:</string>
+    <string name="profile_firstname">First Name:</string>
+    <string name="profile_lastname">Last Name:</string>
+    <string name="profile_email">Email:</string>
     <string name="profile_btn">Upload Image</string>
     <string name="delete">Delete</string>
     <string name="hint_unit_value">Unit Value</string>
-
+    <string name="logout">Logout</string>
+    <string name="logout_success">Logged out successfully</string>
+    <string name="loading">Loading...</string>
 </resources>

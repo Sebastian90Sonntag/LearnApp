@@ -103,6 +103,11 @@
             <action
                 android:id="@+id/action_ProfileForm_to_MainMenuForm"
                 app:destination="@id/MainMenuForm" />
+            <action
+                android:id="@+id/action_ProfileForm_to_LoginForm"
+                app:destination="@id/nav_login_logout"
+                app:popUpTo="@id/nav_graph"
+                app:popUpToInclusive="true" />
         </fragment>
     </navigation>
 </navigation>

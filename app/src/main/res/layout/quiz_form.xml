@@ -87,7 +87,7 @@
             android:id="@+id/button_known"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Known"
+            android:text="@string/quiz_known"
             android:visibility="gone"
             tools:layout_editor_absoluteX="265dp"
             tools:layout_editor_absoluteY="48dp" />
@@ -96,7 +96,7 @@
             android:id="@+id/button_maybe_known"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Sooo close"
+            android:text="@string/quiz_maybe_known"
             android:visibility="gone"
             tools:layout_editor_absoluteX="60dp" />
 
@@ -104,7 +104,7 @@
             android:id="@+id/button_dont_known"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Dont know"
+            android:text="@string/quiz_dont_know"
             android:visibility="gone"
             tools:layout_editor_absoluteX="45dp"
             tools:layout_editor_absoluteY="48dp" />
@@ -113,7 +113,7 @@
             android:id="@+id/button_show"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Show answer"
+            android:text="@string/quiz_show_answer"
             tools:layout_editor_absoluteX="227dp"
             tools:layout_editor_absoluteY="48dp" />
 
