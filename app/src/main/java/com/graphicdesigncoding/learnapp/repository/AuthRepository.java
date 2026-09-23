@@ -33,7 +33,7 @@ public class AuthRepository {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 
-        String jsonBody = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"e\":\"" + email + "\",\"p\":\"" + password + "\"}";
+        String jsonBody = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\"}";
 
         new CallAPI(
                 ApiConfig.BASE_URL + "/api/v1/auth/login",
@@ -86,8 +86,7 @@ public class AuthRepository {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 
-        String jsonBody = "{\"username\":\"" + username + "\",\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"repeatPassword\":\"" + repeatPassword + "\"," +
-                "\"u\":\"" + username + "\",\"e\":\"" + email + "\",\"p\":\"" + password + "\",\"rp\":\"" + repeatPassword + "\"}";
+        String jsonBody = "{\"username\":\"" + username + "\",\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"repeatPassword\":\"" + repeatPassword + "\"}";
 
         new CallAPI(
                 ApiConfig.BASE_URL + "/api/v1/auth/register",
@@ -114,7 +113,7 @@ public class AuthRepository {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 
-        String jsonBody = "{\"email\":\"" + email + "\",\"e\":\"" + email + "\",\"r\":\"" + crypt.md5("recover") + "\"}";
+        String jsonBody = "{\"email\":\"" + email + "\"}";
 
         new CallAPI(
                 ApiConfig.BASE_URL + "/api/v1/auth/forgot-password",
@@ -141,8 +140,7 @@ public class AuthRepository {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 
-        String jsonBody = "{\"code\":\"" + code + "\",\"password\":\"" + password + "\",\"repeatPassword\":\"" + repeatPassword + "\"," +
-                "\"rt\":\"" + code + "\",\"r\":\"" + crypt.md5("recoverToken") + "\",\"p\":\"" + password + "\",\"rp\":\"" + repeatPassword + "\"}";
+        String jsonBody = "{\"code\":\"" + code + "\",\"password\":\"" + password + "\",\"repeatPassword\":\"" + repeatPassword + "\"}";
 
         new CallAPI(
                 ApiConfig.BASE_URL + "/api/v1/auth/reset-password",

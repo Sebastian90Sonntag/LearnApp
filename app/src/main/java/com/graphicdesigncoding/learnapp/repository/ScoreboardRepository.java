@@ -37,13 +37,12 @@ public class ScoreboardRepository {
         result.setValue(Resource.loading());
 
         String token = sessionManager.getToken();
-        String jsonBody = "{\"token\":\"" + token + "\",\"t\":\"" + token + "\"}";
 
         new CallAPI(
                 ApiConfig.BASE_URL + "/api/v1/scoreboard",
-                jsonBody,
+                null,
                 ContentType.APPLICATION_JSON,
-                TransferMethod.POST,
+                TransferMethod.GET,
                 token,
                 new Callback() {
                     @Override

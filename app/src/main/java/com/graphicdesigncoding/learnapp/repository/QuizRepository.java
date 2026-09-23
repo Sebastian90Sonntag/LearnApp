@@ -42,13 +42,12 @@ public class QuizRepository {
         result.setValue(Resource.loading());
 
         String token = sessionManager.getToken();
-        String jsonBody = "{\"token\":\"" + token + "\",\"t\":\"" + token + "\"}";
 
         new CallAPI(
                 ApiConfig.BASE_URL + "/api/v1/quiz/question",
-                jsonBody,
+                null,
                 ContentType.APPLICATION_JSON,
-                TransferMethod.POST,
+                TransferMethod.GET,
                 token,
                 new Callback() {
                     @Override
@@ -89,8 +88,7 @@ public class QuizRepository {
         result.setValue(Resource.loading());
 
         String token = sessionManager.getToken();
-        String jsonBody = "{\"token\":\"" + token + "\",\"questionId\":\"" + questionId + "\",\"rating\":\"" + statusId + "\"," +
-                "\"t\":\"" + token + "\",\"qid\":\"" + questionId + "\",\"sid\":\"" + statusId + "\"}";
+        String jsonBody = "{\"questionId\":\"" + questionId + "\",\"rating\":\"" + statusId + "\"}";
 
         new CallAPI(
                 ApiConfig.BASE_URL + "/api/v1/quiz/question",
