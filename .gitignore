@@ -12,3 +12,13 @@
 /daemon/
 /caches/
 /wrapper/
+
+# Node / Backend
+node_modules/
+/server/node_modules/
+.env
+/server/.env
+*.sqlite
+*.db
+/server/uploads/
+
