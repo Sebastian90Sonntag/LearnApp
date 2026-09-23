@@ -8,9 +8,7 @@ import com.graphicdesigncoding.learnapp.api.ApiConfig;
 import com.graphicdesigncoding.learnapp.api.CallAPI;
 import com.graphicdesigncoding.learnapp.api.Callback;
 import com.graphicdesigncoding.learnapp.api.ContentType;
-import com.graphicdesigncoding.learnapp.api.Crypt;
 import com.graphicdesigncoding.learnapp.api.SessionManager;
-import com.graphicdesigncoding.learnapp.api.SimpleJson;
 import com.graphicdesigncoding.learnapp.api.TransferMethod;
 
 import org.json.JSONObject;
@@ -18,8 +16,6 @@ import org.json.JSONObject;
 public class AuthRepository {
 
     private final SessionManager sessionManager;
-    private final Crypt crypt = new Crypt();
-    private final SimpleJson simpleJson = new SimpleJson();
 
     public AuthRepository(Context context) {
         this.sessionManager = new SessionManager(context);
@@ -45,20 +41,14 @@ public class AuthRepository {
                     public void finished(Object obj) {
                         try {
                             JSONObject json = new JSONObject(obj.toString());
-                            String tokenKey = crypt.md5("token");
-                            String userKey = crypt.md5("username");
-                            String imgKey = crypt.md5("image_link");
-
-                            String token = json.optString("token", json.optString(tokenKey, ""));
+                            String token = json.optString("token", "");
                             String username = "";
-                            String imageLink = json.optString("image_link", json.optString(imgKey, ""));
+                            String imageLink = json.optString("image_link", "");
 
                             if (json.has("user")) {
                                 JSONObject userObj = json.getJSONObject("user");
                                 username = userObj.optString("username", "");
                                 imageLink = userObj.optString("image_link", imageLink);
-                            } else if (json.has(userKey)) {
-                                username = json.optString(userKey, "");
                             }
 
                             if (!token.isEmpty()) {

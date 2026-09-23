@@ -53,7 +53,6 @@ public class CallAPI implements Callback {
                 InputStream in_stream;
 
                 if (urlConnection != null) {
-                    Crypt crypt = new Crypt();
                     if (contentType != null) {
                         urlConnection.setRequestProperty("Content-Type", contentType.getAction());
                     }
@@ -99,8 +98,7 @@ public class CallAPI implements Callback {
                         } else {
                             try {
                                 JSONObject jsonObject = new JSONObject(str);
-                                String errorKey = crypt.md5("error");
-                                if (jsonObject.has("error") || jsonObject.has(errorKey)) {
+                                if (jsonObject.has("error")) {
                                     main_Handler.post(() -> callback.canceled(str));
                                 } else {
                                     main_Handler.post(() -> callback.finished(str));

@@ -8,12 +8,9 @@ import com.graphicdesigncoding.learnapp.api.ApiConfig;
 import com.graphicdesigncoding.learnapp.api.CallAPI;
 import com.graphicdesigncoding.learnapp.api.Callback;
 import com.graphicdesigncoding.learnapp.api.ContentType;
-import com.graphicdesigncoding.learnapp.api.Crypt;
 import com.graphicdesigncoding.learnapp.api.SessionManager;
-import com.graphicdesigncoding.learnapp.api.SimpleJson;
 import com.graphicdesigncoding.learnapp.api.TransferMethod;
 import com.graphicdesigncoding.learnapp.user.User;
-import com.graphicdesigncoding.learnapp.user.UserItem;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,8 +22,6 @@ import java.util.List;
 public class ScoreboardRepository {
 
     private final SessionManager sessionManager;
-    private final Crypt crypt = new Crypt();
-    private final SimpleJson simpleJson = new SimpleJson();
 
     public ScoreboardRepository(Context context) {
         this.sessionManager = new SessionManager(context);
@@ -48,17 +43,8 @@ public class ScoreboardRepository {
                     @Override
                     public void finished(Object responseMsg) {
                         try {
-                            JSONObject obj = simpleJson.Decode(responseMsg.toString());
-                            JSONArray dataArray = null;
-
-                            if (obj.has("data")) {
-                                dataArray = obj.getJSONArray("data");
-                            } else {
-                                String dataKey = crypt.md5("data");
-                                if (obj.has(dataKey)) {
-                                    dataArray = simpleJson.GetArray(obj, dataKey);
-                                }
-                            }
+                            JSONObject obj = new JSONObject(responseMsg.toString());
+                            JSONArray dataArray = obj.optJSONArray("data");
 
                             if (dataArray != null) {
                                 List<User> userList = new ArrayList<>();

@@ -8,7 +8,6 @@ import com.graphicdesigncoding.learnapp.api.ApiConfig;
 import com.graphicdesigncoding.learnapp.api.CallAPI;
 import com.graphicdesigncoding.learnapp.api.Callback;
 import com.graphicdesigncoding.learnapp.api.ContentType;
-import com.graphicdesigncoding.learnapp.api.Crypt;
 import com.graphicdesigncoding.learnapp.api.SessionManager;
 import com.graphicdesigncoding.learnapp.api.TransferMethod;
 
@@ -31,7 +30,6 @@ public class QuizRepository {
     }
 
     private final SessionManager sessionManager;
-    private final Crypt crypt = new Crypt();
 
     public QuizRepository(Context context) {
         this.sessionManager = new SessionManager(context);
@@ -55,15 +53,10 @@ public class QuizRepository {
                         try {
                             JSONObject jobj = new JSONObject(obj.toString());
 
-                            String idKey = crypt.md5("questionID");
-                            String titleKey = crypt.md5("title");
-                            String questionKey = crypt.md5("question");
-                            String answerKey = crypt.md5("answer");
-
-                            String id = jobj.optString("questionId", jobj.optString(idKey, "1"));
-                            String title = jobj.optString("title", jobj.optString(titleKey, "Quiz"));
-                            String question = jobj.optString("question", jobj.optString(questionKey, ""));
-                            String answer = jobj.optString("answer", jobj.optString(answerKey, ""));
+                            String id = jobj.optString("questionId", "1");
+                            String title = jobj.optString("title", "Quiz");
+                            String question = jobj.optString("question", "");
+                            String answer = jobj.optString("answer", "");
 
                             QuizQuestion q = new QuizQuestion(id, title, question, answer);
                             result.postValue(Resource.success(q));
