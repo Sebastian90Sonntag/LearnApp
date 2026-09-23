@@ -14,7 +14,7 @@
     "jsonwebtoken": "^9.0.2",
     "bcryptjs": "^2.4.3",
     "multer": "^1.4.5-lts.1",
-    "sqlite3": "^5.1.7",
+    "sqlite3": "^6.0.1",
     "pg": "^8.11.5",
     "mysql2": "^3.9.7",
     "mongodb": "^6.5.0"
